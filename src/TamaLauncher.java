@@ -6,9 +6,12 @@ import java.net.Socket;
 
 /**
  * 
- * @author jmalooy and blsmith86
+ * @author 	Aidan McArthur
+ *			Bryan Kuo
+ *			Jared Malooly
+ *			Mark Oakeson
  *
- * Purpose: 
+ * Purpose: Launch program
  */
 public class TamaLauncher {
 
