@@ -2,7 +2,7 @@ import java.util.Observable;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
-import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
 public class TamaView extends Application{
@@ -12,23 +12,21 @@ public class TamaView extends Application{
 	private TamaController controller;
 	private TamaModel model;
 	
-	private BorderPane window;
+	private StackPane window;
 	private float height = 500;
 	private float width = 500;
 	
 	
-	
-
-	
 	public TamaView() {
-		this.window = new BorderPane();
+		
+		
+		this.window = new StackPane();
 		this.model = new TamaModel();
 		this.controller = new TamaController(this.model);
 	}
 	
 	/**
-	 * Purpose: Creates the gameboard. Includes everything to construct the
-	 * gameboard and gather event data.
+	 * Purpose: Creates the view. Ellipse in center, with a rectangle over it. 3 buttons.
 	 * 
 	 * @param object to create the stage
 	 */
