@@ -31,30 +31,47 @@
  * included in core mechanics, so inclusion of this stat is up for debate. 
  */
 public class TamaModel {
-	//Might want to make a Tamaclonechi class and move these there
+	//Core stats
 	private float age; 
 	private int health; 
 	private int weight;
 	private int happiness; 
 	//private float fullness; 
 	
+	//Statuses 
 	private boolean healthy;
 	private boolean alive;
 	
+	//Limits/Standards
+	private static final int HEALTH_MAX = 100;
+	private static final int WEIGHT_MAX = 100;
+	private static final int HAPPINESS_MAX = 100;
+	
+	private static final int MEAL_WEIGHT_GAIN = 10;
+	private static final int MEAL_HAPPINESS_GAIN = 10;
+	private static final int SNACK_WEIGHT_GAIN = 30;
+	private static final int SNACK_HAPPINESS_GAIN = 20;
+	private static final int MEDI_HAPPINESS_LOSS = 10;
+	
 	public TamaModel() {
 		this.age = 0;
-		this.health = 100;
-		this.weight = 100;
-		this.happiness = 100;
-		//this.fullness = 100;
-		this.healthy = false;
+		this.health = HEALTH_MAX;
+		this.weight = WEIGHT_MAX;
+		this.happiness = HAPPINESS_MAX;
+		this.healthy = true;
 		this.alive = true;
 	}
 	
 	public float getAge() {return age;}
 	public int getHealth() {return health;}
 	public int getWeight() {return weight;}
+	public void feedMeal() {weight += MEAL_WEIGHT_GAIN; happiness += MEAL_HAPPINESS_GAIN;}
+	public void feedSnack() {weight += SNACK_WEIGHT_GAIN; happiness += SNACK_HAPPINESS_GAIN;}
 	public int getHappiness() {return happiness;}
 	public boolean isHealthy() {return healthy;}
+	private void makeHealthy() {healthy = true;}
+	private void makeSick() {healthy = false;}
+	public void feedMedicine() {healthy = true; happiness -= MEDI_HAPPINESS_LOSS;}
 	public boolean isAlive() {return alive;}
+	private void die() {alive = false;};
 }
