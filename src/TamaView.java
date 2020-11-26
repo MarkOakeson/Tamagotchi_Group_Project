@@ -65,7 +65,7 @@ public class TamaView extends Application{
         screenInset.setX(132);
         screenInset.setY(115);
         screenInset.setWidth(220);
-        screenInset.setHeight(170);
+        screenInset.setHeight(185);
         screenInset.setFill(Color.DARKSLATEGREY);
         window.getChildren().add(screenInset);
         
@@ -73,7 +73,7 @@ public class TamaView extends Application{
         screen.setX(140);
         screen.setY(120);
         screen.setWidth(210);
-        screen.setHeight(160);
+        screen.setHeight(180);
         screen.setFill(Color.BISQUE);
         window.getChildren().add(screen);
         
@@ -135,13 +135,17 @@ public class TamaView extends Application{
 		
 		rootPane.getChildren().addAll(window, sprite);
         
-
+		scene.setOnMousePressed(event -> {
+			int[] pos = getPos((int) event.getSceneX(), (int) event.getSceneY());
+		});
 		
 		stage.setScene(scene);
 		stage.show(); // Show the stage
 	}
 
-	
-	
-	
+
+	private int[] getPos(int sceneX, int sceneY) {
+		System.out.println(sceneX + "   " + sceneY);
+		return null;
+	}
 }
