@@ -1,8 +1,11 @@
 import java.util.Observable;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Ellipse;
 import javafx.scene.shape.Rectangle;
@@ -14,8 +17,10 @@ public class TamaView extends Application{
 
 	private TamaController controller;
 	private TamaModel model;
-	
+
+	Pane rootPane = new Pane();
 	private Pane window;
+	private Pane sprite;
 	private float height = 500;
 	private float width = 500;
 	
@@ -36,7 +41,7 @@ public class TamaView extends Application{
 		
 		stage.setTitle("Tamagotchi"); // Name the stage
 		
-		Scene scene = new Scene(window, width, height);
+		Scene scene = new Scene(rootPane, width, height);
 		
 		// Draw Device
 		Ellipse shadow = new Ellipse();
@@ -122,9 +127,16 @@ public class TamaView extends Application{
         button3.setRadiusX(20);
         button3.setRadiusY(20);
 		window.getChildren().add(button3);
+		
+		sprite = new Sprite();
+		sprite.setLayoutX(200);
+		sprite.setLayoutY(150);
+		sprite.resize(50, 50);
+		
+		rootPane.getChildren().addAll(window, sprite);
         
-        
-        
+
+		
 		stage.setScene(scene);
 		stage.show(); // Show the stage
 	}
