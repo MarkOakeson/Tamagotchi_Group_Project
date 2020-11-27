@@ -3,6 +3,7 @@ import java.util.Observable;
 import java.util.Observer;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
@@ -172,21 +173,28 @@ public class TamaView extends Application implements Observer {
 		window.getChildren().add(bar);
 
 		loadGame.setOnAction(event ->{
+
 			try {
 				model = controller.loadSave();
 				controller.updateModel(model);
-				clock.setText(Integer.toString(controller.getSecondsPassed()));
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
+			Platform.runLater(()->{
+				clock.setText(Integer.toString(controller.getSecondsPassed()));
+			});
+
 		});
 
 		saveGame.setOnAction(event ->{
-			try{
-				controller.save();
-			}catch (IOException e){
-				e.printStackTrace();
-			}
+			Platform.runLater(()->{
+				try{
+					controller.save();
+				}catch (IOException e){
+					e.printStackTrace();
+				}
+			});
+
 		});
 
 		stage.setScene(scene);
