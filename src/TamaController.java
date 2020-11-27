@@ -1,5 +1,7 @@
 import java.io.IOException;
 
+import javafx.event.EventHandler;
+
 public class TamaController {
 	private TamaModel model;
 
@@ -102,6 +104,27 @@ public class TamaController {
 	// For testing purposes
 	public int getSecondsPassed(){
 		return model.getSecondsPassed();
+	}
+
+
+
+	public void button1Press() {
+		System.out.println("Pressed button 1");
+		
+	}
+
+
+
+	public void button2Press() {
+		System.out.println("Pressed button 2");
+		
+	}
+
+
+
+	public void button3Press() {
+		System.out.println("Pressed button 3");
+		
 	}
 	
 }
