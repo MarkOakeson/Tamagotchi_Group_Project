@@ -1,7 +1,5 @@
 import java.io.IOException;
 import java.util.Observable;
-import java.util.Timer;
-import java.util.TimerTask;
 import java.util.Observer;
 
 import javafx.application.Application;
@@ -10,7 +8,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Ellipse;
 import javafx.scene.shape.Rectangle;
@@ -48,16 +45,19 @@ public class TamaView extends Application implements Observer {
 	@Override
 	public void start(Stage stage) {
 		// If a save exists, load the save on startup
-		try{
-			TamaModel tmp;
-			tmp = controller.loadSave();
-			if (tmp != null){
-				model = tmp;
-				controller.updateModel(tmp);
+		new Thread(()->{
+			try{
+				TamaModel tmp;
+				tmp = controller.loadSave();
+				if (tmp != null){
+					model = tmp;
+					controller.updateModel(tmp);
+				}
+			} catch	(IOException e){
+				e.printStackTrace();
 			}
-		} catch	(IOException e){
-			e.printStackTrace();
-		}
+		}).start();
+
 
 		stage.setTitle("Tamagotchi"); // Name the stage
 		
