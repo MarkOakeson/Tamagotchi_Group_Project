@@ -125,8 +125,8 @@ public class TamaModel extends Observable{
 			}
 		}
 		
-		//setChanged();
-		//notifyObservers(message);
+		setChanged();
+		notifyObservers();
 	}
 
 	/**
