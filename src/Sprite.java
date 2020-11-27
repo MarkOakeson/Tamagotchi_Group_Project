@@ -42,7 +42,7 @@ public class Sprite extends Pane {
 	
 	
 	
-	private static final Image IMAGE = new Image("file:./images/testSpriteSheet.png");
+	private static final Image IMAGE = new Image("file:./res/testSpriteSheet.png");
 
     private static final int COLUMNS  =  2;
     private static final int COUNT    =  2;
