@@ -1,7 +1,12 @@
+import java.io.IOException;
 import java.util.Observable;
+import java.util.Observer;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
@@ -9,9 +14,9 @@ import javafx.scene.shape.Ellipse;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
-public class TamaView extends Application{
+import javax.xml.soap.Text;
 
-	private Observable observable;
+public class TamaView extends Application implements Observer {
 
 	private TamaController controller;
 	private TamaModel model;
@@ -19,21 +24,36 @@ public class TamaView extends Application{
 	private Pane window;
 	private float height = 500;
 	private float width = 500;
+
+	// Clock for testing purposes
+	private TextField clock;
 	
 	
 	public TamaView() {
 		this.window = new Pane();
 		this.model = new TamaModel();
 		this.controller = new TamaController(this.model);
+		model.addObserver(this);
 	}
 	
 	/**
 	 * Purpose: Creates the view. Ellipse in center, with a rectangle over it. 3 buttons.
 	 * 
-	 * @param object to create the stage
+	 * @param stage to create the stage
 	 */
 	@Override
 	public void start(Stage stage) {
+		// If a save exists, load the save on startup
+		try{
+			TamaModel tmp;
+			tmp = controller.loadSave();
+			if (tmp != null){
+				model = tmp;
+				controller.updateModel(tmp);
+			}
+		} catch	(IOException e){
+			e.printStackTrace();
+		}
 		
 		stage.setTitle("Tamagotchi"); // Name the stage
 		
@@ -123,14 +143,67 @@ public class TamaView extends Application{
         button3.setRadiusX(20);
         button3.setRadiusY(20);
 		window.getChildren().add(button3);
-        
-        
-        
+
+
+		// Save and Load functionality (Not final view, quick and dirty for testing)
+		HBox bar = new HBox();
+		Button loadGame = new Button("Load");
+		Button saveGame = new Button("Save");
+		clock = new TextField("0");
+		bar.getChildren().add(loadGame);
+		bar.getChildren().add(saveGame);
+		bar.getChildren().add(clock);
+		window.getChildren().add(bar);
+
+		loadGame.setOnAction(event ->{
+			try {
+				model = controller.loadSave();
+				controller.updateModel(model);
+				clock.setText(Integer.toString(controller.getSecondsPassed()));
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		});
+
+		saveGame.setOnAction(event ->{
+			try{
+				controller.save();
+			}catch (IOException e){
+				e.printStackTrace();
+			}
+		});
+
 		stage.setScene(scene);
 		stage.show(); // Show the stage
+
+		// Sim for testing purposes
+		runSim();
+
 	}
 
-	
-	
-	
+	/**
+	 * Runs a simulation and updates the pet every second while displaying
+	 * time passing on the clock
+	 */
+	public void runSim(){
+		new Thread(()->{
+			while (true){
+				controller.updatePet();
+				clock.setText(Integer.toString(controller.getSecondsPassed()));
+				try {
+					Thread.sleep(1000);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+				System.out.println(Integer.toString(controller.getSecondsPassed()));
+			}
+		}).start();
+	}
+
+
+	@Override
+	public void update(Observable o, Object arg) {
+
+
+	}
 }

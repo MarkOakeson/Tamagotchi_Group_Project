@@ -1,3 +1,4 @@
+import java.io.*;
 import java.util.Observable;
 import java.util.Random;
 
@@ -31,7 +32,7 @@ import java.util.Random;
  * Fullness(?): Increases when max value is 0, decreases weight and happiness when at 0. Not 
  * included in core mechanics, so inclusion of this stat is up for debate. 
  */
-public class TamaModel extends Observable{
+public class TamaModel extends Observable implements Serializable{
 	//Core stats
 	private float age; 
 	private float health; 
@@ -57,6 +58,10 @@ public class TamaModel extends Observable{
 	private static final int SNACK_WEIGHT_GAIN = 30;
 	private static final int SNACK_HAPPINESS_GAIN = 20;
 	private static final int MEDI_HAPPINESS_LOSS = 10;
+
+	//Save file
+	private File saveFile = new File("saveState.sav");
+
 	
 	public TamaModel() {
 		this.age = 0;
@@ -110,9 +115,67 @@ public class TamaModel extends Observable{
 		
 		//Check if pet will die
 		//TODO: Fill this in
+
+		// Autosaves every 60 seconds
+		if (secondsPassed % 60 == 0){
+			try{
+				save();
+			}catch (IOException e){
+				e.printStackTrace();
+			}
+		}
 		
-		//setChanged();
-		//notifyObservers(message);
+		setChanged();
+		notifyObservers();
+	}
+
+	/**
+	 * Saves the current game state, including the pet's attributes
+	 * and current status, by writing this Model object to a save file
+	 * in the local directory.
+	 * @throws IOException
+	 */
+	public void save() throws IOException {
+		if (!saveFile.exists()){
+			saveFile.createNewFile();
+		}
+		FileOutputStream saveFileStream = new FileOutputStream("saveState.sav");
+		ObjectOutputStream save = new ObjectOutputStream(saveFileStream);
+		save.writeObject(this);
+		System.out.println("Save written");
+
+	}
+
+	/**
+	 * If a savefile does not exist or cannot be found, returns null.
+	 * If savefile is found, returns the TamaModel object contained
+	 * in the savefile and updates the running instance to be the
+	 * newly returned model.
+	 * @return - null if save not found. Otherwise, returns updated model
+	 * @throws IOException
+	 */
+	public TamaModel load() throws IOException {
+		if (!saveFile.exists()){
+			return null;
+		}
+		FileInputStream saveFileStream = new FileInputStream("saveState.sav");
+		ObjectInputStream load = new ObjectInputStream(saveFileStream);
+		try {
+			System.out.println("Save loaded");
+			TamaModel updated =(TamaModel) load.readObject();
+			System.out.println(updated.getSecondsPassed() + " seconds passed");
+			return updated;
+		}catch (ClassNotFoundException e){
+			e.printStackTrace();
+		}
+
+		System.out.println("LOAD RETURNED NULL");
+		return null;
+	}
+
+	// For testing purposes
+	public int getSecondsPassed(){
+		return secondsPassed;
 	}
 	
 	public float getAge() {return age;}
