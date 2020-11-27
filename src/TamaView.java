@@ -174,14 +174,9 @@ public class TamaView extends Application implements Observer {
 		rootPane.getChildren().addAll(window, sprite);
 
 
-		// "Indentation"
-		
 		scene.setOnMousePressed(event -> {
 			int[] pos = new int[] {(int) event.getSceneX(), (int) event.getSceneY()};
 			handlePress(pos);
-			
-			
-			
 
 		});
 
