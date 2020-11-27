@@ -47,6 +47,25 @@ public class TamaController {
 		model.updatePet();
 	}
 
+	public float getAge(){ return model.getAge(); }
+
+	public float getHealth(){ return model.getHealth(); }
+
+	public float getWeight(){ return model.getWeight(); }
+
+	public float getHappiness(){ return model.getHappiness();}
+
+	public boolean isHealthy(){ return model.isHealthy();}
+
+	public void feedMedicine(){ model.feedMedicine();}
+
+	public boolean isAlive(){ return model.isAlive();}
+
+	public void feedMeal(){ model.feedMeal();}
+
+	public void feedSnack(){ model.feedSnack();}
+
+
 	// For testing purposes
 	public int getSecondsPassed(){
 		return model.getSecondsPassed();
