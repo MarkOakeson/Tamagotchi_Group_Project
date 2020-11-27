@@ -155,6 +155,7 @@ public class TamaModel extends Observable{
 		}catch (ClassNotFoundException e){
 			e.printStackTrace();
 		}
+		load.close();
 
 		return null;
 	}
