@@ -1,4 +1,5 @@
 import java.util.Observable;
+import java.util.Observer;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -9,9 +10,7 @@ import javafx.scene.shape.Ellipse;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
-public class TamaView extends Application{
-
-	private Observable observable;
+public class TamaView extends Application implements Observer {
 
 	private TamaController controller;
 	private TamaModel model;
@@ -25,12 +24,13 @@ public class TamaView extends Application{
 		this.window = new Pane();
 		this.model = new TamaModel();
 		this.controller = new TamaController(this.model);
+		model.addObserver(this);
 	}
 	
 	/**
 	 * Purpose: Creates the view. Ellipse in center, with a rectangle over it. 3 buttons.
 	 * 
-	 * @param object to create the stage
+	 * @param stage to create the stage
 	 */
 	@Override
 	public void start(Stage stage) {
@@ -130,7 +130,9 @@ public class TamaView extends Application{
 		stage.show(); // Show the stage
 	}
 
-	
-	
-	
+
+	@Override
+	public void update(Observable o, Object arg) {
+
+	}
 }
