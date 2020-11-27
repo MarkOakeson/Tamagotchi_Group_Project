@@ -52,9 +52,23 @@ public class TamaController {
 
 
 
-	public EventHandler threeClick() {
-		// TODO Auto-generated method stub
-		return null;
+	public void button1Press() {
+		System.out.println("Pressed button 1");
+		
+	}
+
+
+
+	public void button2Press() {
+		System.out.println("Pressed button 2");
+		
+	}
+
+
+
+	public void button3Press() {
+		System.out.println("Pressed button 3");
+		
 	}
 	
 }

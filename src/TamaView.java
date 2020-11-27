@@ -168,6 +168,9 @@ public class TamaView extends Application implements Observer {
 			
 			if (pos[0] > 130 && pos[0] < 170 && pos[1] > 330 && pos[1] < 370) {
 				
+				// Call controller, tell it button 1 pressed
+				controller.button1Press();
+				
 				button1.setVisible(false);
 				button1_3d.setFill(Color.LIGHTPINK);
 
@@ -184,6 +187,9 @@ public class TamaView extends Application implements Observer {
 				
 			} else if (pos[0] > 220 && pos[0] < 260 && pos[1] > 350 && pos[1] < 390) {
 				
+				// Call controller, tell it button 2 pressed
+				controller.button2Press();
+				
 				button2.setVisible(false);
 				button2_3d.setFill(Color.LIGHTPINK);
 
@@ -198,6 +204,9 @@ public class TamaView extends Application implements Observer {
 				pause.play();
 				
 			} else if (pos[0] > 310 && pos[0] < 350 && pos[1] > 330 && pos[1] < 370) {
+				
+				// Call controller, tell it button 3 pressed
+				controller.button3Press();
 				
 				button3.setVisible(false);
 				button3_3d.setFill(Color.LIGHTPINK);
