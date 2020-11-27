@@ -47,22 +47,55 @@ public class TamaController {
 		model.updatePet();
 	}
 
+	/**
+	 * Getter for pet age from model
+	 * @return - float value age of pet
+	 */
 	public float getAge(){ return model.getAge(); }
 
+	/**
+	 * Getter for pet health from model
+	 * @return - float value health of pet
+	 */
 	public float getHealth(){ return model.getHealth(); }
 
+	/**
+	 * Getter for pet weight from model
+	 * @return - float value weight of pet
+	 */
 	public float getWeight(){ return model.getWeight(); }
 
+	/**
+	 * Getter for pet happiness from model
+	 * @return - float value happiness of pet
+	 */
 	public float getHappiness(){ return model.getHappiness();}
 
+	/**
+	 * Getter for whether pet is healthy or not
+	 * @return - boolean true if pet is healthy, false if sick
+	 */
 	public boolean isHealthy(){ return model.isHealthy();}
 
+	/**
+	 * Feeds pet medicine to make it healthy
+	 */
 	public void feedMedicine(){ model.feedMedicine();}
 
+	/**
+	 * Getter for whether pet is alive or not
+	 * @return - boolean true if pet is alive, false if dead
+	 */
 	public boolean isAlive(){ return model.isAlive();}
 
+	/**
+	 * Feeds pet meal to make it much less hungry
+	 */
 	public void feedMeal(){ model.feedMeal();}
 
+	/**
+	 * Feeds pet snack to make it slightly less hungry
+	 */
 	public void feedSnack(){ model.feedSnack();}
 
 
