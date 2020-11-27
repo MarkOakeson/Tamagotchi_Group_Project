@@ -7,6 +7,10 @@ public class TamaController {
 		this.model = model;
 	}
 
+	public void save() throws IOException {
+		model.save();
+	}
+
 	/**
 	 * If a savefile does not exist or cannot be found, returns null.
 	 * If savefile is found, returns the TamaModel object contained
@@ -25,6 +29,11 @@ public class TamaController {
 	 */
 	public void updatePet(){
 		model.updatePet();
+	}
+
+	// For testing purposes
+	public int getSecondsPassed(){
+		return model.getSecondsPassed();
 	}
 	
 }

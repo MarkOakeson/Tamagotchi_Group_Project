@@ -1,15 +1,20 @@
+import java.io.IOException;
 import java.util.Observable;
 import java.util.Observer;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Ellipse;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
+
+import javax.xml.soap.Text;
 
 public class TamaView extends Application implements Observer {
 
@@ -19,6 +24,9 @@ public class TamaView extends Application implements Observer {
 	private Pane window;
 	private float height = 500;
 	private float width = 500;
+
+	// Clock for testing purposes
+	private TextField clock;
 	
 	
 	public TamaView() {
@@ -125,17 +133,54 @@ public class TamaView extends Application implements Observer {
         button3.setRadiusY(20);
 		window.getChildren().add(button3);
 
-
+		HBox bar = new HBox();
+		// Load button for testing
 		Button loadGame = new Button("Load");
-        
-        
-        
+		loadGame.setOnAction(event ->{
+			try {
+				model = controller.loadSave();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		});
+		bar.getChildren().add(loadGame);
+
+		Button saveGame = new Button("Save");
+		saveGame.setOnAction(event ->{
+			try{
+				controller.save();
+			}catch (IOException e){
+				e.printStackTrace();
+			}
+		});
+		bar.getChildren().add(saveGame);
+
+		clock = new TextField("0");
+		bar.getChildren().add(clock);
+		window.getChildren().add(bar);
+
+
 		stage.setScene(scene);
 		stage.show(); // Show the stage
+
+		// Sim for testing purposes
+		new Thread(()->{
+			try{
+				runSim();
+			} catch (InterruptedException e){
+				e.printStackTrace();
+			}
+		}).start();
+
 	}
 
-	public void runSim(){
+	public void runSim() throws InterruptedException {
 
+		while (true){
+			controller.updatePet();
+			clock.setText(Integer.toString(controller.getSecondsPassed()));
+			Thread.sleep(1000);
+		}
 	}
 
 

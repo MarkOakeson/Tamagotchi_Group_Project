@@ -32,7 +32,7 @@ import java.util.Random;
  * Fullness(?): Increases when max value is 0, decreases weight and happiness when at 0. Not 
  * included in core mechanics, so inclusion of this stat is up for debate. 
  */
-public class TamaModel extends Observable{
+public class TamaModel extends Observable implements Serializable{
 	//Core stats
 	private float age; 
 	private float health; 
@@ -142,7 +142,7 @@ public class TamaModel extends Observable{
 		FileOutputStream saveFileStream = new FileOutputStream("saveState.sav");
 		ObjectOutputStream save = new ObjectOutputStream(saveFileStream);
 		save.writeObject(this);
-		save.close();
+
 	}
 
 	/**
@@ -164,9 +164,14 @@ public class TamaModel extends Observable{
 		}catch (ClassNotFoundException e){
 			e.printStackTrace();
 		}
-		load.close();
+
 
 		return null;
+	}
+
+	// For testing purposes
+	public int getSecondsPassed(){
+		return secondsPassed;
 	}
 	
 	public float getAge() {return age;}
