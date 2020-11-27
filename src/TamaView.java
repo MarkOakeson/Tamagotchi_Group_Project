@@ -3,6 +3,7 @@ import java.util.Observer;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
@@ -123,11 +124,18 @@ public class TamaView extends Application implements Observer {
         button3.setRadiusX(20);
         button3.setRadiusY(20);
 		window.getChildren().add(button3);
+
+
+		Button loadGame = new Button("Load");
         
         
         
 		stage.setScene(scene);
 		stage.show(); // Show the stage
+	}
+
+	public void runSim(){
+
 	}
 
 

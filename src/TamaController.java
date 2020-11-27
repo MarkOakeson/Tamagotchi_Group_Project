@@ -18,5 +18,13 @@ public class TamaController {
 	public TamaModel loadSave() throws IOException {
 		return model.load();
 	}
+
+	/**
+	 * Updates the model every second, autosaving every
+	 * 60 seconds.
+	 */
+	public void updatePet(){
+		model.updatePet();
+	}
 	
 }
