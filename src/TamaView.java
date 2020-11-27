@@ -7,6 +7,7 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
@@ -147,6 +148,7 @@ public class TamaView extends Application implements Observer {
         button3.setCenterY(350);
         button3.setRadiusX(20);
         button3.setRadiusY(20);
+        
 		window.getChildren().add(button3);
 
 		sprite = new Sprite();
@@ -157,31 +159,61 @@ public class TamaView extends Application implements Observer {
 		rootPane.getChildren().addAll(window, sprite);
 
 
-		Ellipse pressedButton = new Ellipse();
-		window.getChildren().add(pressedButton);
+		// "Indentation"
 		
 		scene.setOnMousePressed(event -> {
 			int[] pos = getPos((int) event.getSceneX(), (int) event.getSceneY());
-			button3.setVisible(false);
 			
-			//if (pos[0]) {
 			
-				pressedButton.setFill(Color.LIGHTPINK);
-				pressedButton.setCenterX(333);
-				pressedButton.setCenterY(350);
-				pressedButton.setRadiusX(20);
-				pressedButton.setRadiusY(20);
-				pressedButton.setVisible(true);
-			//}
-			PauseTransition pause = new PauseTransition(Duration.millis(200));
-			pause.setOnFinished(e -> {
+			
+			if (pos[0] > 130 && pos[0] < 170 && pos[1] > 330 && pos[1] < 370) {
+				
+				button1.setVisible(false);
+				button1_3d.setFill(Color.LIGHTPINK);
 
-				pressedButton.setVisible(false);
-				button3.setVisible(true);
+				
+				PauseTransition pause = new PauseTransition(Duration.millis(200));
+				pause.setOnFinished(e -> {
 
-				//pause.playFromStart(); // loop again
-			});
-			pause.play();
+					button1_3d.setFill(Color.DARKSLATEGREY);
+					button1.setVisible(true);
+
+				});
+				
+				pause.play();
+				
+			} else if (pos[0] > 220 && pos[0] < 260 && pos[1] > 350 && pos[1] < 390) {
+				
+				button2.setVisible(false);
+				button2_3d.setFill(Color.LIGHTPINK);
+
+				
+				PauseTransition pause = new PauseTransition(Duration.millis(200));
+				pause.setOnFinished(e -> {
+
+					button2_3d.setFill(Color.DARKSLATEGREY);
+					button2.setVisible(true);
+
+				});
+				pause.play();
+				
+			} else if (pos[0] > 310 && pos[0] < 350 && pos[1] > 330 && pos[1] < 370) {
+				
+				button3.setVisible(false);
+				button3_3d.setFill(Color.LIGHTPINK);
+
+				
+				PauseTransition pause = new PauseTransition(Duration.millis(200));
+				pause.setOnFinished(e -> {
+
+					button3_3d.setFill(Color.DARKSLATEGREY);
+					button3.setVisible(true);
+
+				});
+				pause.play();
+				
+			}
+			
 			
 			
 
@@ -227,8 +259,7 @@ public class TamaView extends Application implements Observer {
 
 
 	private int[] getPos(int sceneX, int sceneY) {
-		System.out.println(sceneX + "   " + sceneY);
-		return null;
+		return new int[]{sceneX, sceneY};
 	}
 	/**
 	 * Runs a simulation and updates the pet every second while displaying

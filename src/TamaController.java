@@ -1,5 +1,7 @@
 import java.io.IOException;
 
+import javafx.event.EventHandler;
+
 public class TamaController {
 	private TamaModel model;
 
@@ -46,6 +48,13 @@ public class TamaController {
 	// For testing purposes
 	public int getSecondsPassed(){
 		return model.getSecondsPassed();
+	}
+
+
+
+	public EventHandler threeClick() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 }
