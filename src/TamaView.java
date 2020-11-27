@@ -33,7 +33,18 @@ public class TamaView extends Application implements Observer {
 	private TextField clock;
 
 	private Stage stage;
-
+	
+	//NODES
+	private Ellipse shadow = new Ellipse();
+	private Ellipse device = new Ellipse();
+	private Rectangle screenInset = new Rectangle();
+	private Rectangle screen = new Rectangle();
+	private Ellipse button1_3d = new Ellipse();
+	private Ellipse button1 = new Ellipse();
+	private Ellipse button2_3d = new Ellipse();
+	private Ellipse button2 = new Ellipse();
+	private Ellipse button3_3d = new Ellipse();
+	private Ellipse button3 = new Ellipse();
 	
 	public TamaView() {
 		this.window = new Pane();
@@ -70,7 +81,7 @@ public class TamaView extends Application implements Observer {
 		Scene scene = new Scene(rootPane, width, height);
 		
 		// Draw Device
-		Ellipse shadow = new Ellipse();
+		
 		shadow.setFill(Color.DARKSLATEGREY);
 		shadow.setCenterX(260);					
 		shadow.setCenterY(255);
@@ -78,7 +89,7 @@ public class TamaView extends Application implements Observer {
 		shadow.setRadiusY(230);
 		window.getChildren().add(shadow);
 		
-		Ellipse device = new Ellipse();
+		
 		device.setFill(Color.HOTPINK);
 		device.setCenterX(250);					// Controller//maybe sprite in future?
 		device.setCenterY(250);					// I'm happy with perceived 3d for now
@@ -87,7 +98,7 @@ public class TamaView extends Application implements Observer {
 		window.getChildren().add(device);
 		
 		// Draw Screen
-		Rectangle screenInset = new Rectangle();
+		
         screenInset.setX(132);
         screenInset.setY(115);
         screenInset.setWidth(220);
@@ -95,7 +106,7 @@ public class TamaView extends Application implements Observer {
         screenInset.setFill(Color.DARKSLATEGREY);
         window.getChildren().add(screenInset);
         
-		Rectangle screen = new Rectangle();
+		
         screen.setX(140);
         screen.setY(120);
         screen.setWidth(210);
@@ -104,7 +115,7 @@ public class TamaView extends Application implements Observer {
         window.getChildren().add(screen);
         
         // Draw buttons
-        Ellipse button1_3d = new Ellipse();
+        
         button1_3d.setFill(Color.DARKSLATEGREY);
         button1_3d.setCenterX(153);					
         button1_3d.setCenterY(350);
@@ -112,7 +123,7 @@ public class TamaView extends Application implements Observer {
         button1_3d.setRadiusY(20);
 		window.getChildren().add(button1_3d);
         
-        Ellipse button1 = new Ellipse();
+        
         button1.setFill(Color.LIGHTPINK);
         button1.setCenterX(150);					
         button1.setCenterY(350);
@@ -121,7 +132,7 @@ public class TamaView extends Application implements Observer {
 		window.getChildren().add(button1);
 		
 		
-		Ellipse button2_3d = new Ellipse();
+		
         button2_3d.setFill(Color.DARKSLATEGREY);
         button2_3d.setCenterX(243);					
         button2_3d.setCenterY(370);
@@ -129,7 +140,7 @@ public class TamaView extends Application implements Observer {
         button2_3d.setRadiusY(20);
 		window.getChildren().add(button2_3d);
 		
-		Ellipse button2 = new Ellipse();
+		
         button2.setFill(Color.LIGHTPINK);
         button2.setCenterX(240);					
         button2.setCenterY(370);
@@ -138,7 +149,7 @@ public class TamaView extends Application implements Observer {
 		window.getChildren().add(button2);
 		
 		
-		Ellipse button3_3d = new Ellipse();
+		
         button3_3d.setFill(Color.DARKSLATEGREY);
         button3_3d.setCenterX(333);					
         button3_3d.setCenterY(350);
@@ -146,7 +157,7 @@ public class TamaView extends Application implements Observer {
         button3_3d.setRadiusY(20);
 		window.getChildren().add(button3_3d);
 		
-		Ellipse button3 = new Ellipse();
+		
         button3.setFill(Color.LIGHTPINK);
         button3.setCenterX(330);					
         button3.setCenterY(350);
@@ -166,66 +177,8 @@ public class TamaView extends Application implements Observer {
 		// "Indentation"
 		
 		scene.setOnMousePressed(event -> {
-			int[] pos = getPos((int) event.getSceneX(), (int) event.getSceneY());
-			
-			
-			
-			if (pos[0] > 130 && pos[0] < 170 && pos[1] > 330 && pos[1] < 370) {
-				
-				// Call controller, tell it button 1 pressed
-				controller.button1Press();
-				
-				button1.setVisible(false);
-				button1_3d.setFill(Color.LIGHTPINK);
-
-				
-				PauseTransition pause = new PauseTransition(Duration.millis(200));
-				pause.setOnFinished(e -> {
-
-					button1_3d.setFill(Color.DARKSLATEGREY);
-					button1.setVisible(true);
-
-				});
-				
-				pause.play();
-				
-			} else if (pos[0] > 220 && pos[0] < 260 && pos[1] > 350 && pos[1] < 390) {
-				
-				// Call controller, tell it button 2 pressed
-				controller.button2Press();
-				
-				button2.setVisible(false);
-				button2_3d.setFill(Color.LIGHTPINK);
-
-				
-				PauseTransition pause = new PauseTransition(Duration.millis(200));
-				pause.setOnFinished(e -> {
-
-					button2_3d.setFill(Color.DARKSLATEGREY);
-					button2.setVisible(true);
-
-				});
-				pause.play();
-				
-			} else if (pos[0] > 310 && pos[0] < 350 && pos[1] > 330 && pos[1] < 370) {
-				
-				// Call controller, tell it button 3 pressed
-				controller.button3Press();
-				
-				button3.setVisible(false);
-				button3_3d.setFill(Color.LIGHTPINK);
-
-				
-				PauseTransition pause = new PauseTransition(Duration.millis(200));
-				pause.setOnFinished(e -> {
-
-					button3_3d.setFill(Color.DARKSLATEGREY);
-					button3.setVisible(true);
-
-				});
-				pause.play();
-				
-			}
+			int[] pos = new int[] {(int) event.getSceneX(), (int) event.getSceneY()};
+			handlePress(pos);
 			
 			
 			
@@ -277,10 +230,72 @@ public class TamaView extends Application implements Observer {
 
 	}
 
+	/**
+	 * Purpose: Handles the mouse press of any of the three button with an 
+	 * 			animation and a call to the controller.
+	 * 
+	 * @param pos
+	 */
+	private void handlePress(int[] pos) {
+		if (pos[0] > 130 && pos[0] < 170 && pos[1] > 330 && pos[1] < 370) {
+			
+			// Call controller, tell it button 1 pressed
+			controller.button1Press();
+			
+			button1.setVisible(false);
+			button1_3d.setFill(Color.LIGHTPINK);
 
-	private int[] getPos(int sceneX, int sceneY) {
-		return new int[]{sceneX, sceneY};
+			
+			PauseTransition pause = new PauseTransition(Duration.millis(200));
+			pause.setOnFinished(e -> {
+
+				button1_3d.setFill(Color.DARKSLATEGREY);
+				button1.setVisible(true);
+
+			});
+			
+			pause.play();
+			
+		} else if (pos[0] > 220 && pos[0] < 260 && pos[1] > 350 && pos[1] < 390) {
+			
+			// Call controller, tell it button 2 pressed
+			controller.button2Press();
+			
+			button2.setVisible(false);
+			button2_3d.setFill(Color.LIGHTPINK);
+
+			
+			PauseTransition pause = new PauseTransition(Duration.millis(200));
+			pause.setOnFinished(e -> {
+
+				button2_3d.setFill(Color.DARKSLATEGREY);
+				button2.setVisible(true);
+
+			});
+			pause.play();
+			
+		} else if (pos[0] > 310 && pos[0] < 350 && pos[1] > 330 && pos[1] < 370) {
+			
+			// Call controller, tell it button 3 pressed
+			controller.button3Press();
+			
+			button3.setVisible(false);
+			button3_3d.setFill(Color.LIGHTPINK);
+
+			
+			PauseTransition pause = new PauseTransition(Duration.millis(200));
+			pause.setOnFinished(e -> {
+
+				button3_3d.setFill(Color.DARKSLATEGREY);
+				button3.setVisible(true);
+
+			});
+			pause.play();
+			
+		}
+		
 	}
+
 	/**
 	 * Runs a simulation and updates the pet every second while displaying
 	 * time passing on the clock
