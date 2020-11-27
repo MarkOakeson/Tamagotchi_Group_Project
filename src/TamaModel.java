@@ -1,3 +1,4 @@
+import java.io.*;
 import java.util.Observable;
 import java.util.Random;
 
@@ -57,6 +58,10 @@ public class TamaModel extends Observable{
 	private static final int SNACK_WEIGHT_GAIN = 30;
 	private static final int SNACK_HAPPINESS_GAIN = 20;
 	private static final int MEDI_HAPPINESS_LOSS = 10;
+
+	//Save file
+	private File saveFile = new File("saveState.sav");
+
 	
 	public TamaModel() {
 		this.age = 0;
@@ -113,6 +118,21 @@ public class TamaModel extends Observable{
 		
 		//setChanged();
 		//notifyObservers(message);
+	}
+
+	/**
+	 * Saves the current game state, including the pet's attributes
+	 * and current status, by writing this Model object to a save file
+	 * in the local directory.
+	 * @throws IOException
+	 */
+	public void save() throws IOException {
+		if (!saveFile.exists()){
+			saveFile.createNewFile();
+		}
+		FileOutputStream saveFileStream = new FileOutputStream("saveState.sav");
+		ObjectOutputStream save = new ObjectOutputStream(saveFileStream);
+		save.writeObject(this);
 	}
 	
 	public float getAge() {return age;}

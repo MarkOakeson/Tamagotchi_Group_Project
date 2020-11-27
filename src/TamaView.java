@@ -134,5 +134,6 @@ public class TamaView extends Application implements Observer {
 	@Override
 	public void update(Observable o, Object arg) {
 
+
 	}
 }
