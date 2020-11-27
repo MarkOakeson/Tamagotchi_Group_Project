@@ -7,10 +7,12 @@ import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Ellipse;
 import javafx.scene.shape.Rectangle;
@@ -29,8 +31,12 @@ public class TamaView extends Application implements Observer {
 	private float height = 500;
 	private float width = 500;
 
-	// Clock for testing purposes
+	// Attributes for testing purposes
 	private TextField clock;
+	private TextField age;
+	private TextField health;
+	private TextField weight;
+	private TextField happiness;
 
 	private Stage stage;
 	
@@ -186,16 +192,44 @@ public class TamaView extends Application implements Observer {
 		});
 
 
-
+		VBox stacker = new VBox();
 		// Save and Load functionality (Not final view, quick and dirty for testing)
 		HBox bar = new HBox();
 		Button loadGame = new Button("Load");
 		Button saveGame = new Button("Save");
+		Label clockLabel = new Label("Time: ");
 		clock = new TextField("0");
+		clock.setPrefColumnCount(3);
+		Label ageLabel = new Label("Age: ");
+		age = new TextField("");
+		age.setPrefColumnCount(2);
+		Label healthLabel = new Label("Health: ");
+		health = new TextField("");
+		health.setPrefColumnCount(2);
+		Label weightLabel = new Label("Weight: ");
+		weight = new TextField("");
+		weight.setPrefColumnCount(2);
+		Label happinessLabel = new Label("Happiness: ");
+		happiness = new TextField("");
+		happiness.setPrefColumnCount(3);
 		bar.getChildren().add(loadGame);
 		bar.getChildren().add(saveGame);
+		bar.getChildren().add(clockLabel);
 		bar.getChildren().add(clock);
-		window.getChildren().add(bar);
+		bar.getChildren().add(ageLabel);
+		bar.getChildren().add(age);
+		bar.getChildren().add(healthLabel);
+		bar.getChildren().add(health);
+		bar.getChildren().add(weightLabel);
+		bar.getChildren().add(weight);
+
+		stacker.getChildren().add(bar);
+		HBox bar2 = new HBox();
+		bar2.getChildren().add(happinessLabel);
+		bar2.getChildren().add(happiness);
+		stacker.getChildren().add(bar2);
+		window.getChildren().add(stacker);
+
 
 		loadGame.setOnAction(event ->{
 
@@ -205,9 +239,7 @@ public class TamaView extends Application implements Observer {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-			Platform.runLater(()->{
-				clock.setText(Integer.toString(controller.getSecondsPassed()));
-			});
+			updateUIAttributes();
 
 		});
 
@@ -304,10 +336,7 @@ public class TamaView extends Application implements Observer {
 		new Thread(()->{
 			while (stage.isShowing()){
 				controller.updatePet();
-				Platform.runLater(()->{
-					clock.setText(Integer.toString(controller.getSecondsPassed()));
-				});
-
+				updateUIAttributes();
 				try {
 					Thread.sleep(1000);
 				} catch (InterruptedException e) {
@@ -316,6 +345,16 @@ public class TamaView extends Application implements Observer {
 				System.out.println(Integer.toString(controller.getSecondsPassed()));
 			}
 		}).start();
+	}
+
+	public void updateUIAttributes(){
+		Platform.runLater(()->{
+			clock.setText(Integer.toString(controller.getSecondsPassed()));
+			age.setText(Float.toString(controller.getAge()));
+			health.setText(Float.toString(controller.getAge()));
+			weight.setText(Float.toString(controller.getWeight()));
+			happiness.setText(Float.toString(controller.getHappiness()));
+		});
 	}
 
 
