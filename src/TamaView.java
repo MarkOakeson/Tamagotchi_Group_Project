@@ -1,5 +1,7 @@
 import java.io.IOException;
 import java.util.Observable;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.Observer;
 
 import javafx.application.Application;
@@ -20,14 +22,16 @@ public class TamaView extends Application implements Observer {
 
 	private TamaController controller;
 	private TamaModel model;
-	
+
+	Pane rootPane = new Pane();
 	private Pane window;
+	private Pane sprite;
 	private float height = 500;
 	private float width = 500;
 
 	// Clock for testing purposes
 	private TextField clock;
-	
+
 	
 	public TamaView() {
 		this.window = new Pane();
@@ -54,10 +58,10 @@ public class TamaView extends Application implements Observer {
 		} catch	(IOException e){
 			e.printStackTrace();
 		}
-		
+
 		stage.setTitle("Tamagotchi"); // Name the stage
 		
-		Scene scene = new Scene(window, width, height);
+		Scene scene = new Scene(rootPane, width, height);
 		
 		// Draw Device
 		Ellipse shadow = new Ellipse();
@@ -81,7 +85,7 @@ public class TamaView extends Application implements Observer {
         screenInset.setX(132);
         screenInset.setY(115);
         screenInset.setWidth(220);
-        screenInset.setHeight(170);
+        screenInset.setHeight(185);
         screenInset.setFill(Color.DARKSLATEGREY);
         window.getChildren().add(screenInset);
         
@@ -89,7 +93,7 @@ public class TamaView extends Application implements Observer {
         screen.setX(140);
         screen.setY(120);
         screen.setWidth(210);
-        screen.setHeight(160);
+        screen.setHeight(180);
         screen.setFill(Color.BISQUE);
         window.getChildren().add(screen);
         
@@ -144,6 +148,18 @@ public class TamaView extends Application implements Observer {
         button3.setRadiusY(20);
 		window.getChildren().add(button3);
 
+		sprite = new Sprite();
+		sprite.setLayoutX(200);
+		sprite.setLayoutY(150);
+		sprite.resize(50, 50);
+
+		rootPane.getChildren().addAll(window, sprite);
+
+		scene.setOnMousePressed(event -> {
+			int[] pos = getPos((int) event.getSceneX(), (int) event.getSceneY());
+		});
+
+
 
 		// Save and Load functionality (Not final view, quick and dirty for testing)
 		HBox bar = new HBox();
@@ -181,6 +197,11 @@ public class TamaView extends Application implements Observer {
 
 	}
 
+
+	private int[] getPos(int sceneX, int sceneY) {
+		System.out.println(sceneX + "   " + sceneY);
+		return null;
+	}
 	/**
 	 * Runs a simulation and updates the pet every second while displaying
 	 * time passing on the clock
