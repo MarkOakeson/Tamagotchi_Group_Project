@@ -7,6 +7,18 @@ public class TamaController {
 		this.model = model;
 	}
 
+
+
+	public void updateModel(TamaModel updatedModel){
+		model = updatedModel;
+	}
+
+	/**
+	 * Saves the current game state, including the pet's attributes
+	 * and current status, by writing the Model object to a save file
+	 * in the local directory.
+	 * @throws IOException
+	 */
 	public void save() throws IOException {
 		model.save();
 	}

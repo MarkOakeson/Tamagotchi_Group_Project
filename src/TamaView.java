@@ -43,6 +43,16 @@ public class TamaView extends Application implements Observer {
 	 */
 	@Override
 	public void start(Stage stage) {
+		try{
+			TamaModel tmp;
+			tmp = controller.loadSave();
+			if (tmp != null){
+				model = tmp;
+				controller.updateModel(tmp);
+			}
+		} catch	(IOException e){
+			e.printStackTrace();
+		}
 		
 		stage.setTitle("Tamagotchi"); // Name the stage
 		
@@ -133,19 +143,27 @@ public class TamaView extends Application implements Observer {
         button3.setRadiusY(20);
 		window.getChildren().add(button3);
 
-		HBox bar = new HBox();
+
 		// Load button for testing
+		HBox bar = new HBox();
 		Button loadGame = new Button("Load");
+		Button saveGame = new Button("Save");
+		clock = new TextField("0");
+		bar.getChildren().add(loadGame);
+		bar.getChildren().add(saveGame);
+		bar.getChildren().add(clock);
+		window.getChildren().add(bar);
+
 		loadGame.setOnAction(event ->{
 			try {
 				model = controller.loadSave();
+				controller.updateModel(model);
+				clock.setText(Integer.toString(controller.getSecondsPassed()));
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
 		});
-		bar.getChildren().add(loadGame);
 
-		Button saveGame = new Button("Save");
 		saveGame.setOnAction(event ->{
 			try{
 				controller.save();
@@ -153,11 +171,8 @@ public class TamaView extends Application implements Observer {
 				e.printStackTrace();
 			}
 		});
-		bar.getChildren().add(saveGame);
 
-		clock = new TextField("0");
-		bar.getChildren().add(clock);
-		window.getChildren().add(bar);
+
 
 
 		stage.setScene(scene);
@@ -165,22 +180,17 @@ public class TamaView extends Application implements Observer {
 
 		// Sim for testing purposes
 		new Thread(()->{
-			try{
-				runSim();
-			} catch (InterruptedException e){
-				e.printStackTrace();
+			while (true){
+				controller.updatePet();
+				try {
+					Thread.sleep(1000);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+				System.out.println(Integer.toString(controller.getSecondsPassed()));
 			}
 		}).start();
 
-	}
-
-	public void runSim() throws InterruptedException {
-
-		while (true){
-			controller.updatePet();
-			clock.setText(Integer.toString(controller.getSecondsPassed()));
-			Thread.sleep(1000);
-		}
 	}
 
 

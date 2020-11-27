@@ -142,6 +142,7 @@ public class TamaModel extends Observable implements Serializable{
 		FileOutputStream saveFileStream = new FileOutputStream("saveState.sav");
 		ObjectOutputStream save = new ObjectOutputStream(saveFileStream);
 		save.writeObject(this);
+		System.out.println("Save written");
 
 	}
 
@@ -160,12 +161,15 @@ public class TamaModel extends Observable implements Serializable{
 		FileInputStream saveFileStream = new FileInputStream("saveState.sav");
 		ObjectInputStream load = new ObjectInputStream(saveFileStream);
 		try {
-			return (TamaModel) load.readObject();
+			System.out.println("Save loaded");
+			TamaModel updated =(TamaModel) load.readObject();
+			System.out.println(updated.getSecondsPassed() + " seconds passed");
+			return updated;
 		}catch (ClassNotFoundException e){
 			e.printStackTrace();
 		}
 
-
+		System.out.println("LOAD RETURNED NULL");
 		return null;
 	}
 
