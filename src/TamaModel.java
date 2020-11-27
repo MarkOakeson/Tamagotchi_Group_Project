@@ -115,6 +115,15 @@ public class TamaModel extends Observable{
 		
 		//Check if pet will die
 		//TODO: Fill this in
+
+		// Autosaves every 60 seconds
+		if (secondsPassed % 60 == 0){
+			try{
+				save();
+			}catch (IOException e){
+				e.printStackTrace();
+			}
+		}
 		
 		//setChanged();
 		//notifyObservers(message);
