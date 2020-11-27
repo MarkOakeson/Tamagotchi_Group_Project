@@ -43,6 +43,7 @@ public class TamaView extends Application implements Observer {
 	 */
 	@Override
 	public void start(Stage stage) {
+		// If a save exists, load the save on startup
 		try{
 			TamaModel tmp;
 			tmp = controller.loadSave();
@@ -144,7 +145,7 @@ public class TamaView extends Application implements Observer {
 		window.getChildren().add(button3);
 
 
-		// Load button for testing
+		// Save and Load functionality (Not final view, quick and dirty for testing)
 		HBox bar = new HBox();
 		Button loadGame = new Button("Load");
 		Button saveGame = new Button("Save");
@@ -172,16 +173,23 @@ public class TamaView extends Application implements Observer {
 			}
 		});
 
-
-
-
 		stage.setScene(scene);
 		stage.show(); // Show the stage
 
 		// Sim for testing purposes
+		runSim();
+
+	}
+
+	/**
+	 * Runs a simulation and updates the pet every second while displaying
+	 * time passing on the clock
+	 */
+	public void runSim(){
 		new Thread(()->{
 			while (true){
 				controller.updatePet();
+				clock.setText(Integer.toString(controller.getSecondsPassed()));
 				try {
 					Thread.sleep(1000);
 				} catch (InterruptedException e) {
@@ -190,7 +198,6 @@ public class TamaView extends Application implements Observer {
 				System.out.println(Integer.toString(controller.getSecondsPassed()));
 			}
 		}).start();
-
 	}
 
 
