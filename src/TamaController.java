@@ -8,7 +8,11 @@ public class TamaController {
 	}
 
 
-
+	/**
+	 * Updates the model with a newly loaded model passed in
+	 * by the view object
+	 * @param updatedModel - updated model loaded in from save file
+	 */
 	public void updateModel(TamaModel updatedModel){
 		model = updatedModel;
 	}

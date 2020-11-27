@@ -30,6 +30,8 @@ public class TamaView extends Application implements Observer {
 	// Clock for testing purposes
 	private TextField clock;
 
+	private Stage stage;
+
 	
 	public TamaView() {
 		this.window = new Pane();
@@ -45,6 +47,7 @@ public class TamaView extends Application implements Observer {
 	 */
 	@Override
 	public void start(Stage stage) {
+		this.stage = stage;
 		// If a save exists, load the save on startup
 		new Thread(()->{
 			try{
@@ -216,7 +219,7 @@ public class TamaView extends Application implements Observer {
 	 */
 	public void runSim(){
 		new Thread(()->{
-			while (true){
+			while (stage.isShowing()){
 				controller.updatePet();
 				Platform.runLater(()->{
 					clock.setText(Integer.toString(controller.getSecondsPassed()));
