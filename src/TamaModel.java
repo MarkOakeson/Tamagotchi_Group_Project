@@ -133,6 +133,30 @@ public class TamaModel extends Observable{
 		FileOutputStream saveFileStream = new FileOutputStream("saveState.sav");
 		ObjectOutputStream save = new ObjectOutputStream(saveFileStream);
 		save.writeObject(this);
+		save.close();
+	}
+
+	/**
+	 * If a savefile does not exist or cannot be found, returns null.
+	 * If savefile is found, returns the TamaModel object contained
+	 * in the savefile and updates the running instance to be the
+	 * newly returned model.
+	 * @return - null if save not found. Otherwise, returns updated model
+	 * @throws IOException
+	 */
+	public TamaModel load() throws IOException {
+		if (!saveFile.exists()){
+			return null;
+		}
+		FileInputStream saveFileStream = new FileInputStream("saveState.sav");
+		ObjectInputStream load = new ObjectInputStream(saveFileStream);
+		try {
+			return (TamaModel) load.readObject();
+		}catch (ClassNotFoundException e){
+			e.printStackTrace();
+		}
+
+		return null;
 	}
 	
 	public float getAge() {return age;}
