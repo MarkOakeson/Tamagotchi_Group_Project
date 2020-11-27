@@ -218,7 +218,10 @@ public class TamaView extends Application implements Observer {
 		new Thread(()->{
 			while (true){
 				controller.updatePet();
-				clock.setText(Integer.toString(controller.getSecondsPassed()));
+				Platform.runLater(()->{
+					clock.setText(Integer.toString(controller.getSecondsPassed()));
+				});
+
 				try {
 					Thread.sleep(1000);
 				} catch (InterruptedException e) {
