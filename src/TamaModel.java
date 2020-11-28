@@ -76,6 +76,18 @@ public class TamaModel extends Observable implements Serializable{
 		
 	}
 	
+	public void resetPet() {
+		age = 0;
+		health = MAX_HEALTH;
+		weight = MAX_WEIGHT;
+		happiness = MAX_HAPPINESS;
+		
+		secondsPassed = 0;
+		
+		healthy = true;
+		alive = true;
+	}
+	
 	public void updatePet() {
 		Random rand = new Random();
 		

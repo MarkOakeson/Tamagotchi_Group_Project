@@ -137,5 +137,11 @@ public class TamaController {
 		System.out.println("Loaded Game");
 		
 	}
+
+
+	public void resetPet() {
+		model.resetPet();
+		System.out.println("Reset Game");
+	}
 	
 }
