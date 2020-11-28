@@ -48,7 +48,9 @@ public class TamaView extends Application implements Observer {
 	private Ellipse shadow = new Ellipse();
 	private Ellipse device = new Ellipse();
 	private Rectangle screenInset = new Rectangle();
+	private Rectangle menuArea = new Rectangle();
 	private Rectangle screen = new Rectangle();
+	
 	private Ellipse button1_3d = new Ellipse();
 	private Ellipse button1 = new Ellipse();
 	private Ellipse button2_3d = new Ellipse();
@@ -128,13 +130,20 @@ public class TamaView extends Application implements Observer {
 		screenInset.setFill(Color.DARKSLATEGREY);
 		window.getChildren().add(screenInset);
 
-		screen.setX(140);
-		screen.setY(100);
-		screen.setWidth(210);
-		screen.setHeight(200);
-		screen.setFill(Color.BISQUE);
-		window.getChildren().add(screen);
+		menuArea.setX(140);
+		menuArea.setY(100);
+		menuArea.setWidth(210);
+		menuArea.setHeight(200);
+		menuArea.setFill(Color.BISQUE);
+		window.getChildren().add(menuArea);
 
+		screen.setX(140);
+		screen.setY(140);
+		screen.setWidth(210);
+		screen.setHeight(120);
+		screen.setFill(Color.BEIGE);
+		window.getChildren().add(screen);
+		
 		// Draw buttons
 
 		// Button 1
