@@ -31,8 +31,12 @@ public class TamaView extends Application implements Observer {
 	private float height = 500;
 	private float width = 500;
 
-	private SoundPlayer buttonPress = new SoundPlayer("./res/buttonPress.wav");;
-
+	// Sounds
+	private SoundPlayer buttonPress = new SoundPlayer("./res/buttonPress.wav");
+	private SoundPlayer saveGameSound = new SoundPlayer("./res/saveGame.wav");
+	private SoundPlayer loadGameSound = new SoundPlayer("./res/loadGame.wav");
+	
+	
 	// Attributes for testing purposes
 	private TextField clock;
 	private TextField age;
@@ -235,9 +239,6 @@ public class TamaView extends Application implements Observer {
 		// Save and Load functionality (Not final view, quick and dirty for testing)
 		HBox bar = new HBox();
 
-		Button loadGame = new Button("Load");
-		Button saveGame = new Button("Save");
-
 		Label clockLabel = new Label("Time: ");
 		clock = new TextField("0");
 		clock.setPrefColumnCount(3);
@@ -253,8 +254,6 @@ public class TamaView extends Application implements Observer {
 		Label happinessLabel = new Label("Happiness: ");
 		happiness = new TextField("");
 		happiness.setPrefColumnCount(3);
-		bar.getChildren().add(loadGame);
-		bar.getChildren().add(saveGame);
 		bar.getChildren().add(clockLabel);
 		bar.getChildren().add(clock);
 		bar.getChildren().add(ageLabel);
@@ -271,28 +270,28 @@ public class TamaView extends Application implements Observer {
 		stacker.getChildren().add(bar2);
 		window.getChildren().add(stacker);
 
-		loadGame.setOnAction(event -> {
+//		loadGame.setOnAction(event -> {
+//
+//			try {
+//				model = controller.loadSave();
+//				controller.updateModel(model);
+//			} catch (IOException e) {
+//				e.printStackTrace();
+//			}
+//			updateUIAttributes();
+//
+//		});
 
-			try {
-				model = controller.loadSave();
-				controller.updateModel(model);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-			updateUIAttributes();
-
-		});
-
-		saveGame.setOnAction(event -> {
-			Platform.runLater(() -> {
-				try {
-					controller.save();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			});
-
-		});
+//		saveGame.setOnAction(event -> {
+//			Platform.runLater(() -> {
+//				try {
+//					controller.save();
+//				} catch (IOException e) {
+//					e.printStackTrace();
+//				}
+//			});
+//
+//		});
 
 		stage.setScene(scene);
 		stage.show(); // Show the stage
@@ -371,8 +370,18 @@ public class TamaView extends Application implements Observer {
 			pause.play();
 
 		} else if (pos[0] > 190 && pos[0] < 210 && pos[1] > 410 && pos[1] < 430) {
+			saveGameSound.play();
+			
 			controller.saveGamePress();
 
+			Platform.runLater(() -> {
+				try {
+					controller.save();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			});
+			
 			loadGame.setVisible(false);
 			loadGame_3d.setFill(Color.LIGHTPINK);
 
@@ -387,8 +396,16 @@ public class TamaView extends Application implements Observer {
 			
 
 		} else if (pos[0] > 280 && pos[0] < 300 && pos[1] > 410 && pos[1] < 430) {
-			
+			loadGameSound.play();
 			controller.loadGamePress();
+			
+			try {
+				model = controller.loadSave();
+				controller.updateModel(model);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			updateUIAttributes();
 
 			saveGame.setVisible(false);
 			saveGame_3d.setFill(Color.LIGHTPINK);

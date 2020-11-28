@@ -9,7 +9,8 @@ public class SoundPlayer {
 	public SoundPlayer(String musicFile) {
 		
 		sound = new Media(new File(musicFile).toURI().toString());
-		
+		mediaPlayer = new MediaPlayer(sound);
+		mediaPlayer.play();
 	}
 	
 	public void play() {
