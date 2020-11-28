@@ -24,10 +24,12 @@ public class TamaView extends Application implements Observer {
 
 	private TamaController controller;
 	private TamaModel model;
+	
+	private Observable o;
 
 	Pane rootPane = new Pane();
 	private Pane window;
-	private Pane sprite;
+	private Pane screenPane;
 	private float height = 500;
 	private float width = 500;
 
@@ -73,10 +75,12 @@ public class TamaView extends Application implements Observer {
 	private Text resetLabel = new Text("RESET");
 
 	public TamaView() {
-		this.window = new Pane();
 		this.model = new TamaModel();
+		model.plusObserver(this);
 		this.controller = new TamaController(this.model);
-		model.addObserver(this);
+
+		this.window = new Pane();
+		
 
 	}
 
@@ -89,7 +93,24 @@ public class TamaView extends Application implements Observer {
 	@Override
 	public void start(Stage stage) {
 		this.stage = stage;
+		
+		
+		// TODO reset observable
+		
 		// If a save exists, load the save on startup
+
+//		new Thread(() -> {
+//			try {
+//				TamaModel tmp;
+//				tmp = controller.loadSave();
+//				if (tmp != null) {
+//					model = tmp;
+//					controller.updateModel(tmp);
+//				}
+//			} catch (IOException e) {
+//				e.printStackTrace();
+//			}
+//		}).start();
 
 		stage.setTitle("Tamagotchi"); // Name the stage
 
@@ -243,12 +264,17 @@ public class TamaView extends Application implements Observer {
 		window.getChildren().add(resetLabel);
 
 		// Sprite
-		sprite = new Sprite();
-		sprite.setLayoutX(200);
-		sprite.setLayoutY(150);
-		sprite.resize(50, 50);
+		
+		// Here's the idea: We'll have a wildcard pane that displays the screen,
+		//					the update function changes the pane, and the model chooses
+		//					the correct pane based on the gamestate. Can you do this
+		//					in javafx? who's to say for sure
+		
 
-		rootPane.getChildren().addAll(window, sprite);
+		screenPane = model.getCurrentPane();
+		
+
+		rootPane.getChildren().addAll(window, screenPane);
 
 		scene.setOnMousePressed(event -> {
 			int[] pos = new int[] { (int) event.getSceneX(), (int) event.getSceneY() };

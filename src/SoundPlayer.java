@@ -14,7 +14,6 @@ public class SoundPlayer {
 	}
 	
 	public void play() {
-		System.out.println("Beep");
 		mediaPlayer = new MediaPlayer(sound);
 		mediaPlayer.play();
 	}

@@ -1,6 +1,9 @@
 import java.io.*;
 import java.util.Observable;
+import java.util.Observer;
 import java.util.Random;
+
+import javafx.scene.layout.Pane;
 
 /*
  * Stat Notes: 
@@ -33,6 +36,11 @@ import java.util.Random;
  * included in core mechanics, so inclusion of this stat is up for debate. 
  */
 public class TamaModel extends Observable implements Serializable{
+	
+	// Game state
+	private GameState state;
+	private Pane screenPane;
+	
 	//Core stats
 	private float age; 
 	private float health; 
@@ -46,6 +54,10 @@ public class TamaModel extends Observable implements Serializable{
 	//Statuses 
 	private boolean healthy;
 	private boolean alive;
+	
+	// screenPanes
+	private MenuPane menuPane = new MenuPane(this);
+	private Sprite spritePane = new Sprite();
 	
 	//Limits/Standards
 	private static final int AGE_PER_SECOND = 10; 
@@ -65,6 +77,10 @@ public class TamaModel extends Observable implements Serializable{
 
 	
 	public TamaModel() {
+		
+		System.out.println("New model");
+		state = new GameState();
+		
 		this.age = 0;
 		this.health = MAX_HEALTH;
 		this.weight = MAX_WEIGHT;
@@ -74,15 +90,19 @@ public class TamaModel extends Observable implements Serializable{
 		
 		this.healthy = true;
 		this.alive = true;
-		attributes = new Attributes(this);
+		attributes = new Attributes();
 		
-		try {
-			save();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
+//		try {
+//			save();
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//		
+	}
+	
+	public GameState getState() {
+		return state;
 	}
 	
 	public void resetPet() {
@@ -157,7 +177,16 @@ public class TamaModel extends Observable implements Serializable{
 	 * @throws IOException
 	 */
 	public void save() throws IOException {
-		attributes.updateSave();
+		
+		attributes.setAge(age);
+		attributes.setAlive(alive);
+		attributes.setHealth(health);
+		attributes.setHappiness(happiness);
+		attributes.setWeight(weight);
+		attributes.setHealthy(healthy);
+		attributes.setSecondsPassed(secondsPassed);
+
+		
 		attributes.makeSave();
 
 	}
@@ -222,4 +251,30 @@ public class TamaModel extends Observable implements Serializable{
 	
 	public boolean isAlive() {return alive;}
 	private void die() {alive = false;}
+
+	public Pane getCurrentPane() {
+		if (state.getState().equals("sprite")) {
+			screenPane = spritePane;
+			screenPane.setLayoutX(200);
+			screenPane.setLayoutY(150);
+			screenPane.resize(50, 50);
+		} else if (state.getState().equals("menu")) {
+			screenPane = menuPane;
+			screenPane.setLayoutX(190);
+			screenPane.setLayoutY(160);
+			screenPane.resize(50, 50);
+		}
+		return screenPane;
+	}
+	
+	public void plusObserver(Observer o) {
+		addObserver(o);
+
+		System.out.println(countObservers());
+	}
+	
+	public void pressed(String button) {
+		setChanged();
+		notifyObservers(button);
+	}
 }

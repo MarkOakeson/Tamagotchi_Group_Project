@@ -6,8 +6,7 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
 public class Attributes implements Serializable{
-	TamaModel model;
-
+	
 	// Core stats
 	private float age;
 	private float health;
@@ -22,16 +21,11 @@ public class Attributes implements Serializable{
 	private boolean healthy;
 	private boolean alive;
 
-	// Limits/Standards
-	private static final int MAX_HEALTH = 100;
-	private static final int MAX_WEIGHT = 100;
-	private static final int MAX_HAPPINESS = 100;
 
 	private File saveFile = new File("saveState.sav");
 
 	// Init with newgame stats
-	public Attributes(TamaModel model) {
-		this.model = model;
+	public Attributes() {
 //		this.age = 0;
 //		this.health = MAX_HEALTH;
 //		this.weight = MAX_WEIGHT;
@@ -41,16 +35,6 @@ public class Attributes implements Serializable{
 //		
 //		this.healthy = true;
 //		this.alive = true;
-	}
-
-	public void updateSave() {
-		this.age = model.getAge();
-		this.health = model.getHealth();
-		this.weight = model.getWeight();
-		this.happiness = model.getHappiness();
-		this.secondsPassed = model.getSecondsPassed();
-		this.healthy = model.isHealthy();
-		this.alive = model.isAlive();
 	}
 
 	public void makeSave() throws IOException {
@@ -72,28 +56,56 @@ public class Attributes implements Serializable{
 		return age;
 	}
 
-	public int getHappiness() {
-		return happiness;
-	}
-
-	public float getWeight() {
-		return weight;
+	public void setAge(float age) {
+		this.age = age;
 	}
 
 	public float getHealth() {
 		return health;
 	}
 
+	public void setHealth(float health) {
+		this.health = health;
+	}
+
+	public float getWeight() {
+		return weight;
+	}
+
+	public void setWeight(float weight) {
+		this.weight = weight;
+	}
+
+	public int getHappiness() {
+		return happiness;
+	}
+
+	public void setHappiness(int happiness) {
+		this.happiness = happiness;
+	}
+
+	public int getSecondsPassed() {
+		return secondsPassed;
+	}
+
+	public void setSecondsPassed(int secondsPassed) {
+		this.secondsPassed = secondsPassed;
+	}
+
 	public boolean isHealthy() {
 		return healthy;
+	}
+
+	public void setHealthy(boolean healthy) {
+		this.healthy = healthy;
 	}
 
 	public boolean isAlive() {
 		return alive;
 	}
 
-	public int getSecondsPassed() {
-		return secondsPassed;
+	public void setAlive(boolean alive) {
+		this.alive = alive;
 	}
 	
 
