@@ -98,6 +98,7 @@ public class TamaView extends Application implements Observer {
 		// TODO reset observable
 		
 		// If a save exists, load the save on startup
+
 //		new Thread(() -> {
 //			try {
 //				TamaModel tmp;
@@ -302,7 +303,12 @@ public class TamaView extends Application implements Observer {
 					pressSave();
 					break;
 				case L:
-					pressLoad();
+					try {
+						pressLoad();
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 					break;
 				}
 			}
@@ -434,16 +440,11 @@ public class TamaView extends Application implements Observer {
 
 	}
 
-	protected void pressLoad() {
+	protected void pressLoad() throws IOException {
 		loadGameSound.play();
 		controller.loadGamePress();
 
-		try {
-			model = controller.loadSave();
-			controller.updateModel(model);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		
 		updateUIAttributes();
 
 		saveGame.setVisible(false);
@@ -507,7 +508,12 @@ public class TamaView extends Application implements Observer {
 			pressSave();
 
 		} else if (pos[0] > 280 && pos[0] < 300 && pos[1] > 410 && pos[1] < 430) {
-			pressLoad();
+			try {
+				pressLoad();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 
 		} else if (pos[0] > 395 && pos[0] < 405 && pos[1] > 145 && pos[1] < 155) {
 			pressReset();
@@ -529,7 +535,7 @@ public class TamaView extends Application implements Observer {
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
-				//System.out.println(Integer.toString(controller.getSecondsPassed()));
+				System.out.println(Integer.toString(controller.getSecondsPassed()));
 			}
 		}).start();
 	}
