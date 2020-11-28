@@ -61,6 +61,7 @@ public class TamaModel extends Observable implements Serializable{
 
 	//Save file
 	private File saveFile = new File("saveState.sav");
+	private Attributes attributes;
 
 	
 	public TamaModel() {
@@ -73,6 +74,7 @@ public class TamaModel extends Observable implements Serializable{
 		
 		this.healthy = true;
 		this.alive = true;
+		attributes = new Attributes(this);
 		
 		try {
 			save();
@@ -155,13 +157,8 @@ public class TamaModel extends Observable implements Serializable{
 	 * @throws IOException
 	 */
 	public void save() throws IOException {
-		if (!saveFile.exists()){
-			saveFile.createNewFile();
-		}
-		FileOutputStream saveFileStream = new FileOutputStream("saveState.sav");
-		ObjectOutputStream save = new ObjectOutputStream(saveFileStream);
-		save.writeObject(this);
-		System.out.println("Save written");
+		attributes.updateSave();
+		attributes.makeSave();
 
 	}
 
@@ -173,23 +170,32 @@ public class TamaModel extends Observable implements Serializable{
 	 * @return - null if save not found. Otherwise, returns updated model
 	 * @throws IOException
 	 */
-	public TamaModel load() throws IOException {
+	public void load() throws IOException {
 		if (!saveFile.exists()){
-			return null;
+			save();
 		}
+		
 		FileInputStream saveFileStream = new FileInputStream("saveState.sav");
 		ObjectInputStream load = new ObjectInputStream(saveFileStream);
 		try {
 			System.out.println("Save loaded");
-			TamaModel updated =(TamaModel) load.readObject();
+			Attributes updated =(Attributes) load.readObject();
+			age = updated.getAge();
+			happiness = updated.getHappiness();
+			health = updated.getHealth();
+			secondsPassed = updated.getSecondsPassed();
+			alive = updated.isAlive();
+			weight = updated.getWeight();
+			healthy = updated.isHealthy();
+			
 			System.out.println(updated.getSecondsPassed() + " seconds passed");
-			return updated;
+			return;
 		}catch (ClassNotFoundException e){
 			e.printStackTrace();
 		}
 
 		System.out.println("LOAD RETURNED NULL");
-		return null;
+		return;
 	}
 
 	// For testing purposes

@@ -37,8 +37,8 @@ public class TamaController {
 	 * @return - null if save not found. Otherwise, returns updated model
 	 * @throws IOException
 	 */
-	public TamaModel loadSave() throws IOException {
-		return model.load();
+	public void loadSave() throws IOException {
+		model.load();
 	}
 
 	/**
@@ -133,7 +133,8 @@ public class TamaController {
 		
 	}
 	
-	public void loadGamePress() {
+	public void loadGamePress() throws IOException {
+		model.load();
 		System.out.println("Loaded Game");
 		
 	}
