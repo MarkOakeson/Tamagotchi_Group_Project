@@ -24,6 +24,8 @@ public class TamaView extends Application implements Observer {
 
 	private TamaController controller;
 	private TamaModel model;
+	
+	private Observable o;
 
 	Pane rootPane = new Pane();
 	private Pane window;
@@ -73,10 +75,12 @@ public class TamaView extends Application implements Observer {
 	private Text resetLabel = new Text("RESET");
 
 	public TamaView() {
-		this.window = new Pane();
 		this.model = new TamaModel();
+		model.plusObserver(this);
 		this.controller = new TamaController(this.model);
-		model.addObserver(this);
+
+		this.window = new Pane();
+		
 
 	}
 
@@ -89,19 +93,23 @@ public class TamaView extends Application implements Observer {
 	@Override
 	public void start(Stage stage) {
 		this.stage = stage;
+		
+		
+		// TODO reset observable
+		
 		// If a save exists, load the save on startup
-		new Thread(() -> {
-			try {
-				TamaModel tmp;
-				tmp = controller.loadSave();
-				if (tmp != null) {
-					model = tmp;
-					controller.updateModel(tmp);
-				}
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}).start();
+//		new Thread(() -> {
+//			try {
+//				TamaModel tmp;
+//				tmp = controller.loadSave();
+//				if (tmp != null) {
+//					model = tmp;
+//					controller.updateModel(tmp);
+//				}
+//			} catch (IOException e) {
+//				e.printStackTrace();
+//			}
+//		}).start();
 
 		stage.setTitle("Tamagotchi"); // Name the stage
 
@@ -521,7 +529,7 @@ public class TamaView extends Application implements Observer {
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
-				System.out.println(Integer.toString(controller.getSecondsPassed()));
+				//System.out.println(Integer.toString(controller.getSecondsPassed()));
 			}
 		}).start();
 	}
@@ -538,6 +546,12 @@ public class TamaView extends Application implements Observer {
 
 	@Override
 	public void update(Observable o, Object arg) {
-
+		if (arg == null)
+			return;
+		
+		rootPane.getChildren().remove(screenPane);
+		screenPane = model.getCurrentPane();
+		rootPane.getChildren().add(screenPane);
+		
 	}
 }

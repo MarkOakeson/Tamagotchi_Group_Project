@@ -1,5 +1,6 @@
 import java.io.*;
 import java.util.Observable;
+import java.util.Observer;
 import java.util.Random;
 
 import javafx.scene.layout.Pane;
@@ -54,6 +55,10 @@ public class TamaModel extends Observable implements Serializable{
 	private boolean healthy;
 	private boolean alive;
 	
+	// screenPanes
+	private MenuPane menuPane = new MenuPane(this);
+	private Sprite spritePane = new Sprite();
+	
 	//Limits/Standards
 	private static final int AGE_PER_SECOND = 10; 
 	private static final int MAX_HEALTH = 100;
@@ -71,6 +76,8 @@ public class TamaModel extends Observable implements Serializable{
 
 	
 	public TamaModel() {
+		
+		System.out.println("New model");
 		state = new GameState();
 		
 		this.age = 0;
@@ -83,13 +90,13 @@ public class TamaModel extends Observable implements Serializable{
 		this.healthy = true;
 		this.alive = true;
 		
-		try {
-			save();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
+//		try {
+//			save();
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//		
 	}
 	
 	public GameState getState() {
@@ -232,13 +239,27 @@ public class TamaModel extends Observable implements Serializable{
 
 	public Pane getCurrentPane() {
 		if (state.getState().equals("sprite")) {
-			screenPane = new Sprite();
+			screenPane = spritePane;
 			screenPane.setLayoutX(200);
 			screenPane.setLayoutY(150);
 			screenPane.resize(50, 50);
 		} else if (state.getState().equals("menu")) {
-			screenPane = new MenuPane();
+			screenPane = menuPane;
+			screenPane.setLayoutX(190);
+			screenPane.setLayoutY(160);
+			screenPane.resize(50, 50);
 		}
 		return screenPane;
+	}
+	
+	public void plusObserver(Observer o) {
+		addObserver(o);
+
+		System.out.println(countObservers());
+	}
+	
+	public void pressed(String button) {
+		setChanged();
+		notifyObservers(button);
 	}
 }
