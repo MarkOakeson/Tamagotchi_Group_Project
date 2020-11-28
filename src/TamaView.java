@@ -6,10 +6,8 @@ import javafx.animation.PauseTransition;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
@@ -60,13 +58,16 @@ public class TamaView extends Application implements Observer {
 
 	private Ellipse saveGame_3d = new Ellipse();
 	private Ellipse saveGame = new Ellipse();
-	private Text saveLabel = new Text("LOAD");
+	private Text saveLabel = new Text("LOAD");				// Yes these are backwards, I'll get to it later.
 
 	private Ellipse loadGame_3d = new Ellipse();
 	private Ellipse loadGame = new Ellipse();
+	private Text loadLabel = new Text("SAVE");				// It was easier to just rename here.
 	
-	private Text loadLabel = new Text("SAVE");
-
+	private Ellipse resetGame_3d = new Ellipse();
+	private Ellipse resetGame = new Ellipse();
+	private Text resetLabel = new Text("RESET");
+	
 	public TamaView() {
 		this.window = new Pane();
 		this.model = new TamaModel();
@@ -121,16 +122,16 @@ public class TamaView extends Application implements Observer {
 		// Draw Screen
 
 		screenInset.setX(132);
-		screenInset.setY(115);
+		screenInset.setY(95);
 		screenInset.setWidth(220);
-		screenInset.setHeight(185);
+		screenInset.setHeight(205);
 		screenInset.setFill(Color.DARKSLATEGREY);
 		window.getChildren().add(screenInset);
 
 		screen.setX(140);
-		screen.setY(120);
+		screen.setY(100);
 		screen.setWidth(210);
-		screen.setHeight(180);
+		screen.setHeight(200);
 		screen.setFill(Color.BISQUE);
 		window.getChildren().add(screen);
 
@@ -221,6 +222,26 @@ public class TamaView extends Application implements Observer {
 		saveLabel.setY(450);
 		saveLabel.setFill(Color.DARKSLATEGRAY);
 		window.getChildren().add(saveLabel);
+		
+		// reset game
+		resetGame_3d.setFill(Color.DARKSLATEGREY);
+		resetGame_3d.setCenterX(401);
+		resetGame_3d.setCenterY(150);
+		resetGame_3d.setRadiusX(5);
+		resetGame_3d.setRadiusY(5);
+		window.getChildren().add(resetGame_3d);
+
+		resetGame.setFill(Color.LIGHTPINK);
+		resetGame.setCenterX(400);
+		resetGame.setCenterY(150);
+		resetGame.setRadiusX(5);
+		resetGame.setRadiusY(5);
+		window.getChildren().add(resetGame);
+
+		resetLabel.setX(390);
+		resetLabel.setY(175);
+		resetLabel.setFill(Color.DARKSLATEGRAY);
+		window.getChildren().add(resetLabel);
 
 		// Sprite
 		sprite = new Sprite();
@@ -415,6 +436,21 @@ public class TamaView extends Application implements Observer {
 
 				saveGame_3d.setFill(Color.DARKSLATEGREY);
 				saveGame.setVisible(true);
+
+			});
+			pause.play();
+		} else if (pos[0] > 395 && pos[0] < 405 && pos[1] > 145 && pos[1] < 155) {
+			//resetSound.play();
+			controller.resetPet();
+
+			resetGame.setVisible(false);
+			resetGame_3d.setFill(Color.LIGHTPINK);
+			
+			PauseTransition pause = new PauseTransition(Duration.millis(200));
+			pause.setOnFinished(e -> {
+
+				resetGame_3d.setFill(Color.DARKSLATEGREY);
+				resetGame.setVisible(true);
 
 			});
 			pause.play();
