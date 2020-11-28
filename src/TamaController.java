@@ -4,9 +4,11 @@ import javafx.event.EventHandler;
 
 public class TamaController {
 	private TamaModel model;
+	private GameState state;
 
 	public TamaController(TamaModel model) {
 		this.model = model;
+		state = model.getState();
 	}
 
 
@@ -109,39 +111,39 @@ public class TamaController {
 
 
 	public void button1Press() {
-		System.out.println("Pressed button 1");
+		model.pressed("1");
 		
 	}
 
 
 
 	public void button2Press() {
-		System.out.println("Pressed button 2");
+		model.pressed("2");
 		
 	}
 
 
 
 	public void button3Press() {
-		System.out.println("Pressed button 3");
+		model.pressed("3");
 		
 	}
 
 
 	public void saveGamePress() {
-		System.out.println("Saved Game");
+		model.pressed("S");
 		
 	}
 	
 	public void loadGamePress() {
-		System.out.println("Loaded Game");
+		model.pressed("L");
 		
 	}
 
 
 	public void resetPet() {
 		model.resetPet();
-		System.out.println("Reset Game");
+		model.pressed("R");
 	}
 	
 }
