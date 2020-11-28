@@ -1,3 +1,5 @@
+import java.io.IOException;
+import java.io.Serializable;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -11,7 +13,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
 
-public class MenuPane extends Pane implements Observer {
+public class MenuPane extends Pane implements Observer, Serializable{
 
 	private Text newGame;
 	private Text loadGame;
@@ -62,6 +64,16 @@ public class MenuPane extends Pane implements Observer {
 		} else if (arg.equals("1")) {
 			model.getState().changeState("sprite");
 			model.pressed("updateScreenPane");
+			if (selected.equals(newGame)) {
+				model.resetPet();
+			} else {
+				try {
+					model.load();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
 		}
 	}
 
