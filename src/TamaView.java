@@ -33,7 +33,7 @@ public class TamaView extends Application implements Observer {
 	private SoundPlayer buttonPress = new SoundPlayer("./res/sounds/buttonPress.wav");
 	private SoundPlayer saveGameSound = new SoundPlayer("./res/sounds/saveGame.wav");
 	private SoundPlayer loadGameSound = new SoundPlayer("./res/sounds/loadGame.wav");
-	
+	private SoundPlayer resetSound = new SoundPlayer("./res/sounds/resetGame.wav");
 	
 	// Attributes for testing purposes
 	private TextField clock;
@@ -440,7 +440,7 @@ public class TamaView extends Application implements Observer {
 			});
 			pause.play();
 		} else if (pos[0] > 395 && pos[0] < 405 && pos[1] > 145 && pos[1] < 155) {
-			//resetSound.play();
+			resetSound.play();
 			controller.resetPet();
 
 			resetGame.setVisible(false);
