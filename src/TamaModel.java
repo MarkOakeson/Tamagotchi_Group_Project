@@ -74,6 +74,13 @@ public class TamaModel extends Observable implements Serializable{
 		this.healthy = true;
 		this.alive = true;
 		
+		try {
+			save();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 	}
 	
 	public void resetPet() {
