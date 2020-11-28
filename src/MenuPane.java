@@ -50,7 +50,7 @@ public class MenuPane extends Pane implements Observer, Serializable{
 
 	@Override
 	public void update(Observable o, Object arg) {
-		if (arg == null) {
+		if (arg == null || !model.getState().getState().equals("menu")) {
 			return;
 		}
 		if (arg.equals("2")) {
@@ -62,7 +62,9 @@ public class MenuPane extends Pane implements Observer, Serializable{
 				selected = newGame;
 			}
 		} else if (arg.equals("1")) {
-			model.getState().changeState("sprite");
+			if (model.getState().getState().equals("menu")) {
+				model.getState().changeState("sprite");
+			}
 			model.pressed("updateScreenPane");
 			if (selected.equals(newGame)) {
 				model.resetPet();

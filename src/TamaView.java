@@ -552,6 +552,12 @@ public class TamaView extends Application implements Observer {
 
 	@Override
 	public void update(Observable o, Object arg) {
-
+		if (arg == null)
+			return;
+		
+		rootPane.getChildren().remove(screenPane);
+		screenPane = model.getCurrentPane();
+		rootPane.getChildren().add(screenPane);
+		
 	}
 }
