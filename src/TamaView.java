@@ -357,7 +357,7 @@ public class TamaView extends Application implements Observer {
 		Platform.runLater(()->{
 			clock.setText(Integer.toString(controller.getSecondsPassed()));
 			age.setText(Float.toString(controller.getAge()));
-			health.setText(Float.toString(controller.getAge()));
+			health.setText(Float.toString(controller.getHealth()));
 			weight.setText(Float.toString(controller.getWeight()));
 			happiness.setText(Float.toString(controller.getHappiness()));
 		});
