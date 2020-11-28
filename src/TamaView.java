@@ -32,9 +32,9 @@ public class TamaView extends Application implements Observer {
 	private float width = 500;
 
 	// Sounds
-	private SoundPlayer buttonPress = new SoundPlayer("./res/buttonPress.wav");
-	private SoundPlayer saveGameSound = new SoundPlayer("./res/saveGame.wav");
-	private SoundPlayer loadGameSound = new SoundPlayer("./res/loadGame.wav");
+	private SoundPlayer buttonPress = new SoundPlayer("./res/sounds/buttonPress.wav");
+	private SoundPlayer saveGameSound = new SoundPlayer("./res/sounds/saveGame.wav");
+	private SoundPlayer loadGameSound = new SoundPlayer("./res/sounds/loadGame.wav");
 	
 	
 	// Attributes for testing purposes
