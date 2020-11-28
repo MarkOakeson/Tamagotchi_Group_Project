@@ -126,5 +126,16 @@ public class TamaController {
 		System.out.println("Pressed button 3");
 		
 	}
+
+
+	public void saveGamePress() {
+		System.out.println("Saved Game");
+		
+	}
+	
+	public void loadGamePress() {
+		System.out.println("Loaded Game");
+		
+	}
 	
 }
