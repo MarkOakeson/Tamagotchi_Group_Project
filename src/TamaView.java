@@ -5,9 +5,11 @@ import java.util.Observer;
 import javafx.animation.PauseTransition;
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
@@ -34,7 +36,7 @@ public class TamaView extends Application implements Observer {
 	private SoundPlayer saveGameSound = new SoundPlayer("./res/sounds/saveGame.wav");
 	private SoundPlayer loadGameSound = new SoundPlayer("./res/sounds/loadGame.wav");
 	private SoundPlayer resetSound = new SoundPlayer("./res/sounds/resetGame.wav");
-	
+
 	// Attributes for testing purposes
 	private TextField clock;
 	private TextField age;
@@ -50,7 +52,7 @@ public class TamaView extends Application implements Observer {
 	private Rectangle screenInset = new Rectangle();
 	private Rectangle menuArea = new Rectangle();
 	private Rectangle screen = new Rectangle();
-	
+
 	private Ellipse button1_3d = new Ellipse();
 	private Ellipse button1 = new Ellipse();
 	private Ellipse button2_3d = new Ellipse();
@@ -60,16 +62,16 @@ public class TamaView extends Application implements Observer {
 
 	private Ellipse saveGame_3d = new Ellipse();
 	private Ellipse saveGame = new Ellipse();
-	private Text saveLabel = new Text("LOAD");				// Yes these are backwards, I'll get to it later.
+	private Text saveLabel = new Text("LOAD"); // Yes these are backwards, I'll get to it later.
 
 	private Ellipse loadGame_3d = new Ellipse();
 	private Ellipse loadGame = new Ellipse();
-	private Text loadLabel = new Text("SAVE");				// It was easier to just rename here.
-	
+	private Text loadLabel = new Text("SAVE"); // It was easier to just rename here.
+
 	private Ellipse resetGame_3d = new Ellipse();
 	private Ellipse resetGame = new Ellipse();
 	private Text resetLabel = new Text("RESET");
-	
+
 	public TamaView() {
 		this.window = new Pane();
 		this.model = new TamaModel();
@@ -143,7 +145,7 @@ public class TamaView extends Application implements Observer {
 		screen.setHeight(120);
 		screen.setFill(Color.BEIGE);
 		window.getChildren().add(screen);
-		
+
 		// Draw buttons
 
 		// Button 1
@@ -231,7 +233,7 @@ public class TamaView extends Application implements Observer {
 		saveLabel.setY(450);
 		saveLabel.setFill(Color.DARKSLATEGRAY);
 		window.getChildren().add(saveLabel);
-		
+
 		// reset game
 		resetGame_3d.setFill(Color.DARKSLATEGREY);
 		resetGame_3d.setCenterX(401);
@@ -263,6 +265,34 @@ public class TamaView extends Application implements Observer {
 		scene.setOnMousePressed(event -> {
 			int[] pos = new int[] { (int) event.getSceneX(), (int) event.getSceneY() };
 			handlePress(pos);
+		});
+
+		scene.setOnKeyReleased(new EventHandler<KeyEvent>() {
+			@Override
+			public void handle(KeyEvent event) {
+				switch (event.getCode()) {
+				case DIGIT1:
+					press1();
+					break;
+
+				case DIGIT2:
+					press2();
+					break;
+
+				case DIGIT3:
+					press3();
+					break;
+				case R:
+					pressReset();
+					break;
+				case S:
+					pressSave();
+					break;
+				case L:
+					pressLoad();
+					break;
+				}
+			}
 		});
 
 		VBox stacker = new VBox();
@@ -300,34 +330,147 @@ public class TamaView extends Application implements Observer {
 		stacker.getChildren().add(bar2);
 		window.getChildren().add(stacker);
 
-//		loadGame.setOnAction(event -> {
-//
-//			try {
-//				model = controller.loadSave();
-//				controller.updateModel(model);
-//			} catch (IOException e) {
-//				e.printStackTrace();
-//			}
-//			updateUIAttributes();
-//
-//		});
-
-//		saveGame.setOnAction(event -> {
-//			Platform.runLater(() -> {
-//				try {
-//					controller.save();
-//				} catch (IOException e) {
-//					e.printStackTrace();
-//				}
-//			});
-//
-//		});
-
 		stage.setScene(scene);
 		stage.show(); // Show the stage
 
 		// Sim for testing purposes
 		runSim();
+
+	}
+
+	protected void press1() {
+		// Play a sound
+		buttonPress.play();
+
+		// Call controller, tell it button 1 pressed
+		controller.button1Press();
+
+		button1.setVisible(false);
+		button1_3d.setFill(Color.LIGHTPINK);
+
+		PauseTransition pause = new PauseTransition(Duration.millis(200));
+		pause.setOnFinished(e -> {
+
+			button1_3d.setFill(Color.DARKSLATEGREY);
+			button1.setVisible(true);
+
+		});
+
+		pause.play();
+
+	}
+
+	protected void press2() {
+		// Play a sound
+		buttonPress.play();
+
+		// Call controller, tell it button 2 pressed
+		controller.button2Press();
+
+		button2.setVisible(false);
+		button2_3d.setFill(Color.LIGHTPINK);
+
+		PauseTransition pause = new PauseTransition(Duration.millis(200));
+		pause.setOnFinished(e -> {
+
+			button2_3d.setFill(Color.DARKSLATEGREY);
+			button2.setVisible(true);
+
+		});
+		pause.play();
+
+	}
+
+	protected void press3() {
+
+		// Play a sound
+		buttonPress.play();
+
+		// Call controller, tell it button 3 pressed
+		controller.button3Press();
+
+		button3.setVisible(false);
+		button3_3d.setFill(Color.LIGHTPINK);
+
+		PauseTransition pause = new PauseTransition(Duration.millis(200));
+		pause.setOnFinished(e -> {
+
+			button3_3d.setFill(Color.DARKSLATEGREY);
+			button3.setVisible(true);
+
+		});
+		pause.play();
+
+	}
+
+	protected void pressReset() {
+		resetSound.play();
+		controller.resetPet();
+
+		resetGame.setVisible(false);
+		resetGame_3d.setFill(Color.LIGHTPINK);
+
+		PauseTransition pause = new PauseTransition(Duration.millis(200));
+		pause.setOnFinished(e -> {
+
+			resetGame_3d.setFill(Color.DARKSLATEGREY);
+			resetGame.setVisible(true);
+
+		});
+		pause.play();
+
+	}
+
+	protected void pressLoad() {
+		loadGameSound.play();
+		controller.loadGamePress();
+
+		try {
+			model = controller.loadSave();
+			controller.updateModel(model);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		updateUIAttributes();
+
+		saveGame.setVisible(false);
+		saveGame_3d.setFill(Color.LIGHTPINK);
+
+		PauseTransition pause = new PauseTransition(Duration.millis(200));
+		pause.setOnFinished(e -> {
+
+			saveGame_3d.setFill(Color.DARKSLATEGREY);
+			saveGame.setVisible(true);
+
+		});
+		pause.play();
+
+	}
+
+	protected void pressSave() {
+		saveGameSound.play();
+
+		controller.saveGamePress();
+
+		Platform.runLater(() -> {
+			try {
+				controller.save();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		});
+
+		loadGame.setVisible(false);
+		loadGame_3d.setFill(Color.LIGHTPINK);
+
+		PauseTransition pause = new PauseTransition(Duration.millis(200));
+		pause.setOnFinished(e -> {
+
+			loadGame_3d.setFill(Color.DARKSLATEGREY);
+			loadGame.setVisible(true);
+
+		});
+		pause.play();
 
 	}
 
@@ -339,130 +482,22 @@ public class TamaView extends Application implements Observer {
 	 */
 	private void handlePress(int[] pos) {
 		if (pos[0] > 130 && pos[0] < 170 && pos[1] > 330 && pos[1] < 370) {
-
-			// Play a sound
-			buttonPress.play();
-
-			// Call controller, tell it button 1 pressed
-			controller.button1Press();
-
-			button1.setVisible(false);
-			button1_3d.setFill(Color.LIGHTPINK);
-
-			PauseTransition pause = new PauseTransition(Duration.millis(200));
-			pause.setOnFinished(e -> {
-
-				button1_3d.setFill(Color.DARKSLATEGREY);
-				button1.setVisible(true);
-
-			});
-
-			pause.play();
+			press1();
 
 		} else if (pos[0] > 220 && pos[0] < 260 && pos[1] > 350 && pos[1] < 390) {
-
-			// Play a sound
-			buttonPress.play();
-
-			// Call controller, tell it button 2 pressed
-			controller.button2Press();
-
-			button2.setVisible(false);
-			button2_3d.setFill(Color.LIGHTPINK);
-
-			PauseTransition pause = new PauseTransition(Duration.millis(200));
-			pause.setOnFinished(e -> {
-
-				button2_3d.setFill(Color.DARKSLATEGREY);
-				button2.setVisible(true);
-
-			});
-			pause.play();
+			press2();
 
 		} else if (pos[0] > 310 && pos[0] < 350 && pos[1] > 330 && pos[1] < 370) {
-
-			// Play a sound
-			buttonPress.play();
-
-			// Call controller, tell it button 3 pressed
-			controller.button3Press();
-
-			button3.setVisible(false);
-			button3_3d.setFill(Color.LIGHTPINK);
-
-			PauseTransition pause = new PauseTransition(Duration.millis(200));
-			pause.setOnFinished(e -> {
-
-				button3_3d.setFill(Color.DARKSLATEGREY);
-				button3.setVisible(true);
-
-			});
-			pause.play();
+			press3();
 
 		} else if (pos[0] > 190 && pos[0] < 210 && pos[1] > 410 && pos[1] < 430) {
-			saveGameSound.play();
-			
-			controller.saveGamePress();
-
-			Platform.runLater(() -> {
-				try {
-					controller.save();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			});
-			
-			loadGame.setVisible(false);
-			loadGame_3d.setFill(Color.LIGHTPINK);
-
-			PauseTransition pause = new PauseTransition(Duration.millis(200));
-			pause.setOnFinished(e -> {
-
-				loadGame_3d.setFill(Color.DARKSLATEGREY);
-				loadGame.setVisible(true);
-
-			});
-			pause.play();
-			
+			pressSave();
 
 		} else if (pos[0] > 280 && pos[0] < 300 && pos[1] > 410 && pos[1] < 430) {
-			loadGameSound.play();
-			controller.loadGamePress();
-			
-			try {
-				model = controller.loadSave();
-				controller.updateModel(model);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-			updateUIAttributes();
+			pressLoad();
 
-			saveGame.setVisible(false);
-			saveGame_3d.setFill(Color.LIGHTPINK);
-
-			PauseTransition pause = new PauseTransition(Duration.millis(200));
-			pause.setOnFinished(e -> {
-
-				saveGame_3d.setFill(Color.DARKSLATEGREY);
-				saveGame.setVisible(true);
-
-			});
-			pause.play();
 		} else if (pos[0] > 395 && pos[0] < 405 && pos[1] > 145 && pos[1] < 155) {
-			resetSound.play();
-			controller.resetPet();
-
-			resetGame.setVisible(false);
-			resetGame_3d.setFill(Color.LIGHTPINK);
-			
-			PauseTransition pause = new PauseTransition(Duration.millis(200));
-			pause.setOnFinished(e -> {
-
-				resetGame_3d.setFill(Color.DARKSLATEGREY);
-				resetGame.setVisible(true);
-
-			});
-			pause.play();
+			pressReset();
 		}
 
 	}
