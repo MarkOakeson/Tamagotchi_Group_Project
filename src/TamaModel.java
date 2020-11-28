@@ -33,6 +33,10 @@ import java.util.Random;
  * included in core mechanics, so inclusion of this stat is up for debate. 
  */
 public class TamaModel extends Observable implements Serializable{
+	
+	// Game state
+	private GameState state;
+	
 	//Core stats
 	private float age; 
 	private float health; 
@@ -64,6 +68,8 @@ public class TamaModel extends Observable implements Serializable{
 
 	
 	public TamaModel() {
+		state = new GameState();
+		
 		this.age = 0;
 		this.health = MAX_HEALTH;
 		this.weight = MAX_WEIGHT;
@@ -81,6 +87,10 @@ public class TamaModel extends Observable implements Serializable{
 			e.printStackTrace();
 		}
 		
+	}
+	
+	public GameState getState() {
+		return state;
 	}
 	
 	public void resetPet() {

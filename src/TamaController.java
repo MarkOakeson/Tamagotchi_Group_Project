@@ -4,9 +4,11 @@ import javafx.event.EventHandler;
 
 public class TamaController {
 	private TamaModel model;
+	private GameState state;
 
 	public TamaController(TamaModel model) {
 		this.model = model;
+		state = model.getState();
 	}
 
 

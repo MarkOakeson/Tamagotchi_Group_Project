@@ -1,13 +1,18 @@
 import java.io.IOException;
+
+import javafx.geometry.Rectangle2D;
 import java.util.Observable;
 import java.util.Observer;
 
 import javafx.animation.PauseTransition;
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
@@ -70,11 +75,18 @@ public class TamaView extends Application implements Observer {
 	private Ellipse resetGame = new Ellipse();
 	private Text resetLabel = new Text("RESET");
 	
+	private GameState state;
+	
+    
+    
+	
 	public TamaView() {
+		
 		this.window = new Pane();
 		this.model = new TamaModel();
 		this.controller = new TamaController(this.model);
 		model.addObserver(this);
+		state = model.getState();
 
 	}
 
@@ -252,13 +264,13 @@ public class TamaView extends Application implements Observer {
 		resetLabel.setFill(Color.DARKSLATEGRAY);
 		window.getChildren().add(resetLabel);
 
-		// Sprite
+		sprite = new Sprite();
 		sprite = new Sprite();
 		sprite.setLayoutX(200);
 		sprite.setLayoutY(150);
 		sprite.resize(50, 50);
 
-		rootPane.getChildren().addAll(window, sprite);
+		rootPane.getChildren().addAll(window,sprite);
 
 		scene.setOnMousePressed(event -> {
 			int[] pos = new int[] { (int) event.getSceneX(), (int) event.getSceneY() };
