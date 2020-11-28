@@ -14,33 +14,6 @@ import javafx.util.Duration;
 
 public class Sprite extends Pane {
 	private int frame;
-
-//	URL url = getClass().getResource("/testSpriteSheet.png");
-//	Image spriteSheet = new Image("/images/testSpriteSheet.png");
-//
-//	Image spriteSheet = new Image("file:./images/testSpriteSheet.png");
-//	ImageView imageView = new ImageView(spriteSheet);
-//
-//	public Sprite() {
-//		frame = 0;
-//		VBox vbox = new VBox();
-//		vbox.getChildren().add(imageView);
-//		super.getChildren().add(vbox);
-//		
-//
-//	    Timeline timeline = 
-//	        new Timeline(new KeyFrame(Duration.millis(100), e -> changeFrame()));
-//	    timeline.setCycleCount(Animation.INDEFINITE); // loop forever
-//	    timeline.play();
-//	    
-//
-//	}
-//	
-//	private void changeFrame() {
-//		imageView.setVisible(!imageView.isVisible());
-//	}
-	
-	
 	
 	private static final Image IMAGE = new Image("file:./res/images/dino.png");
 

@@ -2,6 +2,8 @@ import java.io.*;
 import java.util.Observable;
 import java.util.Random;
 
+import javafx.scene.layout.Pane;
+
 /*
  * Stat Notes: 
  * Age: Begins at zero and increases at a rate that will be determined later. As age increases, 
@@ -36,6 +38,7 @@ public class TamaModel extends Observable implements Serializable{
 	
 	// Game state
 	private GameState state;
+	private Pane screenPane;
 	
 	//Core stats
 	private float age; 
@@ -226,4 +229,16 @@ public class TamaModel extends Observable implements Serializable{
 	
 	public boolean isAlive() {return alive;}
 	private void die() {alive = false;}
+
+	public Pane getCurrentPane() {
+		if (state.getState().equals("sprite")) {
+			screenPane = new Sprite();
+			screenPane.setLayoutX(200);
+			screenPane.setLayoutY(150);
+			screenPane.resize(50, 50);
+		} else if (state.getState().equals("menu")) {
+			screenPane = new MenuPane();
+		}
+		return screenPane;
+	}
 }

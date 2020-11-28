@@ -27,7 +27,7 @@ public class TamaView extends Application implements Observer {
 
 	Pane rootPane = new Pane();
 	private Pane window;
-	private Pane sprite;
+	private Pane screenPane;
 	private float height = 500;
 	private float width = 500;
 
@@ -255,12 +255,17 @@ public class TamaView extends Application implements Observer {
 		window.getChildren().add(resetLabel);
 
 		// Sprite
-		sprite = new Sprite();
-		sprite.setLayoutX(200);
-		sprite.setLayoutY(150);
-		sprite.resize(50, 50);
+		
+		// Here's the idea: We'll have a wildcard pane that displays the screen,
+		//					the update function changes the pane, and the model chooses
+		//					the correct pane based on the gamestate. Can you do this
+		//					in javafx? who's to say for sure
+		
 
-		rootPane.getChildren().addAll(window, sprite);
+		screenPane = model.getCurrentPane();
+		
+
+		rootPane.getChildren().addAll(window, screenPane);
 
 		scene.setOnMousePressed(event -> {
 			int[] pos = new int[] { (int) event.getSceneX(), (int) event.getSceneY() };
