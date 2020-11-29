@@ -23,17 +23,23 @@ public class GamePane extends Pane implements Observer{
 	private Sprite food;
 	private TamaModel model;
 	private Pane grid;
+	private Image foodSelect;
+	private Image playSelect;
+	
+	private TamaController controller;
 
 	public GamePane(TamaModel model) {
-
 		this.model = model;
+		//controller = model.getController();
+		
 		model.addObserver(this);
 		
 		tama = new Sprite(2, 2, 150, 150, new Image("file:./res/images/dino.png"), Animation.INDEFINITE, 700);
 		tama.setLayoutX(190);
 		tama.setLayoutY(150);
 		
-		
+		//foodSelect = new Image();
+		//playSelect = new Image();
 		
 		grid = new Pane();
 		grid.getChildren().addAll(tama);
@@ -58,13 +64,33 @@ public class GamePane extends Pane implements Observer{
 		
 	}
 	
+
+	private void select() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	private void nextSelect() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	private void prevSelect() {
+		// TODO Auto-generated method stub
+		
+	}
+	
 	@Override
 	public void update(Observable o, Object arg) {
 		if (arg == null || !model.getState().getState().equals("game")) {
 			return;
 		}
 		if (arg.equals("3")) {
-			makeFood();
+			prevSelect();
+		} else if (arg.equals("2")) {
+			select();
+		} else if (arg.equals("1")) {
+			nextSelect();
 		}
 	}
 

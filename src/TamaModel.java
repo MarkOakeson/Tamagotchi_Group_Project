@@ -39,7 +39,7 @@ public class TamaModel extends Observable{
 	
 	// Game state
 	private GameState state;
-	private Pane screenPane;
+	private Pane screenPane = new MenuPane(this);
 	
 	//Core stats
 	private float age; 
@@ -54,6 +54,8 @@ public class TamaModel extends Observable{
 	//Statuses 
 	private boolean healthy;
 	private boolean alive;
+	
+	private TamaController controller;
 	
 	// screenPanes
 	private MenuPane menuPane = new MenuPane(this);
@@ -170,6 +172,10 @@ public class TamaModel extends Observable{
 		notifyObservers();
 	}
 
+	public TamaController getController() {
+		return controller;
+	}
+	
 	/**
 	 * Saves the current game state, including the pet's attributes
 	 * and current status, by writing this Model object to a save file
@@ -252,15 +258,12 @@ public class TamaModel extends Observable{
 	public boolean isAlive() {return alive;}
 	private void die() {alive = false;}
 
+	public void setCurrentPane(Pane screenPane) {
+		this.screenPane = screenPane;
+	}
+	
 	public Pane getCurrentPane() {
-		if (state.getState().equals("game")) {
-			screenPane = gamePane;
-		} else if (state.getState().equals("menu")) {
-			screenPane = menuPane;
-			screenPane.setLayoutX(190);
-			screenPane.setLayoutY(160);
-			screenPane.resize(50, 50);
-		}
+		
 		return screenPane;
 	}
 	
@@ -273,5 +276,10 @@ public class TamaModel extends Observable{
 	public void pressed(String button) {
 		setChanged();
 		notifyObservers(button);
+	}
+
+	public void setController(TamaController controller) {
+		this.controller = controller;
+		
 	}
 }

@@ -19,6 +19,7 @@ public class MenuPane extends Pane implements Observer{
 	private Text loadGame;
 	private Text selected;
 	private TamaModel model;
+	private Pane pane;
 
 	public MenuPane(TamaModel model) {
 
@@ -28,10 +29,14 @@ public class MenuPane extends Pane implements Observer{
 		newGame = new Text("NEW GAME");
 		newGame.setFont(Font.font(20));
 		newGame.setFill(Color.DARKSLATEGRAY);
+		newGame.setX(190);
+		newGame.setY(170);
 
 		loadGame = new Text("\nLOAD GAME");
 		loadGame.setFont(Font.font(20));
 		loadGame.setFill(Color.DARKSLATEGRAY);
+		loadGame.setX(190);
+		loadGame.setY(200);
 
 		selected = newGame; // default
 
@@ -39,9 +44,9 @@ public class MenuPane extends Pane implements Observer{
 		timeline.setCycleCount(Animation.INDEFINITE); // loop forever
 		timeline.play();
 
-		VBox vbox = new VBox();
-		vbox.getChildren().addAll(newGame, loadGame);
-		super.getChildren().add(vbox);
+		pane = new Pane();
+		pane.getChildren().addAll(newGame, loadGame);
+		super.getChildren().add(pane);
 	}
 
 	private void changeFrame() {
@@ -53,7 +58,7 @@ public class MenuPane extends Pane implements Observer{
 		if (arg == null || !model.getState().getState().equals("menu")) {
 			return;
 		}
-		if (arg.equals("2")) {
+		if (arg.equals("1")) {
 			if (selected.equals(newGame)) {
 				selected.setVisible(true);
 				selected = loadGame;
@@ -61,18 +66,18 @@ public class MenuPane extends Pane implements Observer{
 				selected.setVisible(true);
 				selected = newGame;
 			}
-		} else if (arg.equals("1")) {
-			if (model.getState().getState().equals("menu")) {
-				model.getState().changeState("game");
-			}
-			model.pressed("updateScreenPane");
+		} else if (arg.equals("2")) {
+			
+			model.getController().changeState("game");
+			
+			model.pressed("updateScreenPane. This string is bogus and doesnt matter");
+			
 			if (selected.equals(newGame)) {
 				model.resetPet();
 			} else {
 				try {
 					model.load();
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}

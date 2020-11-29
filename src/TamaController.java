@@ -9,6 +9,7 @@ public class TamaController {
 	public TamaController(TamaModel model) {
 		this.model = model;
 		state = model.getState();
+		model.setController(this);
 	}
 
 
@@ -145,6 +146,14 @@ public class TamaController {
 	public void resetPet() {
 		model.resetPet();
 		model.pressed("R");
+	}
+
+
+	public void changeState(String gameState) {
+		if (gameState.equals("game")) {
+			model.setCurrentPane(new GamePane(model));
+		}
+		
 	}
 	
 }
