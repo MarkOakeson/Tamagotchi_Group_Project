@@ -31,7 +31,7 @@ public class TamaView extends Application implements Observer {
 	private Pane window;
 	private Pane screenPane;
 	private float height = 500;
-	private float width = 500;
+	private float width = 1000;
 
 	// Sounds
 	private SoundPlayer buttonPress = new SoundPlayer("./res/sounds/buttonPress.wav");

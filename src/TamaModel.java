@@ -35,7 +35,7 @@ import javafx.scene.layout.Pane;
  * Fullness(?): Increases when max value is 0, decreases weight and happiness when at 0. Not 
  * included in core mechanics, so inclusion of this stat is up for debate. 
  */
-public class TamaModel extends Observable implements Serializable{
+public class TamaModel extends Observable{
 	
 	// Game state
 	private GameState state;

@@ -6,6 +6,7 @@ import java.util.Observer;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -13,14 +14,14 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
 
-public class MenuPane extends Pane implements Observer{
+public class GamePane extends Pane implements Observer{
 
 	private Text newGame;
 	private Text loadGame;
 	private Text selected;
 	private TamaModel model;
 
-	public MenuPane(TamaModel model) {
+	public GamePane(TamaModel model) {
 
 		this.model = model;
 		model.addObserver(this);
@@ -39,9 +40,9 @@ public class MenuPane extends Pane implements Observer{
 		timeline.setCycleCount(Animation.INDEFINITE); // loop forever
 		timeline.play();
 
-		VBox vbox = new VBox();
-		vbox.getChildren().addAll(newGame, loadGame);
-		super.getChildren().add(vbox);
+		HBox hbox = new HBox();
+		hbox.getChildren().addAll(newGame, loadGame);
+		super.getChildren().add(hbox);
 	}
 
 	private void changeFrame() {
