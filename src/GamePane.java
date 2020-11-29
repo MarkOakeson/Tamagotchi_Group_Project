@@ -5,7 +5,10 @@ import java.util.Observer;
 
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
+import javafx.animation.PauseTransition;
 import javafx.animation.Timeline;
+import javafx.scene.image.Image;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
@@ -16,67 +19,52 @@ import javafx.util.Duration;
 
 public class GamePane extends Pane implements Observer{
 
-	private Text newGame;
-	private Text loadGame;
-	private Text selected;
+	private Sprite tama;
+	private Sprite food;
 	private TamaModel model;
+	private Pane grid;
 
 	public GamePane(TamaModel model) {
 
 		this.model = model;
 		model.addObserver(this);
 		
-		newGame = new Text("NEW GAME");
-		newGame.setFont(Font.font(20));
-		newGame.setFill(Color.DARKSLATEGRAY);
-
-		loadGame = new Text("\nLOAD GAME");
-		loadGame.setFont(Font.font(20));
-		loadGame.setFill(Color.DARKSLATEGRAY);
-
-		selected = newGame; // default
-
-		Timeline timeline = new Timeline(new KeyFrame(Duration.millis(400), e -> changeFrame()));
-		timeline.setCycleCount(Animation.INDEFINITE); // loop forever
-		timeline.play();
-
-		HBox hbox = new HBox();
-		hbox.getChildren().addAll(newGame, loadGame);
-		super.getChildren().add(hbox);
+		tama = new Sprite(2, 2, 150, 150, new Image("file:./res/images/dino.png"), Animation.INDEFINITE, 700);
+		tama.setLayoutX(190);
+		tama.setLayoutY(150);
+		
+		
+		
+		grid = new Pane();
+		grid.getChildren().addAll(tama);
+		super.getChildren().add(grid);
 	}
 
-	private void changeFrame() {
-		selected.setVisible(!selected.isVisible());
+	private void makeFood() {
+		tama.setLayoutX(200);
+		
+		food = new Sprite(3, 3, 27, 24, new Image("file:./res/images/food.png"), 1, 1000);
+		food.setLayoutX(150);
+		food.setLayoutY(150);
+		food.setScaleX(0.5);
+		food.setScaleY(0.5);
+		grid.getChildren().addAll(food);
+		PauseTransition pause = new PauseTransition(Duration.millis(1000));
+		pause.setOnFinished(e -> {
+			grid.getChildren().remove(food);
+			tama.setLayoutX(190);
+		});
+		pause.play();
+		
 	}
-
+	
 	@Override
 	public void update(Observable o, Object arg) {
-		if (arg == null || !model.getState().getState().equals("menu")) {
+		if (arg == null || !model.getState().getState().equals("game")) {
 			return;
 		}
-		if (arg.equals("2")) {
-			if (selected.equals(newGame)) {
-				selected.setVisible(true);
-				selected = loadGame;
-			} else {
-				selected.setVisible(true);
-				selected = newGame;
-			}
-		} else if (arg.equals("1")) {
-			if (model.getState().getState().equals("menu")) {
-				model.getState().changeState("sprite");
-			}
-			model.pressed("updateScreenPane");
-			if (selected.equals(newGame)) {
-				model.resetPet();
-			} else {
-				try {
-					model.load();
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
+		if (arg.equals("3")) {
+			makeFood();
 		}
 	}
 

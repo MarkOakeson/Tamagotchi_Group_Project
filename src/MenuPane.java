@@ -63,7 +63,7 @@ public class MenuPane extends Pane implements Observer{
 			}
 		} else if (arg.equals("1")) {
 			if (model.getState().getState().equals("menu")) {
-				model.getState().changeState("sprite");
+				model.getState().changeState("game");
 			}
 			model.pressed("updateScreenPane");
 			if (selected.equals(newGame)) {

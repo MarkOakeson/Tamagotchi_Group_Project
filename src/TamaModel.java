@@ -57,7 +57,7 @@ public class TamaModel extends Observable{
 	
 	// screenPanes
 	private MenuPane menuPane = new MenuPane(this);
-	private Sprite spritePane = new Sprite();
+	private GamePane gamePane = new GamePane(this);
 	
 	//Limits/Standards
 	private static final int AGE_PER_SECOND = 10; 
@@ -253,11 +253,8 @@ public class TamaModel extends Observable{
 	private void die() {alive = false;}
 
 	public Pane getCurrentPane() {
-		if (state.getState().equals("sprite")) {
-			screenPane = spritePane;
-			screenPane.setLayoutX(200);
-			screenPane.setLayoutY(150);
-			screenPane.resize(50, 50);
+		if (state.getState().equals("game")) {
+			screenPane = gamePane;
 		} else if (state.getState().equals("menu")) {
 			screenPane = menuPane;
 			screenPane.setLayoutX(190);
