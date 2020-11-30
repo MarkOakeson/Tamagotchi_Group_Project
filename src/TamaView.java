@@ -321,31 +321,46 @@ public class TamaView extends Application implements Observer {
 		Label clockLabel = new Label("Time: ");
 		clock = new TextField("0");
 		clock.setPrefColumnCount(3);
+
 		Label ageLabel = new Label("Age: ");
 		age = new TextField("");
 		age.setPrefColumnCount(2);
+
 		Label healthLabel = new Label("Health: ");
-		health = new TextField("");
-		health.setPrefColumnCount(2);
+//		health = new TextField("");
+//		health.setPrefColumnCount(2);
+
 		Label weightLabel = new Label("Weight: ");
-		weight = new TextField("");
-		weight.setPrefColumnCount(2);
+//		weight = new TextField("");
+//		weight.setPrefColumnCount(2);
+
 		Label happinessLabel = new Label("Happiness: ");
-		happiness = new TextField("");
-		happiness.setPrefColumnCount(3);
+//		happiness = new TextField("");
+//		happiness.setPrefColumnCount(3);
+
+		Rectangle healthRectangle = new Rectangle(75, 15, Color.GREEN);
+		Rectangle weightRectangle = new Rectangle(75, 15, Color.GREEN);
+		Rectangle happinessRectangle = new Rectangle(75, 15, Color.GREEN);
+
+
+		//Adding dynamic stat bars
 		bar.getChildren().add(clockLabel);
 		bar.getChildren().add(clock);
-		bar.getChildren().add(ageLabel);
-		bar.getChildren().add(age);
+		//bar.getChildren().add(ageLabel);
+		//bar.getChildren().add(age);
 		bar.getChildren().add(healthLabel);
-		bar.getChildren().add(health);
+		bar.getChildren().add(healthRectangle);
 		bar.getChildren().add(weightLabel);
-		bar.getChildren().add(weight);
+		bar.getChildren().add(weightRectangle);
+		bar.getChildren().add(happinessLabel);
+		bar.getChildren().add(happinessRectangle);
 
 		stacker.getChildren().add(bar);
 		HBox bar2 = new HBox();
-		bar2.getChildren().add(happinessLabel);
-		bar2.getChildren().add(happiness);
+//		bar2.getChildren().add(happinessLabel);
+//		bar2.getChildren().add(happinessRectangle);
+		bar2.getChildren().add(ageLabel);
+		bar2.getChildren().add(age);
 		stacker.getChildren().add(bar2);
 		window.getChildren().add(stacker);
 
