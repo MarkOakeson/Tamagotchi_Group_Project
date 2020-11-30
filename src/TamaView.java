@@ -6,13 +6,13 @@ import javafx.animation.PauseTransition;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Ellipse;
 import javafx.scene.shape.Rectangle;
@@ -42,9 +42,9 @@ public class TamaView extends Application implements Observer {
 	// Attributes for testing purposes
 	private TextField clock;
 	private TextField age;
-	private TextField health;
-	private TextField weight;
-	private TextField happiness;
+	private Rectangle healthRectangle;
+	private Rectangle weightRectangle;
+	private Rectangle happinessRectangle;
 
 	private Stage stage;
 
@@ -317,10 +317,11 @@ public class TamaView extends Application implements Observer {
 		VBox stacker = new VBox();
 		// Save and Load functionality (Not final view, quick and dirty for testing)
 		HBox bar = new HBox();
+		//TilePane bar = new TilePane();
 
 		Label clockLabel = new Label("Time: ");
 		clock = new TextField("0");
-		clock.setPrefColumnCount(3);
+		clock.setPrefColumnCount(2);
 
 		Label ageLabel = new Label("Age: ");
 		age = new TextField("");
@@ -338,30 +339,48 @@ public class TamaView extends Application implements Observer {
 //		happiness = new TextField("");
 //		happiness.setPrefColumnCount(3);
 
-		Rectangle healthRectangle = new Rectangle(75, 15, Color.GREEN);
-		Rectangle weightRectangle = new Rectangle(75, 15, Color.GREEN);
-		Rectangle happinessRectangle = new Rectangle(75, 15, Color.GREEN);
+		healthRectangle = new Rectangle(75, 15, Color.GREEN);
+		weightRectangle = new Rectangle(75, 15, Color.GREEN);
+		happinessRectangle = new Rectangle(75, 15, Color.GREEN);
 
+		HBox healthBackground = new HBox();
+		healthBackground.setPrefWidth(100);
+		healthBackground.setBackground(new Background(new BackgroundFill(Color.LIGHTGREY, CornerRadii.EMPTY, Insets.EMPTY)));
+
+		HBox weightBackground = new HBox();
+		weightBackground.setPrefWidth(100);
+		weightBackground.setBackground(new Background(new BackgroundFill(Color.LIGHTGREY, CornerRadii.EMPTY, Insets.EMPTY)));
+
+		HBox happinnessBackground = new HBox();
+		happinnessBackground.setPrefWidth(100);
+		happinnessBackground.setBackground(new Background(new BackgroundFill(Color.LIGHTGREY, CornerRadii.EMPTY, Insets.EMPTY)));
 
 		//Adding dynamic stat bars
-		bar.getChildren().add(clockLabel);
-		bar.getChildren().add(clock);
-		//bar.getChildren().add(ageLabel);
-		//bar.getChildren().add(age);
-		bar.getChildren().add(healthLabel);
-		bar.getChildren().add(healthRectangle);
-		bar.getChildren().add(weightLabel);
-		bar.getChildren().add(weightRectangle);
-		bar.getChildren().add(happinessLabel);
-		bar.getChildren().add(happinessRectangle);
 
+
+		bar.setPrefHeight(20);
+		bar.getChildren().add(healthLabel);
+		bar.getChildren().add(healthBackground);
+
+		bar.getChildren().add(weightLabel);
+		bar.getChildren().add(weightBackground);
+		bar.getChildren().add(happinessLabel);
+		bar.getChildren().add(happinnessBackground);
+		bar.setPrefWidth(500);
+		bar.setSpacing(7);
 		stacker.getChildren().add(bar);
+
+		HBox tester = new HBox();
+		tester.setPrefWidth(85);
+		tester.setBackground(new Background(new BackgroundFill(Color.LIGHTGREY, CornerRadii.EMPTY, Insets.EMPTY)));
 		HBox bar2 = new HBox();
-//		bar2.getChildren().add(happinessLabel);
-//		bar2.getChildren().add(happinessRectangle);
+
+		bar2.getChildren().add(clockLabel);
+		bar2.getChildren().add(clock);
 		bar2.getChildren().add(ageLabel);
 		bar2.getChildren().add(age);
 		stacker.getChildren().add(bar2);
+		stacker.setSpacing(10);
 		window.getChildren().add(stacker);
 
 		stage.setScene(scene);
@@ -559,9 +578,13 @@ public class TamaView extends Application implements Observer {
 		Platform.runLater(() -> {
 			clock.setText(Integer.toString(controller.getSecondsPassed()));
 			age.setText(Float.toString(controller.getAge()));
-			health.setText(Float.toString(controller.getHealth()));
-			weight.setText(Float.toString(controller.getWeight()));
-			happiness.setText(Float.toString(controller.getHappiness()));
+			//if(controller.getHappiness()
+			healthRectangle.setWidth(controller.getHealth());
+			weightRectangle.setWidth(controller.getWeight());
+			happinessRectangle.setWidth(controller.getHappiness());
+//			health.setText(Float.toString(controller.getHealth()));
+//			weight.setText(Float.toString(controller.getWeight()));
+//			happiness.setText(Float.toString(controller.getHappiness()));
 		});
 	}
 
