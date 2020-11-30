@@ -258,26 +258,43 @@ public class TamaModel extends Observable{
 	public boolean isAlive() {return alive;}
 	private void die() {alive = false;}
 
+	
+	
+	/**
+	 * for use by controller, sets the screen to be the right pane view
+	 * @param screenPane
+	 */
 	public void setCurrentPane(Pane screenPane) {
 		this.screenPane = screenPane;
 	}
 	
+	/*
+	 * Returns the current screenPane to the model (or whatever calls it)
+	 */
 	public Pane getCurrentPane() {
-		
 		return screenPane;
 	}
 	
+	/**
+	 * adds an observer to the model
+	 * @param o: observer
+	 */
 	public void plusObserver(Observer o) {
 		addObserver(o);
-
-		System.out.println(countObservers());
 	}
 	
+	/**
+	 * Tells all observers that a button was pressed. This calls update.
+	 * @param button: button ID
+	 */
 	public void pressed(String button) {
 		setChanged();
 		notifyObservers(button);
 	}
 
+	/*
+	 * experimental, wanted to test if controller was referenced
+	 */
 	public void setController(TamaController controller) {
 		this.controller = controller;
 		

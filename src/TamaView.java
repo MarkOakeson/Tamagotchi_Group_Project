@@ -357,6 +357,12 @@ public class TamaView extends Application implements Observer {
 
 	}
 
+	/*
+	 * user has pressed button 1:
+	 * 		play a sound
+	 * 		play the button press animation
+	 * 		call the controller and tell it whats up
+	 */
 	protected void press1() {
 		// Play a sound
 		buttonPress.play();
@@ -378,7 +384,13 @@ public class TamaView extends Application implements Observer {
 		pause.play();
 
 	}
-
+	
+	/*
+	 * user has pressed button 2:
+	 * 		play a sound
+	 * 		play the button press animation
+	 * 		call the controller and tell it whats up
+	 */
 	protected void press2() {
 		// Play a sound
 		buttonPress.play();
@@ -400,6 +412,12 @@ public class TamaView extends Application implements Observer {
 
 	}
 
+	/*
+	 * user has pressed button 3:
+	 * 		play a sound
+	 * 		play the button press animation
+	 * 		call the controller and tell it whats up
+	 */
 	protected void press3() {
 
 		// Play a sound
@@ -422,6 +440,12 @@ public class TamaView extends Application implements Observer {
 
 	}
 
+	/*
+	 * user has pressed reset button:
+	 * 		play a sound
+	 * 		play the button press animation
+	 * 		call the controller and tell it whats up
+	 */
 	protected void pressReset() {
 		resetSound.play();
 		controller.resetPet();
@@ -440,6 +464,12 @@ public class TamaView extends Application implements Observer {
 
 	}
 
+	/*
+	 * user has pressed load button:
+	 * 		play a sound
+	 * 		play the button press animation
+	 * 		call the controller and tell it whats up
+	 */
 	protected void pressLoad() throws IOException {
 		loadGameSound.play();
 		controller.loadGamePress();
@@ -461,6 +491,12 @@ public class TamaView extends Application implements Observer {
 
 	}
 
+	/*
+	 * user has pressed save button:
+	 * 		play a sound
+	 * 		play the button press animation
+	 * 		call the controller and tell it whats up
+	 */
 	protected void pressSave() {
 		saveGameSound.play();
 

@@ -169,4 +169,8 @@ public class TamaController {
 		model.feedMeal();
 	}
 	
+	public void eatSnack() {
+		model.feedSnack();
+	}
+	
 }

@@ -20,13 +20,11 @@ public class MenuPane extends Pane implements Observer{
 	private Text selected;
 	private TamaModel model;
 	private Pane pane;
-	private TamaController controller;
 
 	public MenuPane(TamaModel model) {
 
 		this.model = model;
 		model.addObserver(this);
-		controller = model.getController();
 		
 		newGame = new Text("NEW GAME");
 		newGame.setFont(Font.font(20));
@@ -51,6 +49,9 @@ public class MenuPane extends Pane implements Observer{
 		super.getChildren().add(pane);
 	}
 
+	/*
+	 * blinks currently selected option
+	 */
 	private void changeFrame() {
 		selected.setVisible(!selected.isVisible());
 	}
@@ -60,7 +61,7 @@ public class MenuPane extends Pane implements Observer{
 		if (arg == null || !model.getState().getState().equals("menu")) {
 			return;
 		}
-		if (arg.equals("1")) {
+		if (arg.equals("1") || arg.equals("3")) {
 			if (selected.equals(newGame)) {
 				selected.setVisible(true);
 				selected = loadGame;

@@ -34,7 +34,6 @@ public class GamePane extends Pane implements Observer{
 	private int selectionIndex;
 	private boolean eating = false;
 	
-	private TamaController controller;
 
 	public GamePane(TamaModel model) {
 		this.model = model;
@@ -46,21 +45,25 @@ public class GamePane extends Pane implements Observer{
 		tama.setLayoutX(190);
 		tama.setLayoutY(150);
 		
+		// MEAL
 		mealSelect = new Text("MEAL");
 		mealSelect.setFont(Font.font(15));
 		mealSelect.setX(150);
 		mealSelect.setY(130);
 		
+		// SNACK
 		snackSelect = new Text("SNACK");
 		snackSelect.setFont(Font.font(15));
 		snackSelect.setX(210);
 		snackSelect.setY(130);
 		
+		// PLAY
 		playSelect = new Text("PLAY");
 		playSelect.setFont(Font.font(15));
 		playSelect.setX(150);
 		playSelect.setY(280);
 		
+		// creates an arraylist of all available options for selection
 		selections = new ArrayList<Text>();
 		selections.add(mealSelect);
 		selections.add(snackSelect);
@@ -78,11 +81,18 @@ public class GamePane extends Pane implements Observer{
 		
 	}
 
+	/*
+	 * blinks currently selected menu item
+	 */
 	private void changeFrame() {
 		
 		selected.setVisible(!selected.isVisible());
 	}
 	
+	/**
+	 * makes the tamagotchi a meal, animated a meal, 
+	 * calls the eatSnack controller function
+	 */
 	private void makeMeal() {
 		eating = true;
 		tama.setLayoutX(200);
@@ -92,18 +102,22 @@ public class GamePane extends Pane implements Observer{
 		meal.setLayoutY(150);
 		meal.setScaleX(0.5);
 		meal.setScaleY(0.5);
-		model.getController().eatMeal();
 		grid.getChildren().addAll(meal);
 		PauseTransition pause = new PauseTransition(Duration.millis(1000));
 		pause.setOnFinished(e -> {
 			grid.getChildren().remove(meal);
 			tama.setLayoutX(190);
 			eating = false;
+			model.getController().eatMeal();
 		});
 		pause.play();
 		
 	}
 	
+	/**
+	 * makes the tamagotchi a snack, animated a snack, 
+	 * calls the eatSnack controller function
+	 */
 	private void makeSnack() {
 		eating = true;
 		tama.setLayoutX(200);
@@ -113,19 +127,21 @@ public class GamePane extends Pane implements Observer{
 		snack.setLayoutY(150);
 		snack.setScaleX(0.3);
 		snack.setScaleY(0.3);
-		model.getController().eatMeal();
 		grid.getChildren().addAll(snack);
 		PauseTransition pause = new PauseTransition(Duration.millis(1000));
 		pause.setOnFinished(e -> {
 			grid.getChildren().remove(snack);
 			tama.setLayoutX(190);
 			eating = false;
+			model.getController().eatSnack();
 		});
 		pause.play();
 		
 	}
 	
 
+	// Plays selected animation, then calls the correct controller 
+	// function to handle it.
 	private void select() {
 		if (selected.equals(mealSelect) && !eating) {
 			makeMeal();
@@ -135,6 +151,9 @@ public class GamePane extends Pane implements Observer{
 		
 	}
 
+	/**
+	 * Selects the next available menu item.
+	 */
 	private void nextSelect() {
 		if (selectionIndex + 1 > selections.size() - 1) {
 			selectionIndex = 0;
@@ -146,6 +165,9 @@ public class GamePane extends Pane implements Observer{
 		
 	}
 
+	/*
+	 * Selects the previous menu item
+	 */
 	private void prevSelect() {
 		if (selectionIndex - 1 < 0) {
 			selectionIndex = selections.size() - 1;
