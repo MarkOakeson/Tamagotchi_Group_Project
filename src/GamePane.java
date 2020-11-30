@@ -97,13 +97,13 @@ public class GamePane extends Pane implements Observer{
 		eating = true;
 		tama.setLayoutX(200);
 		
-		meal = new Sprite(3, 3, 27, 24, new Image("file:./res/images/meal.png"), 1, 1000);
+		meal = new Sprite(3, 3, 27, 24, new Image("file:./res/images/meal.png"), 1, 2100);
 		meal.setLayoutX(150);
 		meal.setLayoutY(150);
 		meal.setScaleX(0.5);
 		meal.setScaleY(0.5);
 		grid.getChildren().addAll(meal);
-		PauseTransition pause = new PauseTransition(Duration.millis(1000));
+		PauseTransition pause = new PauseTransition(Duration.millis(2100));
 		pause.setOnFinished(e -> {
 			grid.getChildren().remove(meal);
 			tama.setLayoutX(190);
