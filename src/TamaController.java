@@ -146,14 +146,27 @@ public class TamaController {
 	public void resetPet() {
 		model.resetPet();
 		model.pressed("R");
+		changeState("menu");
+		model.pressed("bogus input, update screenpane");
 	}
 
 
 	public void changeState(String gameState) {
+		state.changeState(gameState);
 		if (gameState.equals("game")) {
 			model.setCurrentPane(new GamePane(model));
-		}
-		
+		} else if (gameState.equals("menu"))
+			model.setCurrentPane(new MenuPane(model));
+	}
+
+
+	public String getState() {
+		return state.getState();
+	}
+
+
+	public void eatMeal() {
+		model.feedMeal();
 	}
 	
 }

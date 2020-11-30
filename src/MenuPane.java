@@ -20,11 +20,13 @@ public class MenuPane extends Pane implements Observer{
 	private Text selected;
 	private TamaModel model;
 	private Pane pane;
+	private TamaController controller;
 
 	public MenuPane(TamaModel model) {
 
 		this.model = model;
 		model.addObserver(this);
+		controller = model.getController();
 		
 		newGame = new Text("NEW GAME");
 		newGame.setFont(Font.font(20));
