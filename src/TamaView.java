@@ -319,14 +319,17 @@ public class TamaView extends Application implements Observer {
 			}
 		});
 
-		VBox stacker = new VBox();
-		// Save and Load functionality (Not final view, quick and dirty for testing)
+		// Bar will be the main VBox for holding all stats
 		VBox bar = new VBox();
-		//TilePane bar = new TilePane();
-		HBox timeBox = new HBox();
+		// topbox holds time and age
+		HBox topbox = new HBox();
+		//Holds time
 		HBox clockBox = new HBox();
+		//Holds age
 		HBox ageBox = new HBox();
 
+
+		// Creating the top box
 		Label clockLabel = new Label("Time:   ");
 		clock = new Label("0");
 		clock.setFont(new Font("Calibri", 20));
@@ -341,13 +344,14 @@ public class TamaView extends Application implements Observer {
 		ageBox.getChildren().add(age);
 		ageBox.setAlignment(Pos.CENTER);
 
-		timeBox.getChildren().add(clockBox);
-		timeBox.getChildren().add(ageBox);
-		timeBox.setAlignment(Pos.CENTER);
-		timeBox.setSpacing(70);
-		bar.getChildren().add(timeBox);
+		topbox.getChildren().add(clockBox);
+		topbox.getChildren().add(ageBox);
+		topbox.setAlignment(Pos.CENTER);
+		topbox.setSpacing(70);
+		bar.getChildren().add(topbox);
 
 
+		//Creating Labels for the stat display
 		Label healthLabel = new Label("  Health: ");
 		healthLabel.setPrefWidth(80);
 		healthLabel.setAlignment(Pos.CENTER);
@@ -360,61 +364,51 @@ public class TamaView extends Application implements Observer {
 
 		Label happinessLabel = new Label("  Happiness: ");
 		happinessLabel.setPrefWidth(80);
-		happinessLabel.setAlignment(Pos.CENTER);
+		happinessLabel.setAlignment(Pos.CENTER_LEFT);
 		happinessLabel.setFont(new Font("Calibri", 15));
 
 
-		healthRectangle = new Rectangle(400, 25, Color.GREEN);
-		weightRectangle = new Rectangle(400, 25, Color.GREEN);
-		happinessRectangle = new Rectangle(400, 25, Color.GREEN);
+		// Creating rectangles to display stats
+		healthRectangle = new Rectangle(400, 20, Color.GREEN);
+		weightRectangle = new Rectangle(400, 20, Color.GREEN);
+		happinessRectangle = new Rectangle(400, 20, Color.GREEN);
 
 
+		// Creating boxes that hold the stat label and stat display rectangle
 		HBox healthBox = getStat(healthRectangle, healthLabel);
 		HBox weightBox = getStat(weightRectangle, weightLabel);
 		HBox happinessBox = getStat(happinessRectangle, happinessLabel);
 
-
-
 		bar.setPrefHeight(20);
 		bar.setAlignment(Pos.CENTER);
-
-
-//		HBox healthBox = new HBox();
-//		healthBox.getChildren().add(healthLabel);
-//		healthBox.getChildren().add(healthStat);
-//		healthBox.setAlignment(Pos.CENTER_LEFT);
-//		healthBox.setSpacing(10);
 		bar.getChildren().add(healthBox);
-//
-//		HBox weightBox = new HBox();
-//		weightBox.getChildren().add(weightLabel);
-//		weightBox.getChildren().add(weightStat);
-//		weightBox.setAlignment(Pos.CENTER_LEFT);
-//		weightBox.setSpacing(10);
 		bar.getChildren().add(weightBox);
-//
-//		HBox happinessBox = new HBox();
-//		happinessBox.getChildren().add(happinessLabel);
-//		happinessBox.getChildren().add(happinessStat);
-//		happinessBox.setAlignment(Pos.CENTER_LEFT);
-//		happinessBox.setSpacing(10);
 		bar.getChildren().add(happinessBox);
-
-
 		bar.setPrefWidth(500);
-		bar.setSpacing(10);
+		bar.setSpacing(7);
 
-		layout.setSpacing(10);
+		//Setting background color + border
 		bar.setBackground(new Background(new BackgroundFill(Color.LIGHTBLUE, CornerRadii.EMPTY, Insets.EMPTY)));
 		bar.setPrefHeight(170);
-		Separator separator = new Separator();
-//		separator.setBorder(new Border(new BorderStroke(Color.BLACK,
-//				BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
-//		separator.setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));
-//		bar.getChildren().add(1, separator);
+		bar.setBorder(new Border(new BorderStroke(Color.BLACK,
+				BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
 
+
+		// Adding separators to break up the stat display
+		Separator separator1 = new Separator();
+		separator1.setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));
+		bar.getChildren().add(1, separator1);
+
+		Separator separator2 = new Separator();
+		separator2.setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));
+		bar.getChildren().add(3, separator2);
+
+		Separator separator3 = new Separator();
+		separator3.setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));
+		bar.getChildren().add(5, separator3);
+
+		layout.setSpacing(10);
 		layout.getChildren().add(bar);
-
 
 		stage.setScene(scene);
 		stage.show(); // Show the stage
@@ -422,6 +416,33 @@ public class TamaView extends Application implements Observer {
 		// Sim for testing purposes
 		runSim();
 
+	}
+
+	/**
+	 * Method takes in a rectangle and a label that correlate to an aspect of the tamagotchi.
+	 * Then, puts the label and rectangle into two seperate HBox's and combines them into one
+	 * HBox (this is done for spacing and displaying bars correctly).
+	 * @param rect  A Rectangle that is used to display visual of the stat
+	 * @param label A Label that defines what stat to display
+	 * @return An HBox that is used to display the label and rectangle for the stat display
+	 */
+	private HBox getStat(Rectangle rect, Label label){
+		HBox statBox = new HBox();
+		HBox displayBox = new HBox();
+		statBox.setBorder(new Border(new BorderStroke(Color.BLACK,
+				BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
+		statBox.getChildren().add(rect);
+		statBox.setPrefWidth(400);
+		statBox.setMaxWidth(400);
+		statBox.setBackground(new Background(new BackgroundFill(Color.LIGHTGREY, CornerRadii.EMPTY, Insets.EMPTY)));
+		statBox.setAlignment(Pos.CENTER_LEFT);
+
+		displayBox.getChildren().add(label);
+		displayBox.getChildren().add(statBox);
+		displayBox.setAlignment(Pos.CENTER_LEFT);
+		displayBox.setSpacing(10);
+
+		return displayBox;
 	}
 
 
@@ -671,22 +692,5 @@ public class TamaView extends Application implements Observer {
 		
 	}
 
-	private HBox getStat(Rectangle rect, Label label){
-		HBox statBox = new HBox();
-		HBox displayBox = new HBox();
-		statBox.setBorder(new Border(new BorderStroke(Color.BLACK,
-				BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
-		statBox.getChildren().add(rect);
-		statBox.setPrefWidth(400);
-		statBox.setMaxWidth(400);
-		statBox.setBackground(new Background(new BackgroundFill(Color.LIGHTGREY, CornerRadii.EMPTY, Insets.EMPTY)));
-		statBox.setAlignment(Pos.CENTER_LEFT);
 
-		displayBox.getChildren().add(label);
-		displayBox.getChildren().add(statBox);
-		displayBox.setAlignment(Pos.CENTER_LEFT);
-		displayBox.setSpacing(10);
-
-		return displayBox;
-	}
 }
