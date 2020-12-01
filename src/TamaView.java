@@ -33,7 +33,7 @@ public class TamaView extends Application implements Observer {
 	private Pane window;
 	private Pane screenPane;
 	private VBox layout;
-	private float height = 650;
+	private float height = 660;
 	private float width = 500;
 
 	// Sounds
@@ -330,15 +330,13 @@ public class TamaView extends Application implements Observer {
 		Label clockLabel = new Label("Time:   ");
 		clock = new Label("0");
 		clock.setFont(new Font("Calibri", 20));
-		clock.setPrefWidth(2);
 		clockBox.getChildren().add(clockLabel);
 		clockBox.getChildren().add(clock);
 		clockBox.setAlignment(Pos.CENTER);
 
-		Label ageLabel = new Label("Age: ");
+		Label ageLabel = new Label("Age:   ");
 		age = new Label("");
 		age.setFont(new Font("Calibri", 20));
-		age.setPrefWidth(2);
 		ageBox.getChildren().add(ageLabel);
 		ageBox.getChildren().add(age);
 		ageBox.setAlignment(Pos.CENTER);
@@ -426,15 +424,15 @@ public class TamaView extends Application implements Observer {
 
 
 		bar.setPrefWidth(500);
-		bar.setSpacing(7);
+		bar.setSpacing(10);
 		//stacker.getChildren().add(bar);
 
 
 
 		//stacker.setSpacing(10);
-		layout.setSpacing(30);
+		layout.setSpacing(10);
 		bar.setBackground(new Background(new BackgroundFill(Color.LIGHTBLUE, CornerRadii.EMPTY, Insets.EMPTY)));
-		bar.setPrefHeight(150);
+		bar.setPrefHeight(170);
 		Separator separator = new Separator();
 //		separator.setBorder(new Border(new BorderStroke(Color.BLACK,
 //				BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
@@ -638,14 +636,16 @@ public class TamaView extends Application implements Observer {
 				}
 				System.out.println(Integer.toString(controller.getSecondsPassed()));
 			}
+			System.out.println("Tama has died");
 		}).start();
 	}
 
 	public void updateUIAttributes() {
 		Platform.runLater(() -> {
 
-//			clock.setText(Integer.toString(controller.getSecondsPassed()));
-//			age.setText(Float.toString(controller.getAge()));
+			clock.setText(Integer.toString(controller.getSecondsPassed()));
+			System.out.println(controller.getAge());
+			age.setText(Float.toString(controller.getAge()));
 			setStat(controller.getHealth(), healthRectangle);
 			setStat(controller.getWeight(), weightRectangle);
 			setStat(controller.getHappiness(), happinessRectangle);
