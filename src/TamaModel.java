@@ -153,9 +153,17 @@ public class TamaModel extends Observable implements Serializable{
 		} else {
 			happiness -= 5;
 		}
-		
+
 		//Check if pet will die
-		//TODO: Fill this in
+		if(!isHealthy() && isUnderOverWt()){
+			die();
+		}
+		else if(isUnhappy() && isUnderOverWt()){
+			die();
+		}
+		else if(isUnhappy() && !isHealthy()){
+			die();
+		}
 
 		// Autosaves every 60 seconds
 		if (secondsPassed % 60 == 0){
