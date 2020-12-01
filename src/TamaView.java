@@ -6,16 +6,18 @@ import javafx.animation.PauseTransition;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.control.Separator;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Ellipse;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -30,7 +32,8 @@ public class TamaView extends Application implements Observer {
 	Pane rootPane = new Pane();
 	private Pane window;
 	private Pane screenPane;
-	private float height = 500;
+	private VBox layout;
+	private float height = 660;
 	private float width = 500;
 
 	// Sounds
@@ -40,11 +43,11 @@ public class TamaView extends Application implements Observer {
 	private SoundPlayer resetSound = new SoundPlayer("./res/sounds/resetGame.wav");
 
 	// Attributes for testing purposes
-	private TextField clock;
-	private TextField age;
-	private TextField health;
-	private TextField weight;
-	private TextField happiness;
+	private Label clock;
+	private Label age;
+	private Rectangle healthRectangle;
+	private Rectangle weightRectangle;
+	private Rectangle happinessRectangle;
 
 	private Stage stage;
 
@@ -80,6 +83,8 @@ public class TamaView extends Application implements Observer {
 		this.controller = new TamaController(this.model);
 
 		this.window = new Pane();
+
+		this.layout = new VBox();
 		
 
 	}
@@ -273,8 +278,8 @@ public class TamaView extends Application implements Observer {
 
 		screenPane = model.getCurrentPane();
 		
-
-		rootPane.getChildren().addAll(window, screenPane);
+		layout.getChildren().add(window);
+		rootPane.getChildren().addAll(layout, screenPane);
 
 		scene.setOnMousePressed(event -> {
 			int[] pos = new int[] { (int) event.getSceneX(), (int) event.getSceneY() };
@@ -314,40 +319,96 @@ public class TamaView extends Application implements Observer {
 			}
 		});
 
-		VBox stacker = new VBox();
-		// Save and Load functionality (Not final view, quick and dirty for testing)
-		HBox bar = new HBox();
+		// Bar will be the main VBox for holding all stats
+		VBox bar = new VBox();
+		// topbox holds time and age
+		HBox topbox = new HBox();
+		//Holds time
+		HBox clockBox = new HBox();
+		//Holds age
+		HBox ageBox = new HBox();
 
-		Label clockLabel = new Label("Time: ");
-		clock = new TextField("0");
-		clock.setPrefColumnCount(3);
-		Label ageLabel = new Label("Age: ");
-		age = new TextField("");
-		age.setPrefColumnCount(2);
-		Label healthLabel = new Label("Health: ");
-		health = new TextField("");
-		health.setPrefColumnCount(2);
-		Label weightLabel = new Label("Weight: ");
-		weight = new TextField("");
-		weight.setPrefColumnCount(2);
-		Label happinessLabel = new Label("Happiness: ");
-		happiness = new TextField("");
-		happiness.setPrefColumnCount(3);
-		bar.getChildren().add(clockLabel);
-		bar.getChildren().add(clock);
-		bar.getChildren().add(ageLabel);
-		bar.getChildren().add(age);
-		bar.getChildren().add(healthLabel);
-		bar.getChildren().add(health);
-		bar.getChildren().add(weightLabel);
-		bar.getChildren().add(weight);
 
-		stacker.getChildren().add(bar);
-		HBox bar2 = new HBox();
-		bar2.getChildren().add(happinessLabel);
-		bar2.getChildren().add(happiness);
-		stacker.getChildren().add(bar2);
-		window.getChildren().add(stacker);
+		// Creating the top box
+		Label clockLabel = new Label("Time:   ");
+		clock = new Label("0");
+		clock.setFont(new Font("Calibri", 20));
+		clockBox.getChildren().add(clockLabel);
+		clockBox.getChildren().add(clock);
+		clockBox.setAlignment(Pos.CENTER);
+
+		Label ageLabel = new Label("Age:   ");
+		age = new Label("");
+		age.setFont(new Font("Calibri", 20));
+		ageBox.getChildren().add(ageLabel);
+		ageBox.getChildren().add(age);
+		ageBox.setAlignment(Pos.CENTER);
+
+		topbox.getChildren().add(clockBox);
+		topbox.getChildren().add(ageBox);
+		topbox.setAlignment(Pos.CENTER);
+		topbox.setSpacing(70);
+		bar.getChildren().add(topbox);
+
+
+		//Creating Labels for the stat display
+		Label healthLabel = new Label("  Health: ");
+		healthLabel.setPrefWidth(80);
+		healthLabel.setAlignment(Pos.CENTER);
+		healthLabel.setFont(new Font("Calibri", 15));
+
+		Label weightLabel = new Label("  Weight: ");
+		weightLabel.setPrefWidth(80);
+		weightLabel.setAlignment(Pos.CENTER);
+		weightLabel.setFont(new Font("Calibri", 15));
+
+		Label happinessLabel = new Label("  Happiness: ");
+		happinessLabel.setPrefWidth(80);
+		happinessLabel.setAlignment(Pos.CENTER_LEFT);
+		happinessLabel.setFont(new Font("Calibri", 15));
+
+
+		// Creating rectangles to display stats
+		healthRectangle = new Rectangle(400, 20, Color.GREEN);
+		weightRectangle = new Rectangle(400, 20, Color.GREEN);
+		happinessRectangle = new Rectangle(400, 20, Color.GREEN);
+
+
+		// Creating boxes that hold the stat label and stat display rectangle
+		HBox healthBox = getStat(healthRectangle, healthLabel);
+		HBox weightBox = getStat(weightRectangle, weightLabel);
+		HBox happinessBox = getStat(happinessRectangle, happinessLabel);
+
+		bar.setPrefHeight(20);
+		bar.setAlignment(Pos.CENTER);
+		bar.getChildren().add(healthBox);
+		bar.getChildren().add(weightBox);
+		bar.getChildren().add(happinessBox);
+		bar.setPrefWidth(500);
+		bar.setSpacing(7);
+
+		//Setting background color + border
+		bar.setBackground(new Background(new BackgroundFill(Color.LIGHTBLUE, CornerRadii.EMPTY, Insets.EMPTY)));
+		bar.setPrefHeight(170);
+		bar.setBorder(new Border(new BorderStroke(Color.BLACK,
+				BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
+
+
+		// Adding separators to break up the stat display
+		Separator separator1 = new Separator();
+		separator1.setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));
+		bar.getChildren().add(1, separator1);
+
+		Separator separator2 = new Separator();
+		separator2.setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));
+		bar.getChildren().add(3, separator2);
+
+		Separator separator3 = new Separator();
+		separator3.setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));
+		bar.getChildren().add(5, separator3);
+
+		layout.setSpacing(10);
+		layout.getChildren().add(bar);
 
 		stage.setScene(scene);
 		stage.show(); // Show the stage
@@ -356,6 +417,34 @@ public class TamaView extends Application implements Observer {
 		runSim();
 
 	}
+
+	/**
+	 * Method takes in a rectangle and a label that correlate to an aspect of the tamagotchi.
+	 * Then, puts the label and rectangle into two seperate HBox's and combines them into one
+	 * HBox (this is done for spacing and displaying bars correctly).
+	 * @param rect  A Rectangle that is used to display visual of the stat
+	 * @param label A Label that defines what stat to display
+	 * @return An HBox that is used to display the label and rectangle for the stat display
+	 */
+	private HBox getStat(Rectangle rect, Label label){
+		HBox statBox = new HBox();
+		HBox displayBox = new HBox();
+		statBox.setBorder(new Border(new BorderStroke(Color.BLACK,
+				BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
+		statBox.getChildren().add(rect);
+		statBox.setPrefWidth(400);
+		statBox.setMaxWidth(400);
+		statBox.setBackground(new Background(new BackgroundFill(Color.LIGHTGREY, CornerRadii.EMPTY, Insets.EMPTY)));
+		statBox.setAlignment(Pos.CENTER_LEFT);
+
+		displayBox.getChildren().add(label);
+		displayBox.getChildren().add(statBox);
+		displayBox.setAlignment(Pos.CENTER_LEFT);
+		displayBox.setSpacing(10);
+
+		return displayBox;
+	}
+
 
 	protected void press1() {
 		// Play a sound
@@ -530,6 +619,10 @@ public class TamaView extends Application implements Observer {
 			while (stage.isShowing()) {
 				controller.updatePet();
 				updateUIAttributes();
+				if(!controller.isAlive()){
+					break;
+				}
+
 				try {
 					Thread.sleep(1000);
 				} catch (InterruptedException e) {
@@ -537,18 +630,56 @@ public class TamaView extends Application implements Observer {
 				}
 				System.out.println(Integer.toString(controller.getSecondsPassed()));
 			}
+			System.out.println("Tama has died");
 		}).start();
 	}
 
 	public void updateUIAttributes() {
 		Platform.runLater(() -> {
+
 			clock.setText(Integer.toString(controller.getSecondsPassed()));
+			System.out.println(controller.getAge());
 			age.setText(Float.toString(controller.getAge()));
-			health.setText(Float.toString(controller.getHealth()));
-			weight.setText(Float.toString(controller.getWeight()));
-			happiness.setText(Float.toString(controller.getHappiness()));
+			setStat(controller.getHealth(), healthRectangle);
+			setStat(controller.getWeight(), weightRectangle);
+			setStat(controller.getHappiness(), happinessRectangle);
+
 		});
 	}
+
+	private void setStat(float val, Rectangle rect){
+		float newWidth = val * 4;
+		if(val > 100){
+			rect.setWidth(400);
+			rect.setFill(Color.GREEN);
+		}
+		else if( val >= 75 ){
+			rect.setFill(Color.GREEN);
+			rect.setWidth(newWidth);
+		}
+		else if( val >= 60 ){
+			rect.setFill(Color.YELLOW);
+			rect.setWidth(newWidth);
+		}
+		else if( val >= 40 ){
+			rect.setFill(Color.ORANGE);
+			rect.setWidth(newWidth);
+		}
+		else if( val >= 20 ){
+			rect.setFill(Color.ORANGERED);
+			rect.setWidth(newWidth);
+		}
+		else if( val > 0 ){
+			rect.setFill(Color.DARKRED);
+			rect.setWidth(newWidth);
+		}
+		else if(val <= 0){
+			rect.setFill(Color.BLACK);
+			rect.setWidth(400);
+		}
+	}
+
+
 
 	@Override
 	public void update(Observable o, Object arg) {
@@ -560,4 +691,6 @@ public class TamaView extends Application implements Observer {
 		rootPane.getChildren().add(screenPane);
 		
 	}
+
+
 }
