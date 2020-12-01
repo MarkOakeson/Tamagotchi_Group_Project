@@ -30,7 +30,8 @@ public class TamaView extends Application implements Observer {
 	Pane rootPane = new Pane();
 	private Pane window;
 	private Pane screenPane;
-	private float height = 500;
+	private VBox layout;
+	private float height = 650;
 	private float width = 500;
 
 	// Sounds
@@ -80,6 +81,8 @@ public class TamaView extends Application implements Observer {
 		this.controller = new TamaController(this.model);
 
 		this.window = new Pane();
+
+		this.layout = new VBox();
 		
 
 	}
@@ -273,8 +276,8 @@ public class TamaView extends Application implements Observer {
 
 		screenPane = model.getCurrentPane();
 		
-
-		rootPane.getChildren().addAll(window, screenPane);
+		layout.getChildren().add(window);
+		rootPane.getChildren().addAll(layout, screenPane);
 
 		scene.setOnMousePressed(event -> {
 			int[] pos = new int[] { (int) event.getSceneX(), (int) event.getSceneY() };
@@ -316,48 +319,48 @@ public class TamaView extends Application implements Observer {
 
 		VBox stacker = new VBox();
 		// Save and Load functionality (Not final view, quick and dirty for testing)
-		HBox bar = new HBox();
+		VBox bar = new VBox();
 		//TilePane bar = new TilePane();
 
-		Label clockLabel = new Label("Time: ");
-		clock = new TextField("0");
-		clock.setPrefColumnCount(2);
+//		Label clockLabel = new Label("Time: ");
+//		clock = new TextField("0");
+//		clock.setPrefColumnCount(2);
+//
+//		Label ageLabel = new Label("Age: ");
+//		age = new TextField("");
+//		age.setPrefColumnCount(2);
 
-		Label ageLabel = new Label("Age: ");
-		age = new TextField("");
-		age.setPrefColumnCount(2);
-
-		Label healthLabel = new Label("Health: ");
-
-
-		Label weightLabel = new Label("Weight: ");
+		Label healthLabel = new Label("  Health: ");
 
 
-		Label happinessLabel = new Label("Happiness: ");
+		Label weightLabel = new Label("  Weight: ");
 
 
-		healthRectangle = new Rectangle(100, 15, Color.GREEN);
-		weightRectangle = new Rectangle(100, 15, Color.GREEN);
-		happinessRectangle = new Rectangle(100, 15, Color.GREEN);
+		Label happinessLabel = new Label("  Happiness: ");
+
+
+		healthRectangle = new Rectangle(400, 15, Color.GREEN);
+		weightRectangle = new Rectangle(400, 15, Color.GREEN);
+		happinessRectangle = new Rectangle(400, 15, Color.GREEN);
 
 
 		HBox healthBox = new HBox();
 		healthBox.getChildren().add(healthRectangle);
-		healthBox.setPrefWidth(100);
-		healthBox.setMaxWidth(100);
+		healthBox.setPrefWidth(400);
+		healthBox.setMaxWidth(400);
 		healthBox.setBackground(new Background(new BackgroundFill(Color.LIGHTGREY, CornerRadii.EMPTY, Insets.EMPTY)));
 		healthBox.setAlignment(Pos.CENTER_LEFT);
 
 		HBox weightBox = new HBox();
 		weightBox.getChildren().add(weightRectangle);
-		weightBox.setPrefWidth(100);
-		weightBox.setMaxWidth(100);
+		weightBox.setPrefWidth(400);
+		weightBox.setMaxWidth(400);
 		weightBox.setBackground(new Background(new BackgroundFill(Color.LIGHTGREY, CornerRadii.EMPTY, Insets.EMPTY)));
 		weightBox.setAlignment(Pos.CENTER_LEFT);
 
 		HBox happinessBox = new HBox();
 		happinessBox.getChildren().add(happinessRectangle);
-		happinessBox.setPrefWidth(100);
+		happinessBox.setPrefWidth(400);
 		happinessBox.setMaxWidth(100);
 		happinessBox.setBackground(new Background(new BackgroundFill(Color.LIGHTGREY, CornerRadii.EMPTY, Insets.EMPTY)));
 		happinessBox.setAlignment(Pos.CENTER_LEFT);
@@ -365,36 +368,54 @@ public class TamaView extends Application implements Observer {
 
 		bar.setPrefHeight(20);
 		bar.setAlignment(Pos.CENTER);
-		bar.getChildren().add(healthLabel);
-		bar.getChildren().add(healthBox);
 
-		bar.getChildren().add(weightLabel);
-		bar.getChildren().add(weightBox);
+		HBox test = new HBox();
+		test.getChildren().add(healthLabel);
+		test.getChildren().add(healthBox);
+		test.setAlignment(Pos.CENTER);
+//
+//		bar.getChildren().add(healthLabel);
+//		bar.getChildren().add(healthBox);
+		bar.getChildren().add(test);
 
-		bar.getChildren().add(happinessLabel);
-		bar.getChildren().add(happinessBox);
+		HBox test1 = new HBox();
+		test1.getChildren().add(weightLabel);
+		test1.getChildren().add(weightBox);
+		test1.setAlignment(Pos.CENTER);
+		test1.setAlignment(Pos.CENTER_LEFT);
+		test1.setSpacing(10);
+		bar.getChildren().add(test1);
+
+		HBox test2 = new HBox();
+		test2.getChildren().add(happinessLabel);
+		test2.getChildren().add(happinessBox);
+		test2.setAlignment(Pos.CENTER);
+		bar.getChildren().add(test2);
 
 
 		bar.setPrefWidth(500);
 		bar.setSpacing(7);
-		stacker.getChildren().add(bar);
+		//stacker.getChildren().add(bar);
 
 
 		HBox bar2 = new HBox();
 
-		bar2.getChildren().add(clockLabel);
-		bar2.getChildren().add(clock);
-		bar2.getChildren().add(ageLabel);
-		bar2.getChildren().add(age);
-		stacker.getChildren().add(bar2);
-		stacker.setSpacing(10);
-		window.getChildren().add(stacker);
+//		bar2.getChildren().add(clockLabel);
+//		bar2.getChildren().add(clock);
+//		bar2.getChildren().add(ageLabel);
+//		bar2.getChildren().add(age);
+//		stacker.getChildren().add(bar2);
+		//stacker.setSpacing(10);
+		layout.setSpacing(30);
+		bar.setBackground(new Background(new BackgroundFill(Color.LIGHTBLUE, CornerRadii.EMPTY, Insets.EMPTY)));
+		layout.getChildren().add(bar);
+//		window.getChildren().add(bar);
 
 		stage.setScene(scene);
 		stage.show(); // Show the stage
 
 		// Sim for testing purposes
-		runSim();
+		//runSim();
 
 	}
 
