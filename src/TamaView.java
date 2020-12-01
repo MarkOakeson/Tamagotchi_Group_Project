@@ -572,6 +572,10 @@ public class TamaView extends Application implements Observer {
 			while (stage.isShowing()) {
 				controller.updatePet();
 				updateUIAttributes();
+				if(!controller.isAlive()){
+					break;
+				}
+
 				try {
 					Thread.sleep(1000);
 				} catch (InterruptedException e) {
@@ -590,14 +594,10 @@ public class TamaView extends Application implements Observer {
 			setStat(controller.getWeight(), weightRectangle);
 			setStat(controller.getHappiness(), happinessRectangle);
 
-
-//			healthRectangle.setWidth(controller.getHealth());
-//			weightRectangle.setWidth(controller.getWeight());
-//			happinessRectangle.setWidth(controller.getHappiness());
 		});
 	}
 
-	public void setStat(float val, Rectangle rect){
+	private void setStat(float val, Rectangle rect){
 		if(val > 100){
 			rect.setWidth(100);
 			rect.setFill(Color.GREEN);
