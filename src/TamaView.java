@@ -369,67 +369,41 @@ public class TamaView extends Application implements Observer {
 		happinessRectangle = new Rectangle(400, 25, Color.GREEN);
 
 
-		HBox healthStat = new HBox();
-		healthStat.setBorder(new Border(new BorderStroke(Color.BLACK,
-				BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
-		healthStat.getChildren().add(healthRectangle);
-		healthStat.setPrefWidth(400);
-		healthStat.setMaxWidth(400);
-		healthStat.setBackground(new Background(new BackgroundFill(Color.LIGHTGREY, CornerRadii.EMPTY, Insets.EMPTY)));
-		healthStat.setAlignment(Pos.CENTER_LEFT);
+		HBox healthBox = getStat(healthRectangle, healthLabel);
+		HBox weightBox = getStat(weightRectangle, weightLabel);
+		HBox happinessBox = getStat(happinessRectangle, happinessLabel);
 
-		HBox weightStat = new HBox();
-		weightStat.setBorder(new Border(new BorderStroke(Color.BLACK,
-				BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
-		weightStat.getChildren().add(weightRectangle);
-		weightStat.setPrefWidth(400);
-		weightStat.setMaxWidth(400);
-		weightStat.setBackground(new Background(new BackgroundFill(Color.LIGHTGREY, CornerRadii.EMPTY, Insets.EMPTY)));
-		weightStat.setAlignment(Pos.CENTER_LEFT);
-
-		HBox happinessStat = new HBox();
-		happinessStat.setBorder(new Border(new BorderStroke(Color.BLACK,
-				BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
-		happinessStat.getChildren().add(happinessRectangle);
-		happinessStat.setPrefWidth(400);
-		happinessStat.setMaxWidth(400);
-		happinessStat.setBackground(new Background(new BackgroundFill(Color.LIGHTGREY, CornerRadii.EMPTY, Insets.EMPTY)));
-		happinessStat.setAlignment(Pos.CENTER_LEFT);
 
 
 		bar.setPrefHeight(20);
 		bar.setAlignment(Pos.CENTER);
 
 
-		HBox healthBox = new HBox();
-		healthBox.getChildren().add(healthLabel);
-		healthBox.getChildren().add(healthStat);
-		healthBox.setAlignment(Pos.CENTER_LEFT);
-		healthBox.setSpacing(10);
+//		HBox healthBox = new HBox();
+//		healthBox.getChildren().add(healthLabel);
+//		healthBox.getChildren().add(healthStat);
+//		healthBox.setAlignment(Pos.CENTER_LEFT);
+//		healthBox.setSpacing(10);
 		bar.getChildren().add(healthBox);
-
-		HBox weightBox = new HBox();
-		weightBox.getChildren().add(weightLabel);
-		weightBox.getChildren().add(weightStat);
-		weightBox.setAlignment(Pos.CENTER_LEFT);
-		weightBox.setSpacing(10);
+//
+//		HBox weightBox = new HBox();
+//		weightBox.getChildren().add(weightLabel);
+//		weightBox.getChildren().add(weightStat);
+//		weightBox.setAlignment(Pos.CENTER_LEFT);
+//		weightBox.setSpacing(10);
 		bar.getChildren().add(weightBox);
-
-		HBox happinessBox = new HBox();
-		happinessBox.getChildren().add(happinessLabel);
-		happinessBox.getChildren().add(happinessStat);
-		happinessBox.setAlignment(Pos.CENTER_LEFT);
-		happinessBox.setSpacing(10);
+//
+//		HBox happinessBox = new HBox();
+//		happinessBox.getChildren().add(happinessLabel);
+//		happinessBox.getChildren().add(happinessStat);
+//		happinessBox.setAlignment(Pos.CENTER_LEFT);
+//		happinessBox.setSpacing(10);
 		bar.getChildren().add(happinessBox);
 
 
 		bar.setPrefWidth(500);
 		bar.setSpacing(10);
-		//stacker.getChildren().add(bar);
 
-
-
-		//stacker.setSpacing(10);
 		layout.setSpacing(10);
 		bar.setBackground(new Background(new BackgroundFill(Color.LIGHTBLUE, CornerRadii.EMPTY, Insets.EMPTY)));
 		bar.setPrefHeight(170);
@@ -438,10 +412,9 @@ public class TamaView extends Application implements Observer {
 //				BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
 //		separator.setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));
 //		bar.getChildren().add(1, separator);
-//		bar.getChildren().add(3, separator);
-//		bar.getChildren().add(5, separator);
+
 		layout.getChildren().add(bar);
-//		window.getChildren().add(bar);
+
 
 		stage.setScene(scene);
 		stage.show(); // Show the stage
@@ -696,5 +669,24 @@ public class TamaView extends Application implements Observer {
 		screenPane = model.getCurrentPane();
 		rootPane.getChildren().add(screenPane);
 		
+	}
+
+	private HBox getStat(Rectangle rect, Label label){
+		HBox statBox = new HBox();
+		HBox displayBox = new HBox();
+		statBox.setBorder(new Border(new BorderStroke(Color.BLACK,
+				BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
+		statBox.getChildren().add(rect);
+		statBox.setPrefWidth(400);
+		statBox.setMaxWidth(400);
+		statBox.setBackground(new Background(new BackgroundFill(Color.LIGHTGREY, CornerRadii.EMPTY, Insets.EMPTY)));
+		statBox.setAlignment(Pos.CENTER_LEFT);
+
+		displayBox.getChildren().add(label);
+		displayBox.getChildren().add(statBox);
+		displayBox.setAlignment(Pos.CENTER_LEFT);
+		displayBox.setSpacing(10);
+
+		return displayBox;
 	}
 }
