@@ -10,12 +10,14 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.control.Separator;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Ellipse;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -41,8 +43,8 @@ public class TamaView extends Application implements Observer {
 	private SoundPlayer resetSound = new SoundPlayer("./res/sounds/resetGame.wav");
 
 	// Attributes for testing purposes
-	private TextField clock;
-	private TextField age;
+	private Label clock;
+	private Label age;
 	private Rectangle healthRectangle;
 	private Rectangle weightRectangle;
 	private Rectangle happinessRectangle;
@@ -321,23 +323,47 @@ public class TamaView extends Application implements Observer {
 		// Save and Load functionality (Not final view, quick and dirty for testing)
 		VBox bar = new VBox();
 		//TilePane bar = new TilePane();
+		HBox timeBox = new HBox();
+		HBox clockBox = new HBox();
+		HBox ageBox = new HBox();
 
-//		Label clockLabel = new Label("Time: ");
-//		clock = new TextField("0");
-//		clock.setPrefColumnCount(2);
-//
-//		Label ageLabel = new Label("Age: ");
-//		age = new TextField("");
-//		age.setPrefColumnCount(2);
+		Label clockLabel = new Label("Time:   ");
+		clock = new Label("0");
+		clock.setFont(new Font("Calibri", 20));
+		clock.setPrefWidth(2);
+		clockBox.getChildren().add(clockLabel);
+		clockBox.getChildren().add(clock);
+		clockBox.setAlignment(Pos.CENTER);
+
+		Label ageLabel = new Label("Age: ");
+		age = new Label("");
+		age.setFont(new Font("Calibri", 20));
+		age.setPrefWidth(2);
+		ageBox.getChildren().add(ageLabel);
+		ageBox.getChildren().add(age);
+		ageBox.setAlignment(Pos.CENTER);
+
+		timeBox.getChildren().add(clockBox);
+		timeBox.getChildren().add(ageBox);
+		timeBox.setAlignment(Pos.CENTER);
+		timeBox.setSpacing(70);
+		bar.getChildren().add(timeBox);
+
 
 		Label healthLabel = new Label("  Health: ");
-		healthLabel.setPrefWidth(70);
+		healthLabel.setPrefWidth(80);
+		healthLabel.setAlignment(Pos.CENTER);
+		healthLabel.setFont(new Font("Calibri", 15));
 
 		Label weightLabel = new Label("  Weight: ");
-		weightLabel.setPrefWidth(70);
+		weightLabel.setPrefWidth(80);
+		weightLabel.setAlignment(Pos.CENTER);
+		weightLabel.setFont(new Font("Calibri", 15));
 
 		Label happinessLabel = new Label("  Happiness: ");
-		happinessLabel.setPrefWidth(70);
+		happinessLabel.setPrefWidth(80);
+		happinessLabel.setAlignment(Pos.CENTER);
+		happinessLabel.setFont(new Font("Calibri", 15));
 
 
 		healthRectangle = new Rectangle(400, 25, Color.GREEN);
@@ -346,6 +372,8 @@ public class TamaView extends Application implements Observer {
 
 
 		HBox healthStat = new HBox();
+		healthStat.setBorder(new Border(new BorderStroke(Color.BLACK,
+				BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
 		healthStat.getChildren().add(healthRectangle);
 		healthStat.setPrefWidth(400);
 		healthStat.setMaxWidth(400);
@@ -353,6 +381,8 @@ public class TamaView extends Application implements Observer {
 		healthStat.setAlignment(Pos.CENTER_LEFT);
 
 		HBox weightStat = new HBox();
+		weightStat.setBorder(new Border(new BorderStroke(Color.BLACK,
+				BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
 		weightStat.getChildren().add(weightRectangle);
 		weightStat.setPrefWidth(400);
 		weightStat.setMaxWidth(400);
@@ -360,15 +390,18 @@ public class TamaView extends Application implements Observer {
 		weightStat.setAlignment(Pos.CENTER_LEFT);
 
 		HBox happinessStat = new HBox();
+		happinessStat.setBorder(new Border(new BorderStroke(Color.BLACK,
+				BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
 		happinessStat.getChildren().add(happinessRectangle);
 		happinessStat.setPrefWidth(400);
-		happinessStat.setMaxWidth(100);
+		happinessStat.setMaxWidth(400);
 		happinessStat.setBackground(new Background(new BackgroundFill(Color.LIGHTGREY, CornerRadii.EMPTY, Insets.EMPTY)));
 		happinessStat.setAlignment(Pos.CENTER_LEFT);
 
 
 		bar.setPrefHeight(20);
 		bar.setAlignment(Pos.CENTER);
+
 
 		HBox healthBox = new HBox();
 		healthBox.getChildren().add(healthLabel);
@@ -397,17 +430,18 @@ public class TamaView extends Application implements Observer {
 		//stacker.getChildren().add(bar);
 
 
-		HBox bar2 = new HBox();
 
-//		bar2.getChildren().add(clockLabel);
-//		bar2.getChildren().add(clock);
-//		bar2.getChildren().add(ageLabel);
-//		bar2.getChildren().add(age);
-//		stacker.getChildren().add(bar2);
 		//stacker.setSpacing(10);
 		layout.setSpacing(30);
 		bar.setBackground(new Background(new BackgroundFill(Color.LIGHTBLUE, CornerRadii.EMPTY, Insets.EMPTY)));
-		bar.setPrefHeight(100);
+		bar.setPrefHeight(150);
+		Separator separator = new Separator();
+//		separator.setBorder(new Border(new BorderStroke(Color.BLACK,
+//				BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
+//		separator.setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));
+//		bar.getChildren().add(1, separator);
+//		bar.getChildren().add(3, separator);
+//		bar.getChildren().add(5, separator);
 		layout.getChildren().add(bar);
 //		window.getChildren().add(bar);
 
@@ -415,7 +449,7 @@ public class TamaView extends Application implements Observer {
 		stage.show(); // Show the stage
 
 		// Sim for testing purposes
-		//runSim();
+		runSim();
 
 	}
 
@@ -609,8 +643,9 @@ public class TamaView extends Application implements Observer {
 
 	public void updateUIAttributes() {
 		Platform.runLater(() -> {
-			clock.setText(Integer.toString(controller.getSecondsPassed()));
-			age.setText(Float.toString(controller.getAge()));
+
+//			clock.setText(Integer.toString(controller.getSecondsPassed()));
+//			age.setText(Float.toString(controller.getAge()));
 			setStat(controller.getHealth(), healthRectangle);
 			setStat(controller.getWeight(), weightRectangle);
 			setStat(controller.getHappiness(), happinessRectangle);
@@ -619,33 +654,34 @@ public class TamaView extends Application implements Observer {
 	}
 
 	private void setStat(float val, Rectangle rect){
+		float newWidth = val * 4;
 		if(val > 100){
-			rect.setWidth(100);
+			rect.setWidth(400);
 			rect.setFill(Color.GREEN);
 		}
 		else if( val >= 75 ){
 			rect.setFill(Color.GREEN);
-			rect.setWidth(val);
+			rect.setWidth(newWidth);
 		}
 		else if( val >= 60 ){
 			rect.setFill(Color.YELLOW);
-			rect.setWidth(val);
+			rect.setWidth(newWidth);
 		}
 		else if( val >= 40 ){
 			rect.setFill(Color.ORANGE);
-			rect.setWidth(val);
+			rect.setWidth(newWidth);
 		}
 		else if( val >= 20 ){
 			rect.setFill(Color.ORANGERED);
-			rect.setWidth(val);
+			rect.setWidth(newWidth);
 		}
 		else if( val > 0 ){
 			rect.setFill(Color.DARKRED);
-			rect.setWidth(val);
+			rect.setWidth(newWidth);
 		}
 		else if(val <= 0){
 			rect.setFill(Color.BLACK);
-			rect.setWidth(100);
+			rect.setWidth(400);
 		}
 	}
 
