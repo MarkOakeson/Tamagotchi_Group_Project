@@ -35,11 +35,11 @@ import javafx.scene.layout.Pane;
  * Fullness(?): Increases when max value is 0, decreases weight and happiness when at 0. Not 
  * included in core mechanics, so inclusion of this stat is up for debate. 
  */
-public class TamaModel extends Observable implements Serializable{
+public class TamaModel extends Observable{
 	
 	// Game state
 	private GameState state;
-	private Pane screenPane;
+	private Pane screenPane = new MenuPane(this);
 	
 	//Core stats
 	private float age; 
@@ -55,9 +55,11 @@ public class TamaModel extends Observable implements Serializable{
 	private boolean healthy;
 	private boolean alive;
 	
+	private TamaController controller;
+	
 	// screenPanes
 	private MenuPane menuPane = new MenuPane(this);
-	private Sprite spritePane = new Sprite();
+	private GamePane gamePane = new GamePane(this);
 	
 	//Limits/Standards
 	private static final int AGE_PER_SECOND = 10; 
@@ -178,6 +180,10 @@ public class TamaModel extends Observable implements Serializable{
 		notifyObservers();
 	}
 
+	public TamaController getController() {
+		return controller;
+	}
+	
 	/**
 	 * Saves the current game state, including the pet's attributes
 	 * and current status, by writing this Model object to a save file
@@ -260,29 +266,45 @@ public class TamaModel extends Observable implements Serializable{
 	public boolean isAlive() {return alive;}
 	private void die() {alive = false;}
 
+	
+	
+	/**
+	 * for use by controller, sets the screen to be the right pane view
+	 * @param screenPane
+	 */
+	public void setCurrentPane(Pane screenPane) {
+		this.screenPane = screenPane;
+	}
+	
+	/*
+	 * Returns the current screenPane to the model (or whatever calls it)
+	 */
 	public Pane getCurrentPane() {
-		if (state.getState().equals("sprite")) {
-			screenPane = spritePane;
-			screenPane.setLayoutX(200);
-			screenPane.setLayoutY(150);
-			screenPane.resize(50, 50);
-		} else if (state.getState().equals("menu")) {
-			screenPane = menuPane;
-			screenPane.setLayoutX(190);
-			screenPane.setLayoutY(160);
-			screenPane.resize(50, 50);
-		}
 		return screenPane;
 	}
 	
+	/**
+	 * adds an observer to the model
+	 * @param o: observer
+	 */
 	public void plusObserver(Observer o) {
 		addObserver(o);
-
-		System.out.println(countObservers());
 	}
 	
+	/**
+	 * Tells all observers that a button was pressed. This calls update.
+	 * @param button: button ID
+	 */
 	public void pressed(String button) {
 		setChanged();
 		notifyObservers(button);
+	}
+
+	/*
+	 * experimental, wanted to test if controller was referenced
+	 */
+	public void setController(TamaController controller) {
+		this.controller = controller;
+		
 	}
 }

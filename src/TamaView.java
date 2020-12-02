@@ -26,7 +26,7 @@ public class TamaView extends Application implements Observer {
 
 	private TamaController controller;
 	private TamaModel model;
-	
+
 	private Observable o;
 
 	Pane rootPane = new Pane();
@@ -85,23 +85,23 @@ public class TamaView extends Application implements Observer {
 		this.window = new Pane();
 
 		this.layout = new VBox();
-		
+
 
 	}
 
 	/**
 	 * Purpose: Creates the view. Ellipse in center, with a rectangle over it. 3
 	 * buttons.
-	 * 
+	 *
 	 * @param stage to create the stage
 	 */
 	@Override
 	public void start(Stage stage) {
 		this.stage = stage;
-		
-		
+
+
 		// TODO reset observable
-		
+
 		// If a save exists, load the save on startup
 
 //		new Thread(() -> {
@@ -269,15 +269,15 @@ public class TamaView extends Application implements Observer {
 		window.getChildren().add(resetLabel);
 
 		// Sprite
-		
+
 		// Here's the idea: We'll have a wildcard pane that displays the screen,
 		//					the update function changes the pane, and the model chooses
 		//					the correct pane based on the gamestate. Can you do this
 		//					in javafx? who's to say for sure
-		
+
 
 		screenPane = model.getCurrentPane();
-		
+
 		layout.getChildren().add(window);
 		rootPane.getChildren().addAll(layout, screenPane);
 
@@ -468,6 +468,12 @@ public class TamaView extends Application implements Observer {
 
 	}
 
+	/*
+	 * user has pressed button 2:
+	 * 		play a sound
+	 * 		play the button press animation
+	 * 		call the controller and tell it whats up
+	 */
 	protected void press2() {
 		// Play a sound
 		buttonPress.play();
@@ -489,6 +495,12 @@ public class TamaView extends Application implements Observer {
 
 	}
 
+	/*
+	 * user has pressed button 3:
+	 * 		play a sound
+	 * 		play the button press animation
+	 * 		call the controller and tell it whats up
+	 */
 	protected void press3() {
 
 		// Play a sound
@@ -511,6 +523,12 @@ public class TamaView extends Application implements Observer {
 
 	}
 
+	/*
+	 * user has pressed reset button:
+	 * 		play a sound
+	 * 		play the button press animation
+	 * 		call the controller and tell it whats up
+	 */
 	protected void pressReset() {
 		resetSound.play();
 		controller.resetPet();
@@ -529,11 +547,17 @@ public class TamaView extends Application implements Observer {
 
 	}
 
+	/*
+	 * user has pressed load button:
+	 * 		play a sound
+	 * 		play the button press animation
+	 * 		call the controller and tell it whats up
+	 */
 	protected void pressLoad() throws IOException {
 		loadGameSound.play();
 		controller.loadGamePress();
 
-		
+
 		updateUIAttributes();
 
 		saveGame.setVisible(false);
@@ -550,6 +574,12 @@ public class TamaView extends Application implements Observer {
 
 	}
 
+	/*
+	 * user has pressed save button:
+	 * 		play a sound
+	 * 		play the button press animation
+	 * 		call the controller and tell it whats up
+	 */
 	protected void pressSave() {
 		saveGameSound.play();
 
@@ -580,7 +610,7 @@ public class TamaView extends Application implements Observer {
 	/**
 	 * Purpose: Handles the mouse press of any of the three button with an animation
 	 * and a call to the controller.
-	 * 
+	 *
 	 * @param pos
 	 */
 	private void handlePress(int[] pos) {
@@ -685,11 +715,11 @@ public class TamaView extends Application implements Observer {
 	public void update(Observable o, Object arg) {
 		if (arg == null)
 			return;
-		
+
 		rootPane.getChildren().remove(screenPane);
 		screenPane = model.getCurrentPane();
 		rootPane.getChildren().add(screenPane);
-		
+
 	}
 
 

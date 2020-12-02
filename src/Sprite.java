@@ -12,7 +12,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 
-public class Sprite extends Pane {
+public class Sprite extends Pane{
 	private int frame;
 
 //	URL url = getClass().getResource("/testSpriteSheet.png");
@@ -42,19 +42,26 @@ public class Sprite extends Pane {
 	
 	
 	
-	private static final Image IMAGE = new Image("file:./res/images/dino.png");
-
-    private static final int COLUMNS  =  2;
-    private static final int COUNT    =  2;
+	private Image img; // = new Image("file:./res/images/dino.png");
     private static final int OFFSET_X =  0;
     private static final int OFFSET_Y =  0;
-    private static final int WIDTH    = 150;
-    private static final int HEIGHT   = 150;
+    private int col;
+    private int count;
+    private int w;
+    private int h;
+    private int cycle;
+    private int duration;
     
-    public Sprite() {
+    public Sprite(int col, int count, int w, int h, Image img, int cycle, int duration) {
+    	this.cycle = cycle;
+    	this.img = img;
+    	this.col = col;
+    	this.count = count;
+    	this.w = w;
+    	this.h = h;
 
-        final ImageView imageView = new ImageView(IMAGE);
-        imageView.setViewport(new Rectangle2D(OFFSET_X, OFFSET_Y, WIDTH, HEIGHT));
+        final ImageView imageView = new ImageView(img);
+        imageView.setViewport(new Rectangle2D(OFFSET_X, OFFSET_Y, w, h));
 
         imageView.setFitHeight(100);
         imageView.setFitWidth(100);
@@ -65,12 +72,12 @@ public class Sprite extends Pane {
         
         final Animation animation = new SpriteAnimation(
                 imageView,
-                Duration.millis(700),
-                COUNT, COLUMNS,
+                Duration.millis(duration),
+                count, col,
                 OFFSET_X, OFFSET_Y,
-                WIDTH, HEIGHT
+                w, h
         );
-        animation.setCycleCount(Animation.INDEFINITE);
+        animation.setCycleCount(cycle);
         animation.play();
     }
 	

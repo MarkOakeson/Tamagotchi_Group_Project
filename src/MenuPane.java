@@ -13,12 +13,13 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
 
-public class MenuPane extends Pane implements Observer, Serializable{
+public class MenuPane extends Pane implements Observer{
 
 	private Text newGame;
 	private Text loadGame;
 	private Text selected;
 	private TamaModel model;
+	private Pane pane;
 
 	public MenuPane(TamaModel model) {
 
@@ -28,10 +29,14 @@ public class MenuPane extends Pane implements Observer, Serializable{
 		newGame = new Text("NEW GAME");
 		newGame.setFont(Font.font(20));
 		newGame.setFill(Color.DARKSLATEGRAY);
+		newGame.setX(190);
+		newGame.setY(170);
 
 		loadGame = new Text("\nLOAD GAME");
 		loadGame.setFont(Font.font(20));
 		loadGame.setFill(Color.DARKSLATEGRAY);
+		loadGame.setX(190);
+		loadGame.setY(200);
 
 		selected = newGame; // default
 
@@ -39,11 +44,14 @@ public class MenuPane extends Pane implements Observer, Serializable{
 		timeline.setCycleCount(Animation.INDEFINITE); // loop forever
 		timeline.play();
 
-		VBox vbox = new VBox();
-		vbox.getChildren().addAll(newGame, loadGame);
-		super.getChildren().add(vbox);
+		pane = new Pane();
+		pane.getChildren().addAll(newGame, loadGame);
+		super.getChildren().add(pane);
 	}
 
+	/*
+	 * blinks currently selected option
+	 */
 	private void changeFrame() {
 		selected.setVisible(!selected.isVisible());
 	}
@@ -53,7 +61,7 @@ public class MenuPane extends Pane implements Observer, Serializable{
 		if (arg == null || !model.getState().getState().equals("menu")) {
 			return;
 		}
-		if (arg.equals("2")) {
+		if (arg.equals("1") || arg.equals("3")) {
 			if (selected.equals(newGame)) {
 				selected.setVisible(true);
 				selected = loadGame;
@@ -61,18 +69,18 @@ public class MenuPane extends Pane implements Observer, Serializable{
 				selected.setVisible(true);
 				selected = newGame;
 			}
-		} else if (arg.equals("1")) {
-			if (model.getState().getState().equals("menu")) {
-				model.getState().changeState("sprite");
-			}
-			model.pressed("updateScreenPane");
+		} else if (arg.equals("2")) {
+			
+			model.getController().changeState("game");
+			
+			model.pressed("updateScreenPane. This string is bogus and doesnt matter");
+			
 			if (selected.equals(newGame)) {
 				model.resetPet();
 			} else {
 				try {
 					model.load();
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}
