@@ -42,8 +42,8 @@ public class GamePane extends Pane implements Observer{
 		//controller = model.getController();
 		
 		model.addObserver(this);
-		
 		tama = new Sprite(3, 3, 160, 160, new Image("file:./res/images/tama.png"), Animation.INDEFINITE, 700);
+//			tama = new Sprite(3, 3, 160, 160, new Image("file:./res/images/sickTama.png"), Animation.INDEFINITE, 700);
 		tama.setLayoutX(190);
 		tama.setLayoutY(150);
 		
@@ -97,6 +97,14 @@ public class GamePane extends Pane implements Observer{
 		
 		selected.setVisible(!selected.isVisible());
 	}
+
+	private void setSickImg(){
+		this.tama = new Sprite(3, 3, 160, 160, new Image("file:./res/images/sickTama.png"), Animation.INDEFINITE, 700);
+		tama.setLayoutX(190);
+		tama.setLayoutY(150);
+		grid.getChildren().add(tama);
+	}
+
 	
 	/**
 	 * makes the tamagotchi a meal, animated a meal, 
@@ -118,9 +126,11 @@ public class GamePane extends Pane implements Observer{
 			tama.setLayoutX(190);
 			eating = false;
 			model.getController().eatMeal();
+			if(!model.isHealthy()){
+				setSickImg();
+			}
 		});
 		pause.play();
-		
 	}
 	
 	/**
@@ -142,7 +152,9 @@ public class GamePane extends Pane implements Observer{
 			grid.getChildren().remove(snack);
 			tama.setLayoutX(190);
 			eating = false;
-			model.getController().eatSnack();
+			if(!model.isHealthy()){
+				setSickImg();
+			}
 		});
 		pause.play();
 		
