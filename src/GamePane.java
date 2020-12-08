@@ -152,6 +152,7 @@ public class GamePane extends Pane implements Observer{
 			grid.getChildren().remove(snack);
 			tama.setLayoutX(190);
 			eating = false;
+			model.getController().eatSnack();
 			if(!model.isHealthy()){
 				setSickImg();
 			}
