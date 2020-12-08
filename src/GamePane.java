@@ -23,10 +23,12 @@ public class GamePane extends Pane implements Observer{
 	private Sprite tama;
 	private Sprite meal;
 	private Sprite snack;
+	private Sprite medicine;
 	private TamaModel model;
 	private Pane grid;
 	private Text mealSelect;
 	private Text snackSelect;
+	private Text medicineSelect;
 	private Text playSelect;
 	private Text statsSelect;
 	private Text selected; // Default
@@ -56,6 +58,12 @@ public class GamePane extends Pane implements Observer{
 		snackSelect.setFont(Font.font(15));
 		snackSelect.setX(210);
 		snackSelect.setY(130);
+
+		// MEDICINE
+		medicineSelect = new Text("MEDICINE");
+		medicineSelect.setFont(Font.font(15));
+		medicineSelect.setX(270);
+		medicineSelect.setY(130);
 		
 		// PLAY
 		playSelect = new Text("PLAY");
@@ -67,11 +75,12 @@ public class GamePane extends Pane implements Observer{
 		selections = new ArrayList<Text>();
 		selections.add(mealSelect);
 		selections.add(snackSelect);
+		selections.add(medicineSelect);
 		selections.add(playSelect);
 		
-		
+
 		grid = new Pane();
-		grid.getChildren().addAll(tama, mealSelect, snackSelect, playSelect);
+		grid.getChildren().addAll(tama, mealSelect, snackSelect, medicineSelect, playSelect);
 		super.getChildren().add(grid);
 		
 		selected = mealSelect;
@@ -99,7 +108,7 @@ public class GamePane extends Pane implements Observer{
 	
 	/**
 	 * makes the tamagotchi a meal, animated a meal, 
-	 * calls the eatSnack controller function
+	 * calls the eatMeal controller function
 	 */
 	private void makeMeal() {
 		eating = true;
@@ -150,6 +159,31 @@ public class GamePane extends Pane implements Observer{
 		pause.play();
 		
 	}
+
+	/**
+	 * makes the tamagotchi some medicine, animated a medicine,
+	 * calls the feedMedicine controller function
+	 */
+	private void makeMedicine() {
+		eating = true;
+		tama.setLayoutX(200);
+
+		medicine = new Sprite(3, 3, 540, 478, new Image("file:./res/images/hearts.png"), 1, 2100);
+		medicine.setLayoutX(150);
+		medicine.setLayoutY(150);
+		medicine.setScaleX(0.3);
+		medicine.setScaleY(0.3);
+		grid.getChildren().addAll(medicine);
+		PauseTransition pause = new PauseTransition(Duration.millis(2100));
+		pause.setOnFinished(e -> {
+			grid.getChildren().remove(medicine);
+			tama.setLayoutX(190);
+			eating = false;
+			model.getController().feedMedicine();
+		});
+		pause.play();
+
+	}
 	
 
 	// Plays selected animation, then calls the correct controller 
@@ -159,6 +193,8 @@ public class GamePane extends Pane implements Observer{
 			makeMeal();
 		} else if (selected.equals(snackSelect) && !eating) {
 			makeSnack();
+		} else if (selected.equals(medicineSelect) && !eating){
+			makeMedicine();
 		}
 		
 	}
@@ -196,12 +232,13 @@ public class GamePane extends Pane implements Observer{
 		if (arg == null || !model.getController().getState().equals("game")) {
 			return;
 		}
+
 		if (arg.equals("3")) {
-			prevSelect();
+			nextSelect();
 		} else if (arg.equals("2")) {
 			select();
 		} else if (arg.equals("1")) {
-			nextSelect();
+			prevSelect();
 		}
 	}
 
