@@ -157,7 +157,7 @@ public class TamaModel extends Observable{
 		}
 
 		//Check if pet will die
-		chanceOfDeath();
+		determineDeath();
 
 		// Autosaves every 30 seconds
 		if (secondsPassed % 30 == 0){
@@ -306,7 +306,7 @@ public class TamaModel extends Observable{
 	 * whether the pet will die or not. If pet should die, this method
 	 * kills the pet.
 	 */
-	public void chanceOfDeath(){
+	public void determineDeath(){
 		if(!isHealthy() && isUnderOverWt()){
 			die();
 		}
