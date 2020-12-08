@@ -157,15 +157,7 @@ public class TamaModel extends Observable{
 		}
 
 		//Check if pet will die
-		if(!isHealthy() && isUnderOverWt()){
-			die();
-		}
-		else if(isUnhappy() && isUnderOverWt()){
-			die();
-		}
-		else if(isUnhappy() && !isHealthy()){
-			die();
-		}
+		chanceOfDeath();
 
 		// Autosaves every 30 seconds
 		if (secondsPassed % 30 == 0){
@@ -306,5 +298,23 @@ public class TamaModel extends Observable{
 	public void setController(TamaController controller) {
 		this.controller = controller;
 		
+	}
+
+	/**
+	 * Determines whether pet is in a state wherein it could die, and
+	 * if so, based on the severity of the conditions it is in calculates
+	 * whether the pet will die or not. If pet should die, this method
+	 * kills the pet.
+	 */
+	public void chanceOfDeath(){
+		if(!isHealthy() && isUnderOverWt()){
+			die();
+		}
+		else if(isUnhappy() && isUnderOverWt()){
+			die();
+		}
+		else if(isUnhappy() && !isHealthy()){
+			die();
+		}
 	}
 }
