@@ -98,11 +98,21 @@ public class GamePane extends Pane implements Observer{
 		selected.setVisible(!selected.isVisible());
 	}
 
-	private void setSickImg(){
+
+	public void setSickImg(){
 		this.tama = new Sprite(3, 3, 160, 160, new Image("file:./res/images/sickTama.png"), Animation.INDEFINITE, 700);
 		tama.setLayoutX(190);
 		tama.setLayoutY(150);
-		grid.getChildren().add(tama);
+		grid.getChildren().remove(0);
+		grid.getChildren().add(0, tama);
+	}
+
+	public void setHealthyImg(){
+		this.tama = new Sprite(3, 3, 160, 160, new Image("file:./res/images/tama.png"), Animation.INDEFINITE, 700);
+		tama.setLayoutX(190);
+		tama.setLayoutY(150);
+		grid.getChildren().remove(0);
+		grid.getChildren().add(0, tama);
 	}
 
 	
@@ -126,9 +136,9 @@ public class GamePane extends Pane implements Observer{
 			tama.setLayoutX(190);
 			eating = false;
 			model.getController().eatMeal();
-			if(!model.isHealthy()){
-				setSickImg();
-			}
+//			if(!model.isHealthy()){
+//				setSickImg();
+//			}
 		});
 		pause.play();
 	}
@@ -152,9 +162,9 @@ public class GamePane extends Pane implements Observer{
 			grid.getChildren().remove(snack);
 			tama.setLayoutX(190);
 			eating = false;
-			if(!model.isHealthy()){
-				setSickImg();
-			}
+//			if(!model.isHealthy()){
+//				setSickImg();
+//			}
 		});
 		pause.play();
 		
@@ -180,6 +190,7 @@ public class GamePane extends Pane implements Observer{
 			tama.setLayoutX(190);
 			eating = false;
 			model.getController().feedMedicine();
+			setHealthyImg();
 		});
 		pause.play();
 

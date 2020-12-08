@@ -147,6 +147,10 @@ public class TamaModel extends Observable{
 		if(health < 0) {health = 0;}
 		else if(health > MAX_HEALTH) {health = MAX_HEALTH;}
 
+		if(!isHealthy()){
+			gamePane.setSickImg();
+		}
+
 		if(weight < 0) {weight = 0;}
 		else if(weight > MAX_WEIGHT) {weight = MAX_WEIGHT;}
 
@@ -184,6 +188,8 @@ public class TamaModel extends Observable{
 				e.printStackTrace();
 			}
 		}
+
+
 		
 		setChanged();
 		notifyObservers();
@@ -273,16 +279,29 @@ public class TamaModel extends Observable{
 	public void feedMedicine() {healthy = true; happiness -= MEDI_HAPPINESS_LOSS;}
 	
 	public boolean isAlive() {return alive;}
-	private void die() {alive = false;}
+	private void die() {
+		alive = false;
+	}
 
 	
 	
 	/**
 	 * for use by controller, sets the screen to be the right pane view
-	 * @param screenPane
+	 * @param
 	 */
-	public void setCurrentPane(Pane screenPane) {
-		this.screenPane = screenPane;
+	public void setCurrentPane(String gameState) {
+		state.changeState(gameState);
+		if(state.getState().equals("game")){
+			this.gamePane = new GamePane(this);
+			this.screenPane = gamePane;
+			this.menuPane = null;
+		}
+		else{
+			this.menuPane = new MenuPane(this);
+			this.screenPane = menuPane;
+			this.gamePane = null;
+		}
+
 	}
 	
 	/*

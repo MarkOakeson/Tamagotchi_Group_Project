@@ -652,7 +652,6 @@ public class TamaView extends Application implements Observer {
 	public void runSim() {
 		new Thread(() -> {
 			while (stage.isShowing()) {
-				controller.updatePet();
 				updateUIAttributes();
 				if(!controller.isAlive()){
 					break;
@@ -671,7 +670,7 @@ public class TamaView extends Application implements Observer {
 
 	public void updateUIAttributes() {
 		Platform.runLater(() -> {
-
+			controller.updatePet();
 			clock.setText(Integer.toString(controller.getSecondsPassed()));
 			System.out.println(controller.getAge());
 			age.setText(Float.toString(controller.getAge()));
