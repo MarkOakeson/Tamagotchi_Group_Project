@@ -93,14 +93,7 @@ public class TamaModel extends Observable{
 		this.healthy = true;
 		this.alive = true;
 		attributes = new Attributes();
-		
-//		try {
-//			save();
-//		} catch (IOException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//		
+
 	}
 	
 	public GameState getState() {
@@ -322,7 +315,6 @@ public class TamaModel extends Observable{
 			}else{
 				chanceOfDeath += weight / 2;
 			}
-			die();
 		}
 		else if(isUnhappy() && isUnderOverWt()){
 			chanceOfDeath += (100 - happiness);
