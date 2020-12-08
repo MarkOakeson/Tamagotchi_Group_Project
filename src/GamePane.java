@@ -23,6 +23,7 @@ public class GamePane extends Pane implements Observer{
 	private Sprite tama;
 	private Sprite meal;
 	private Sprite snack;
+	private Sprite medicine;
 	private TamaModel model;
 	private Pane grid;
 	private Text mealSelect;
@@ -99,7 +100,7 @@ public class GamePane extends Pane implements Observer{
 	
 	/**
 	 * makes the tamagotchi a meal, animated a meal, 
-	 * calls the eatSnack controller function
+	 * calls the eatMeal controller function
 	 */
 	private void makeMeal() {
 		eating = true;
@@ -145,6 +146,31 @@ public class GamePane extends Pane implements Observer{
 		});
 		pause.play();
 		
+	}
+
+	/**
+	 * makes the tamagotchi some medicine, animated a medicine,
+	 * calls the feedMedicine controller function
+	 */
+	private void makeMedicine() {
+		eating = true;
+		tama.setLayoutX(200);
+
+		medicine = new Sprite(3, 3, 27, 24, new Image("file:./res/images/meal.png"), 1, 2100);
+		medicine.setLayoutX(150);
+		medicine.setLayoutY(150);
+		medicine.setScaleX(0.5);
+		medicine.setScaleY(0.5);
+		grid.getChildren().addAll(medicine);
+		PauseTransition pause = new PauseTransition(Duration.millis(2100));
+		pause.setOnFinished(e -> {
+			grid.getChildren().remove(medicine);
+			tama.setLayoutX(190);
+			eating = false;
+			model.getController().feedMedicine();
+		});
+		pause.play();
+
 	}
 	
 
