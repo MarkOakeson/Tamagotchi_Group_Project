@@ -181,6 +181,8 @@ public class GamePane extends Pane implements Observer{
 			makeMeal();
 		} else if (selected.equals(snackSelect) && !eating) {
 			makeSnack();
+		} else if (selected.equals(medicineSelect) && !eating){
+			makeMedicine();
 		}
 		
 	}
