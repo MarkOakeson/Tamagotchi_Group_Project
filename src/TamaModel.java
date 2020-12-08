@@ -318,18 +318,18 @@ public class TamaModel extends Observable{
 		if(!isHealthy() && isUnderOverWt()){
 			chanceOfDeath += (100 - health);
 			if (weight < MAX_WEIGHT/4){
-				chanceOfDeath += (weight / 2);
+				chanceOfDeath += 100 - weight;
 			}else{
-				chanceOfDeath += (100 - weight) / 2;
+				chanceOfDeath += weight / 2;
 			}
 			die();
 		}
 		else if(isUnhappy() && isUnderOverWt()){
 			chanceOfDeath += (100 - happiness);
 			if (weight < MAX_WEIGHT/4){
-				chanceOfDeath += (weight / 2);
+				chanceOfDeath += 100 - weight;
 			}else{
-				chanceOfDeath += (100 - weight) / 2;
+				chanceOfDeath += weight / 2;
 			}
 		}
 		else if(isUnhappy() && !isHealthy()){
