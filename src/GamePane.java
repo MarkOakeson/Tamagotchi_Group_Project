@@ -90,7 +90,7 @@ public class GamePane extends Pane implements Observer{
 		
 	}
 
-	/*
+	/**
 	 * blinks currently selected menu item
 	 */
 	private void changeFrame() {

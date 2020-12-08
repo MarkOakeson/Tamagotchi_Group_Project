@@ -21,4 +21,3 @@ public class TamaLauncher {
 		
 	} // End main
 } // End class
-
