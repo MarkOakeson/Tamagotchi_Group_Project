@@ -167,8 +167,8 @@ public class TamaModel extends Observable{
 			die();
 		}
 
-		// Autosaves every 60 seconds
-		if (secondsPassed % 60 == 0){
+		// Autosaves every 30 seconds
+		if (secondsPassed % 30 == 0){
 			try{
 				save();
 			}catch (IOException e){
