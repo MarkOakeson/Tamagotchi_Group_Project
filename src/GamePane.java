@@ -192,6 +192,7 @@ public class GamePane extends Pane implements Observer{
 		if (arg == null || !model.getController().getState().equals("game")) {
 			return;
 		}
+
 		if (arg.equals("3")) {
 			nextSelect();
 		} else if (arg.equals("2")) {
