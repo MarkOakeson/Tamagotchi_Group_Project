@@ -159,8 +159,8 @@ public class GamePane extends Pane implements Observer{
 		medicine = new Sprite(3, 3, 540, 478, new Image("file:./res/images/hearts.png"), 1, 2100);
 		medicine.setLayoutX(150);
 		medicine.setLayoutY(150);
-		medicine.setScaleX(0.5);
-		medicine.setScaleY(0.5);
+		medicine.setScaleX(0.3);
+		medicine.setScaleY(0.3);
 		grid.getChildren().addAll(medicine);
 		PauseTransition pause = new PauseTransition(Duration.millis(2100));
 		pause.setOnFinished(e -> {
