@@ -408,8 +408,13 @@ public class TamaView extends Application implements Observer {
 		bar.getChildren().add(5, separator3);
 
 		layout.setSpacing(10);
-		layout.getChildren().add(bar);
+		
+		//layout.getChildren().add(bar);  ->  this will not update consistently
 
+		bar.setLayoutY(490);
+		
+		rootPane.getChildren().add(bar);//->  this will
+		
 		stage.setScene(scene);
 		stage.show(); // Show the stage
 
