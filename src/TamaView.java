@@ -675,20 +675,16 @@ public class TamaView extends Application implements Observer {
 			clock.setText(Integer.toString(controller.getSecondsPassed()));
 			System.out.println(controller.getAge());
 			age.setText(Float.toString(controller.getAge()));
-			setStat(controller.getHealth(), healthRectangle);
-			setStat(controller.getWeight(), weightRectangle);
-			setStat(controller.getHappiness(), happinessRectangle);
+			setHealthAndHappiness(controller.getHealth(), healthRectangle);
+			setWeightStat(controller.getWeight(), weightRectangle);
+			setHealthAndHappiness(controller.getHappiness(), happinessRectangle);
 
 		});
 	}
 
-	private void setStat(float val, Rectangle rect){
+	private void setHealthAndHappiness(float val, Rectangle rect){
 		float newWidth = val * 4;
-		if(val > 100){
-			rect.setWidth(400);
-			rect.setFill(Color.GREEN);
-		}
-		else if( val >= 75 ){
+		if( val >= 75 ){
 			rect.setFill(Color.GREEN);
 			rect.setWidth(newWidth);
 		}
@@ -700,17 +696,37 @@ public class TamaView extends Application implements Observer {
 			rect.setFill(Color.ORANGE);
 			rect.setWidth(newWidth);
 		}
-		else if( val >= 20 ){
+		else if( val >= 25 ){
 			rect.setFill(Color.ORANGERED);
 			rect.setWidth(newWidth);
 		}
-		else if( val > 0 ){
+		else if( val >= 0 ){
 			rect.setFill(Color.DARKRED);
 			rect.setWidth(newWidth);
 		}
-		else if(val <= 0){
-			rect.setFill(Color.BLACK);
-			rect.setWidth(400);
+	}
+
+	private void setWeightStat(float val, Rectangle rect){
+		float newWidth = val * 4;
+		if( val >= 75 ){
+			rect.setFill(Color.RED);
+			rect.setWidth(newWidth);
+		}
+		else if( val >= 60 ){
+			rect.setFill(Color.YELLOW);
+			rect.setWidth(newWidth);
+		}
+		else if( val >= 40 ){
+			rect.setFill(Color.GREEN);
+			rect.setWidth(newWidth);
+		}
+		else if( val >= 25 ){
+			rect.setFill(Color.YELLOW);
+			rect.setWidth(newWidth);
+		}
+		else if( val >= 0 ){
+			rect.setFill(Color.DARKRED);
+			rect.setWidth(newWidth);
 		}
 	}
 

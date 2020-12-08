@@ -84,9 +84,9 @@ public class TamaModel extends Observable{
 		state = new GameState();
 		
 		this.age = 0;
-		this.health = MAX_HEALTH;
-		this.weight = MAX_WEIGHT;
-		this.happiness = MAX_HAPPINESS;
+		this.health = 50;
+		this.weight = 50;
+		this.happiness = 50;
 		
 		this.secondsPassed = 0;
 		
@@ -109,9 +109,9 @@ public class TamaModel extends Observable{
 	
 	public void resetPet() {
 		age = 0;
-		health = MAX_HEALTH;
-		weight = MAX_WEIGHT;
-		happiness = MAX_HAPPINESS;
+		health = 50;
+		weight = 50;
+		happiness = 50;
 		
 		secondsPassed = 0;
 		
@@ -158,12 +158,15 @@ public class TamaModel extends Observable{
 
 		//Check if pet will die
 		if(!isHealthy() && isUnderOverWt()){
+			System.out.println("Not healthy and weight");
 			die();
 		}
 		else if(isUnhappy() && isUnderOverWt()){
+			System.out.println("Not happy and weight");
 			die();
 		}
 		else if(isUnhappy() && !isHealthy()){
+			System.out.println("Not healthy and happy");
 			die();
 		}
 
