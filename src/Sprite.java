@@ -80,6 +80,12 @@ public class Sprite extends Pane{
         animation.setCycleCount(cycle);
         animation.play();
     }
+
+    public void setImage(Image img){
+        this.img = img;
+    }
+
+
 	
 	
 	
