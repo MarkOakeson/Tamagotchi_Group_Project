@@ -128,7 +128,7 @@ public class GamePane extends Pane implements Observer{
 		snack.setScaleX(0.3);
 		snack.setScaleY(0.3);
 		grid.getChildren().addAll(snack);
-		PauseTransition pause = new PauseTransition(Duration.millis(1000));
+		PauseTransition pause = new PauseTransition(Duration.millis(1500));
 		pause.setOnFinished(e -> {
 			grid.getChildren().remove(snack);
 			tama.setLayoutX(190);
