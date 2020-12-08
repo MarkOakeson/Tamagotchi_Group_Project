@@ -156,7 +156,7 @@ public class GamePane extends Pane implements Observer{
 		eating = true;
 		tama.setLayoutX(200);
 
-		medicine = new Sprite(3, 3, 27, 24, new Image("file:./res/images/meal.png"), 1, 2100);
+		medicine = new Sprite(3, 3, 540, 478, new Image("file:./res/images/hearts.png"), 1, 2100);
 		medicine.setLayoutX(150);
 		medicine.setLayoutY(150);
 		medicine.setScaleX(0.5);
