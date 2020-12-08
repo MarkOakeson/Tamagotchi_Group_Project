@@ -27,6 +27,7 @@ public class GamePane extends Pane implements Observer{
 	private Pane grid;
 	private Text mealSelect;
 	private Text snackSelect;
+	private Text medicineSelect;
 	private Text playSelect;
 	private Text statsSelect;
 	private Text selected; // Default
@@ -56,6 +57,12 @@ public class GamePane extends Pane implements Observer{
 		snackSelect.setFont(Font.font(15));
 		snackSelect.setX(210);
 		snackSelect.setY(130);
+
+		// MEDICINE
+		medicineSelect = new Text("MEDICINE");
+		medicineSelect.setFont(Font.font(15));
+		medicineSelect.setX(270);
+		medicineSelect.setY(130);
 		
 		// PLAY
 		playSelect = new Text("PLAY");
@@ -67,11 +74,12 @@ public class GamePane extends Pane implements Observer{
 		selections = new ArrayList<Text>();
 		selections.add(mealSelect);
 		selections.add(snackSelect);
+		selections.add(medicineSelect);
 		selections.add(playSelect);
 		
-		
+
 		grid = new Pane();
-		grid.getChildren().addAll(tama, mealSelect, snackSelect, playSelect);
+		grid.getChildren().addAll(tama, mealSelect, snackSelect, medicineSelect, playSelect);
 		super.getChildren().add(grid);
 		
 		selected = mealSelect;
@@ -185,11 +193,11 @@ public class GamePane extends Pane implements Observer{
 			return;
 		}
 		if (arg.equals("3")) {
-			prevSelect();
+			nextSelect();
 		} else if (arg.equals("2")) {
 			select();
 		} else if (arg.equals("1")) {
-			nextSelect();
+			prevSelect();
 		}
 	}
 
