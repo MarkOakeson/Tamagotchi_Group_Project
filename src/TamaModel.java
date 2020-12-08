@@ -84,9 +84,9 @@ public class TamaModel extends Observable{
 		state = new GameState();
 		
 		this.age = 0;
-		this.health = MAX_HEALTH;
-		this.weight = MAX_WEIGHT;
-		this.happiness = MAX_HAPPINESS;
+		this.health = 50;
+		this.weight = 50;
+		this.happiness = 50;
 		
 		this.secondsPassed = 0;
 		
@@ -109,9 +109,9 @@ public class TamaModel extends Observable{
 	
 	public void resetPet() {
 		age = 0;
-		health = MAX_HEALTH;
-		weight = MAX_WEIGHT;
-		happiness = MAX_HAPPINESS;
+		health = 50;
+		weight = 50;
+		happiness = 50;
 		
 		secondsPassed = 0;
 		
@@ -146,6 +146,12 @@ public class TamaModel extends Observable{
 		health += -0.5 + rand.nextFloat();
 		if(health < 0) {health = 0;}
 		else if(health > MAX_HEALTH) {health = MAX_HEALTH;}
+
+		if(weight < 0) {weight = 0;}
+		else if(weight > MAX_WEIGHT) {weight = MAX_WEIGHT;}
+
+		if(happiness < 0) {happiness = 0;}
+		else if(happiness > MAX_HAPPINESS) {happiness = MAX_HAPPINESS;}
 		weight -= 2;
 		if(weight < 0) {weight = 0;}
 		
@@ -157,10 +163,21 @@ public class TamaModel extends Observable{
 		}
 
 		//Check if pet will die
-		determineDeath();
+		if(!isHealthy() && isUnderOverWt()){
+			System.out.println("Not healthy and weight");
+			die();
+		}
+		else if(isUnhappy() && isUnderOverWt()){
+			System.out.println("Not happy and weight");
+			die();
+		}
+		else if(isUnhappy() && !isHealthy()){
+			System.out.println("Not healthy and happy");
+			die();
+		}
 
-		// Autosaves every 30 seconds
-		if (secondsPassed % 30 == 0){
+		// Autosaves every 60 seconds
+		if (secondsPassed % 60 == 0){
 			try{
 				save();
 			}catch (IOException e){
@@ -252,7 +269,7 @@ public class TamaModel extends Observable{
 	public boolean isUnhappy() {return happiness < 30;}
 	
 	public boolean isHealthy() {return healthy;}
-	private void makeSick() {healthy = false;}
+	public void makeSick() {healthy = false;}
 	public void feedMedicine() {healthy = true; happiness -= MEDI_HAPPINESS_LOSS;}
 	
 	public boolean isAlive() {return alive;}
@@ -298,43 +315,5 @@ public class TamaModel extends Observable{
 	public void setController(TamaController controller) {
 		this.controller = controller;
 		
-	}
-
-	/**
-	 * Determines whether pet is in a state wherein it could die, and
-	 * if so, based on the severity of the conditions it is in calculates
-	 * whether the pet will die or not. If pet should die, this method
-	 * kills the pet.
-	 */
-	public void determineDeath(){
-		float chanceOfDeath = 0;
-
-		if(!isHealthy() && isUnderOverWt()){
-			chanceOfDeath += (100 - health);
-			if (weight < MAX_WEIGHT/4){
-				chanceOfDeath += (weight / 2);
-			}else{
-				chanceOfDeath += (100 - weight) / 2;
-			}
-			die();
-		}
-		else if(isUnhappy() && isUnderOverWt()){
-			chanceOfDeath += (100 - happiness);
-			if (weight < MAX_WEIGHT/4){
-				chanceOfDeath += (weight / 2);
-			}else{
-				chanceOfDeath += (100 - weight) / 2;
-			}
-		}
-		else if(isUnhappy() && !isHealthy()){
-			chanceOfDeath += (100 - health) / 2;
-			chanceOfDeath += (float)(100 - happiness) / 2;
-		}
-		Random deathRand = new Random();
-		float deathValue = deathRand.nextFloat() * 100;
-		// If pet is calculated to die, kills pet
-		if (deathValue < chanceOfDeath){
-			die();
-		}
 	}
 }
