@@ -93,16 +93,6 @@ public class TamaController {
 	 */
 	public boolean isAlive(){ return model.isAlive();}
 
-	/**
-	 * Feeds pet meal to make it much less hungry
-	 */
-	public void feedMeal(){ model.feedMeal();}
-
-	/**
-	 * Feeds pet snack to make it slightly less hungry
-	 */
-	public void feedSnack(){ model.feedSnack();}
-
 
 	// For testing purposes
 	public int getSecondsPassed(){
@@ -165,10 +155,16 @@ public class TamaController {
 	}
 
 
+	/**
+	 * Feeds pet meal to make it much less hungry
+	 */
 	public void eatMeal() {
 		model.feedMeal();
 	}
-	
+
+	/**
+	 * Feeds pet snack to make it slightly less hungry
+	 */
 	public void eatSnack() {
 		model.feedSnack();
 	}
