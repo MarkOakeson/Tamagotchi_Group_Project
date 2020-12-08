@@ -307,13 +307,33 @@ public class TamaModel extends Observable{
 	 * kills the pet.
 	 */
 	public void determineDeath(){
+		float chanceOfDeath = 0;
+
 		if(!isHealthy() && isUnderOverWt()){
+			chanceOfDeath += (100 - health);
+			if (weight < MAX_WEIGHT/4){
+				chanceOfDeath += (weight / 2);
+			}else{
+				chanceOfDeath += (100 - weight) / 2;
+			}
 			die();
 		}
 		else if(isUnhappy() && isUnderOverWt()){
-			die();
+			chanceOfDeath += (100 - happiness);
+			if (weight < MAX_WEIGHT/4){
+				chanceOfDeath += (weight / 2);
+			}else{
+				chanceOfDeath += (100 - weight) / 2;
+			}
 		}
 		else if(isUnhappy() && !isHealthy()){
+			chanceOfDeath += (100 - health) / 2;
+			chanceOfDeath += (float)(100 - happiness) / 2;
+		}
+		Random deathRand = new Random();
+		float deathValue = deathRand.nextFloat() * 100;
+		// If pet is calculated to die, kills pet
+		if (deathValue < chanceOfDeath){
 			die();
 		}
 	}
