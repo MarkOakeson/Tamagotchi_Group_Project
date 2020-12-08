@@ -41,7 +41,7 @@ public class GamePane extends Pane implements Observer{
 		
 		model.addObserver(this);
 		
-		tama = new Sprite(2, 2, 150, 150, new Image("file:./res/images/dino.png"), Animation.INDEFINITE, 700);
+		tama = new Sprite(3, 3, 160, 160, new Image("file:./res/images/tama.png"), Animation.INDEFINITE, 700);
 		tama.setLayoutX(190);
 		tama.setLayoutY(150);
 		
