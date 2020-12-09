@@ -14,15 +14,6 @@ public class TamaController {
 
 
 	/**
-	 * Updates the model with a newly loaded model passed in
-	 * by the view object
-	 * @param updatedModel - updated model loaded in from save file
-	 */
-	public void updateModel(TamaModel updatedModel){
-		model = updatedModel;
-	}
-
-	/**
 	 * Saves the current game state, including the pet's attributes
 	 * and current status, by writing the Model object to a save file
 	 * in the local directory.
@@ -30,18 +21,6 @@ public class TamaController {
 	 */
 	public void save() throws IOException {
 		model.save();
-	}
-
-	/**
-	 * If a savefile does not exist or cannot be found, returns null.
-	 * If savefile is found, returns the TamaModel object contained
-	 * in the savefile and updates the running instance to be the
-	 * newly returned model.
-	 * @return - null if save not found. Otherwise, returns updated model
-	 * @throws IOException
-	 */
-	public void loadSave() throws IOException {
-		model.load();
 	}
 
 	/**
@@ -167,6 +146,14 @@ public class TamaController {
 	 */
 	public void eatSnack() {
 		model.feedSnack();
+	}
+
+	public boolean getIsReset(){
+		return model.getIsReset();
+	}
+
+	public void setIsReset(boolean isReset){
+		model.setIsReset(isReset);
 	}
 	
 }

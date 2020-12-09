@@ -40,6 +40,8 @@ public class TamaModel extends Observable{
 	// Game state
 	private GameState state;
 	private Pane screenPane = new MenuPane(this);
+
+	private boolean isReset = false;
 	
 	//Core stats
 	private float age; 
@@ -67,9 +69,9 @@ public class TamaModel extends Observable{
 	private static final int MAX_WEIGHT = 100;
 	private static final int MAX_HAPPINESS = 100;
 	
-	private static final int MEAL_WEIGHT_GAIN = 10;
+	private static final int MEAL_WEIGHT_GAIN = 7;
 	private static final int MEAL_HAPPINESS_GAIN = 5;
-	private static final int SNACK_WEIGHT_GAIN = 30;
+	private static final int SNACK_WEIGHT_GAIN = 20;
 	private static final int SNACK_HAPPINESS_GAIN = 20;
 	private static final int MEDI_HAPPINESS_LOSS = 10;
 
@@ -101,6 +103,7 @@ public class TamaModel extends Observable{
 	}
 	
 	public void resetPet() {
+		isReset = true;
 		age = 0;
 		health = 50;
 		weight = 50;
@@ -110,6 +113,8 @@ public class TamaModel extends Observable{
 		
 		healthy = true;
 		alive = true;
+
+
 	}
 	
 	public void updatePet() {
@@ -334,5 +339,13 @@ public class TamaModel extends Observable{
 		if (deathValue < chanceOfDeath){
 			die();
 		}
+	}
+
+	public boolean getIsReset(){
+		return isReset;
+	}
+
+	public void setIsReset(boolean isReset){
+		this.isReset = isReset;
 	}
 }

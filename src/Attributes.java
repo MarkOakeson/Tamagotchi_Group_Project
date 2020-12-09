@@ -26,15 +26,15 @@ public class Attributes implements Serializable{
 
 	// Init with newgame stats
 	public Attributes() {
-//		this.age = 0;
-//		this.health = MAX_HEALTH;
-//		this.weight = MAX_WEIGHT;
-//		this.happiness = MAX_HAPPINESS;
-//		
-//		this.secondsPassed = 0;
-//		
-//		this.healthy = true;
-//		this.alive = true;
+		this.age = 0;
+		this.health = 50;
+		this.weight = 50;
+		this.happiness = 50;
+
+		this.secondsPassed = 0;
+
+		this.healthy = true;
+		this.alive = true;
 	}
 
 	public void makeSave() throws IOException {

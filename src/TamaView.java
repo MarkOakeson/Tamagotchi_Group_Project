@@ -737,7 +737,10 @@ public class TamaView extends Application implements Observer {
 		//updateUIAttributes();
 		if (arg == null)
 			return;
-
+		if (controller.getIsReset()){
+			controller.setIsReset(false);
+			//runSim();
+		}
 		rootPane.getChildren().remove(screenPane);
 		screenPane = model.getCurrentPane();
 		rootPane.getChildren().add(screenPane);
