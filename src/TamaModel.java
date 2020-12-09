@@ -42,7 +42,7 @@ public class TamaModel extends Observable{
 	private Pane screenPane = new MenuPane(this);
 
 	private boolean isReset = false;
-	
+
 	//Core stats
 	private float age; 
 	private float health; 
@@ -132,7 +132,7 @@ public class TamaModel extends Observable{
 		if(isHappy()){chanceOfSickness -= 1;}
 		if(isUnhappy()){chanceOfSickness += 1;}
 		
-		if(rand.nextFloat()*100 <= chanceOfSickness) {makeSick();}
+		if(rand.nextFloat()*100 <= chanceOfSickness) {makeSick(); }
 		
 		//Adjust health and weight
 		if(isUnderOverWt()) {
@@ -256,20 +256,34 @@ public class TamaModel extends Observable{
 	public boolean isUnhappy() {return happiness < 30;}
 	
 	public boolean isHealthy() {return healthy;}
-	public void makeSick() {healthy = false;}
+	public void makeSick() {healthy = false;  gamePane.setSickImg();}
 	public void feedMedicine() {healthy = true; happiness -= MEDI_HAPPINESS_LOSS;}
 	
 	public boolean isAlive() {return alive;}
-	private void die() {alive = false;}
+	private void die() {
+		alive = false;
+		gamePane.setDeadImg();
+	}
 
 	
 	
 	/**
 	 * for use by controller, sets the screen to be the right pane view
-	 * @param screenPane
+	 * @param
 	 */
-	public void setCurrentPane(Pane screenPane) {
-		this.screenPane = screenPane;
+	public void setCurrentPane(String gameState) {
+		state.changeState(gameState);
+		if(state.getState().equals("game")){
+			this.gamePane = new GamePane(this);
+			this.screenPane = gamePane;
+			this.menuPane = null;
+		}
+		else{
+			this.menuPane = new MenuPane(this);
+			this.screenPane = menuPane;
+			this.gamePane = null;
+		}
+
 	}
 	
 	/*

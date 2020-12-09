@@ -121,11 +121,7 @@ public class TamaController {
 
 
 	public void changeState(String gameState) {
-		state.changeState(gameState);
-		if (gameState.equals("game")) {
-			model.setCurrentPane(new GamePane(model));
-		} else if (gameState.equals("menu"))
-			model.setCurrentPane(new MenuPane(model));
+		model.setCurrentPane(gameState);
 	}
 
 

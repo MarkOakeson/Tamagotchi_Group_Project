@@ -81,9 +81,6 @@ public class Sprite extends Pane{
         animation.play();
     }
 
-    public void setImage(Image img){
-        this.img = img;
-    }
 
 
 	

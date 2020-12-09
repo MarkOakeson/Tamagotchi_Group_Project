@@ -8,7 +8,9 @@ import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.PauseTransition;
 import javafx.animation.Timeline;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -44,7 +46,6 @@ public class GamePane extends Pane implements Observer{
 		
 		model.addObserver(this);
 		tama = new Sprite(3, 3, 160, 160, new Image("file:./res/images/tama.png"), Animation.INDEFINITE, 700);
-//		tama = new Sprite(3, 3, 160, 160, new Image("file:./res/images/sickTama.png"), Animation.INDEFINITE, 700);
 		tama.setLayoutX(190);
 		tama.setLayoutY(150);
 		
@@ -78,7 +79,9 @@ public class GamePane extends Pane implements Observer{
 		selections.add(snackSelect);
 		selections.add(medicineSelect);
 		selections.add(playSelect);
-		
+
+
+//
 
 		grid = new Pane();
 		grid.getChildren().addAll(tama, mealSelect, snackSelect, medicineSelect, playSelect);
@@ -99,12 +102,40 @@ public class GamePane extends Pane implements Observer{
 		selected.setVisible(!selected.isVisible());
 	}
 
+	public void setDeadImg(){
+		ImageView imageView = null;
+		if(model.isHealthy()) {
+			imageView = new ImageView(new Image("file:./res/images/deadTama.png"));
+		}
+		else{
+			imageView = new ImageView(new Image("file:./res/images/sickDeadTama.png"));
 
-	private void setSickImg(){
+		}
+		imageView.setViewport(new Rectangle2D(0, 0, 160, 160));
+
+		imageView.setFitHeight(100);
+		imageView.setFitWidth(100);
+		imageView.setLayoutX(190);
+		imageView.setLayoutY(150);
+		grid.getChildren().remove(0);
+		grid.getChildren().add(0, imageView);
+	}
+
+
+	public void setSickImg(){
 		this.tama = new Sprite(3, 3, 160, 160, new Image("file:./res/images/sickTama.png"), Animation.INDEFINITE, 700);
 		tama.setLayoutX(190);
 		tama.setLayoutY(150);
-		grid.getChildren().add(tama);
+		grid.getChildren().remove(0);
+		grid.getChildren().add(0, tama);
+	}
+
+	public void setHealthyImg(){
+		this.tama = new Sprite(3, 3, 160, 160, new Image("file:./res/images/tama.png"), Animation.INDEFINITE, 700);
+		tama.setLayoutX(190);
+		tama.setLayoutY(150);
+		grid.getChildren().remove(0);
+		grid.getChildren().add(0, tama);
 	}
 
 	
@@ -128,9 +159,9 @@ public class GamePane extends Pane implements Observer{
 			tama.setLayoutX(190);
 			eating = false;
 			model.getController().eatMeal();
-			if(!model.isHealthy()){
-				setSickImg();
-			}
+//			if(!model.isHealthy()){
+//				setSickImg();
+//			}
 		});
 		pause.play();
 	}
@@ -155,9 +186,9 @@ public class GamePane extends Pane implements Observer{
 			tama.setLayoutX(190);
 			eating = false;
 			model.getController().eatSnack();
-			if(!model.isHealthy()){
-				setSickImg();
-			}
+//			if(!model.isHealthy()){
+//				setSickImg();
+//			}
 		});
 		pause.play();
 		
@@ -212,7 +243,7 @@ public class GamePane extends Pane implements Observer{
 		pause.play();
 
 	}
-	
+
 
 	// Plays selected animation, then calls the correct controller 
 	// function to handle it.
