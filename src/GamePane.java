@@ -24,6 +24,7 @@ public class GamePane extends Pane implements Observer{
 	private Sprite meal;
 	private Sprite snack;
 	private Sprite medicine;
+	private Sprite play;
 	private TamaModel model;
 	private Pane grid;
 	private Text mealSelect;
@@ -43,7 +44,7 @@ public class GamePane extends Pane implements Observer{
 		
 		model.addObserver(this);
 		tama = new Sprite(3, 3, 160, 160, new Image("file:./res/images/tama.png"), Animation.INDEFINITE, 700);
-//			tama = new Sprite(3, 3, 160, 160, new Image("file:./res/images/sickTama.png"), Animation.INDEFINITE, 700);
+//		tama = new Sprite(3, 3, 160, 160, new Image("file:./res/images/sickTama.png"), Animation.INDEFINITE, 700);
 		tama.setLayoutX(190);
 		tama.setLayoutY(150);
 		
@@ -97,6 +98,7 @@ public class GamePane extends Pane implements Observer{
 		
 		selected.setVisible(!selected.isVisible());
 	}
+
 
 	private void setSickImg(){
 		this.tama = new Sprite(3, 3, 160, 160, new Image("file:./res/images/sickTama.png"), Animation.INDEFINITE, 700);
@@ -185,6 +187,31 @@ public class GamePane extends Pane implements Observer{
 		pause.play();
 
 	}
+
+	/**
+	 * makes the tamagotchi some medicine, animated a medicine,
+	 * calls the feedMedicine controller function
+	 */
+	private void makePlay() {
+		eating = true;
+		tama.setLayoutX(200);
+
+		play = new Sprite(6, 6, 360, 379, new Image("file:./res/images/basketball.png"), 1, 1000);
+		play.setLayoutX(140);
+		play.setLayoutY(190);
+		play.setScaleX(0.5);
+		play.setScaleY(0.5);
+		grid.getChildren().addAll(play);
+		PauseTransition pause = new PauseTransition(Duration.millis(1000));
+		pause.setOnFinished(e -> {
+			grid.getChildren().remove(play);
+			tama.setLayoutX(190);
+			eating = false;
+			model.getController().feedMedicine();
+		});
+		pause.play();
+
+	}
 	
 
 	// Plays selected animation, then calls the correct controller 
@@ -196,6 +223,8 @@ public class GamePane extends Pane implements Observer{
 			makeSnack();
 		} else if (selected.equals(medicineSelect) && !eating){
 			makeMedicine();
+		} else if (selected.equals(playSelect) && !eating){
+			makePlay();
 		}
 		
 	}
