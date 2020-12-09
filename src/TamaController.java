@@ -144,6 +144,12 @@ public class TamaController {
 		model.feedSnack();
 	}
 
+	/**
+	 * Interacts with the pet by playing with it.
+	 * Increasing happiness and health while decreasing weight.
+	 */
+	public void playWith(){ model.playWith();}
+
 	public boolean getIsReset(){
 		return model.getIsReset();
 	}
