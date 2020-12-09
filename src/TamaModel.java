@@ -134,7 +134,7 @@ public class TamaModel extends Observable{
 		if(isHappy()){chanceOfSickness -= 1;}
 		if(isUnhappy()){chanceOfSickness += 1;}
 		
-		if(rand.nextFloat()*100 <= chanceOfSickness) {makeSick();}
+		if(rand.nextFloat()*100 <= chanceOfSickness) {makeSick(); }
 		
 		//Adjust health and weight
 		if(isUnderOverWt()) {
@@ -146,10 +146,6 @@ public class TamaModel extends Observable{
 		health += -0.5 + rand.nextFloat();
 		if(health < 0) {health = 0;}
 		else if(health > MAX_HEALTH) {health = MAX_HEALTH;}
-
-		if(!isHealthy()){
-			gamePane.setSickImg();
-		}
 
 		if(weight < 0) {weight = 0;}
 		else if(weight > MAX_WEIGHT) {weight = MAX_WEIGHT;}
@@ -188,9 +184,6 @@ public class TamaModel extends Observable{
 				e.printStackTrace();
 			}
 		}
-
-
-		
 		setChanged();
 		notifyObservers();
 	}
@@ -275,12 +268,13 @@ public class TamaModel extends Observable{
 	public boolean isUnhappy() {return happiness < 30;}
 	
 	public boolean isHealthy() {return healthy;}
-	public void makeSick() {healthy = false;}
+	public void makeSick() {healthy = false;  gamePane.setSickImg();}
 	public void feedMedicine() {healthy = true; happiness -= MEDI_HAPPINESS_LOSS;}
 	
 	public boolean isAlive() {return alive;}
 	private void die() {
 		alive = false;
+		gamePane.setDeadImg();
 	}
 
 	
