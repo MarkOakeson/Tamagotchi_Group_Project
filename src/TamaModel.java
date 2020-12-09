@@ -355,10 +355,18 @@ public class TamaModel extends Observable{
 		}
 	}
 
+	/**
+	 * Getter for whether the pet has been reset or not
+	 * @return - true if the pet has been reset, false if otherwise
+	 */
 	public boolean getIsReset(){
 		return isReset;
 	}
 
+	/**
+	 * Setter for whether the pet has been reset or not
+	 * @param isReset - boolean value whether the pet has been reset or not
+	 */
 	public void setIsReset(boolean isReset){
 		this.isReset = isReset;
 	}
