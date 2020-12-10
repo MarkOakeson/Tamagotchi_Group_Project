@@ -261,7 +261,11 @@ public class TamaModel extends Observable{
 	
 	public boolean isHealthy() {return healthy;}
 	public void makeSick() {healthy = false;  gamePane.setSickImg();}
-	public void feedMedicine() {healthy = true; happiness -= MEDI_HAPPINESS_LOSS;}
+	public void feedMedicine() {
+		healthy = true; 
+		happiness -= MEDI_HAPPINESS_LOSS;
+		gamePane.setHealthyImg();
+	}
 
 	/**
 	 * Executed by the "Play" button on the UI, interacts with the pet and increases
