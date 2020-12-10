@@ -167,6 +167,11 @@ public class TamaModel extends Observable{
 
 		//Check if pet will die
 		determineDeath();
+		
+		//Change appearance based on status
+		if(!isAlive()) {gamePane.setDeadImg();}
+		else if(!isHealthy()) {gamePane.setSickImg();}
+		else {gamePane.setHealthyImg();}
 
 		// Autosaves every 30 seconds
 		if (secondsPassed % 30 == 0){
@@ -261,14 +266,8 @@ public class TamaModel extends Observable{
 	public boolean isUnhappy() {return happiness < 30;}
 	
 	public boolean isHealthy() {return healthy;}
-	public void makeSick() {healthy = false;  gamePane.setSickImg();}
-	public void feedMedicine() {
-		if(isAlive()) {
-			healthy = true; 
-			happiness -= MEDI_HAPPINESS_LOSS;
-			gamePane.setHealthyImg();
-		}
-	}
+	public void makeSick() {healthy = false;}
+	public void feedMedicine() {healthy = true; happiness -= MEDI_HAPPINESS_LOSS;}
 
 	/**
 	 * Executed by the "Play" button on the UI, interacts with the pet and increases
@@ -281,10 +280,7 @@ public class TamaModel extends Observable{
 	}
 	
 	public boolean isAlive() {return alive;}
-	private void die() {
-		alive = false;
-		gamePane.setDeadImg();
-	}
+	private void die() {alive = false;}
 
 	
 	
