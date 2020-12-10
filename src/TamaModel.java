@@ -158,6 +158,7 @@ public class TamaModel extends Observable{
 		if(weight < 0) {weight = 0;}
 		
 		//Adjust happiness
+		if(isUnderOverWt()) {happiness -= 3;}
 		if(healthy) {
 			happiness += 1;
 		} else {
