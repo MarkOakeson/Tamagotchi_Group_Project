@@ -263,9 +263,11 @@ public class TamaModel extends Observable{
 	public boolean isHealthy() {return healthy;}
 	public void makeSick() {healthy = false;  gamePane.setSickImg();}
 	public void feedMedicine() {
-		healthy = true; 
-		happiness -= MEDI_HAPPINESS_LOSS;
-		gamePane.setHealthyImg();
+		if(isAlive()) {
+			healthy = true; 
+			happiness -= MEDI_HAPPINESS_LOSS;
+			gamePane.setHealthyImg();
+		}
 	}
 
 	/**
