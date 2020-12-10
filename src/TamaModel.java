@@ -64,7 +64,7 @@ public class TamaModel extends Observable{
 	private GamePane gamePane = new GamePane(this);
 	
 	//Limits/Standards
-	private static final int AGE_PER_SECOND = 10; 
+	private static final int SECONDS_PER_AGE = 10; 
 	private static final int MAX_HEALTH = 100;
 	private static final int MAX_WEIGHT = 100;
 	private static final int MAX_HAPPINESS = 100;
@@ -126,7 +126,7 @@ public class TamaModel extends Observable{
 		
 		//Adjust timer and age
 		secondsPassed++;
-		age = secondsPassed/AGE_PER_SECOND; 
+		age = secondsPassed/SECONDS_PER_AGE; 
 		
 		//Check if pet will become sick
 		float chanceOfSickness = 1.5f;
