@@ -169,9 +169,11 @@ public class TamaModel extends Observable{
 		determineDeath();
 		
 		//Change appearance based on status
-		if(!isAlive()) {gamePane.setDeadImg();}
-		else if(!isHealthy()) {gamePane.setSickImg();}
-		else {gamePane.setHealthyImg();}
+		if(this.gamePane != null) {
+			if(!isAlive()) {gamePane.setDeadImg();}
+			else if(!isHealthy()) {gamePane.setSickImg();}
+			else {gamePane.setHealthyImg();}
+		}
 
 		// Autosaves every 30 seconds
 		if (secondsPassed % 30 == 0){
