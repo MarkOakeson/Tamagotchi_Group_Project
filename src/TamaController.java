@@ -158,4 +158,5 @@ public class TamaController {
 		model.setIsReset(isReset);
 	}
 	
+	public void endGame() {model.endGame();}
 }

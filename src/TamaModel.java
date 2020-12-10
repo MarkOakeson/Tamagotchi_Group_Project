@@ -391,4 +391,6 @@ public class TamaModel extends Observable{
 	public void setIsReset(boolean isReset){
 		this.isReset = isReset;
 	}
+	
+	public void endGame() {this.alive = false;}
 }

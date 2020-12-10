@@ -77,6 +77,8 @@ public class TamaView extends Application implements Observer {
 	private Ellipse resetGame = new Ellipse();
 	private Text resetLabel = new Text("RESET");
 
+	private boolean threadRunning = true;
+	
 	public TamaView() {
 		this.model = new TamaModel();
 		model.plusObserver(this);
@@ -535,6 +537,7 @@ public class TamaView extends Application implements Observer {
 	 * 		call the controller and tell it whats up
 	 */
 	protected void pressReset() {
+		controller.endGame();
 		resetSound.play();
 		controller.resetPet();
 
@@ -562,6 +565,7 @@ public class TamaView extends Application implements Observer {
 		loadGameSound.play();
 		controller.loadGamePress();
 
+		if(!threadRunning) {runSim(); threadRunning = true;}
 
 		updateUIAttributes();
 
@@ -654,6 +658,7 @@ public class TamaView extends Application implements Observer {
 			while (stage.isShowing()) {
 				updateUIAttributes();
 				if(!controller.isAlive()){
+					threadRunning = false;
 					break;
 				}
 
@@ -738,7 +743,7 @@ public class TamaView extends Application implements Observer {
 			return;
 		if (controller.getIsReset()){
 			controller.setIsReset(false);
-			//runSim();
+			if(!threadRunning) {runSim(); threadRunning = true;}
 		}
 		rootPane.getChildren().remove(screenPane);
 		screenPane = model.getCurrentPane();
