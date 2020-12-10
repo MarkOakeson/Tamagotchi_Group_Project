@@ -537,7 +537,6 @@ public class TamaView extends Application implements Observer {
 	 * 		call the controller and tell it whats up
 	 */
 	protected void pressReset() {
-		controller.endGame();
 		resetSound.play();
 		controller.resetPet();
 
