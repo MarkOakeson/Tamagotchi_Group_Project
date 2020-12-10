@@ -1,3 +1,5 @@
+import java.io.IOException;
+
 public class TamaController {
 	private TamaModel model;
 	private GameState state;
