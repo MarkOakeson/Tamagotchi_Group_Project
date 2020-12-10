@@ -75,6 +75,10 @@ public class TamaModel extends Observable{
 	private static final int SNACK_HAPPINESS_GAIN = 20;
 	private static final int MEDI_HAPPINESS_LOSS = 10;
 
+	private static final int PLAY_WEIGHT_LOSS = 5;
+	private static final int PLAY_HAPPINESS_GAIN = 10;
+	private static final int PLAY_HEALTH_GAIN = 7;
+
 	//Save file
 	private File saveFile = new File("saveState.sav");
 	private Attributes attributes;
@@ -259,6 +263,16 @@ public class TamaModel extends Observable{
 	public void makeSick() {healthy = false;  gamePane.setSickImg();}
 	public void feedMedicine() {healthy = true; happiness -= MEDI_HAPPINESS_LOSS;}
 
+	/**
+	 * Executed by the "Play" button on the UI, interacts with the pet and increases
+	 * happiness and health while decreasing weight.
+	 */
+	public void playWith(){
+		weight -= PLAY_WEIGHT_LOSS;
+		happiness += PLAY_HAPPINESS_GAIN;
+		health += PLAY_HEALTH_GAIN;
+	}
+
 	public boolean isAlive() {return alive;}
 	private void die() {
 		alive = false;
@@ -355,10 +369,18 @@ public class TamaModel extends Observable{
 		}
 	}
 
+	/**
+	 * Getter for whether the pet has been reset or not
+	 * @return - true if the pet has been reset, false if otherwise
+	 */
 	public boolean getIsReset(){
 		return isReset;
 	}
 
+	/**
+	 * Setter for whether the pet has been reset or not
+	 * @param isReset - boolean value whether the pet has been reset or not
+	 */
 	public void setIsReset(boolean isReset){
 		this.isReset = isReset;
 	}
