@@ -1,7 +1,3 @@
-import java.io.IOException;
-
-import javafx.event.EventHandler;
-
 public class TamaController {
 	private TamaModel model;
 	private GameState state;
@@ -82,33 +78,33 @@ public class TamaController {
 
 	public void button1Press() {
 		model.pressed("1");
-		
+
 	}
 
 
 
 	public void button2Press() {
 		model.pressed("2");
-		
+
 	}
 
 
 
 	public void button3Press() {
 		model.pressed("3");
-		
+
 	}
 
 
 	public void saveGamePress() {
 		model.pressed("S");
-		
+
 	}
-	
+
 	public void loadGamePress() throws IOException {
 		model.load();
 		model.pressed("L");
-		
+
 	}
 
 
@@ -157,5 +153,5 @@ public class TamaController {
 	public void setIsReset(boolean isReset){
 		model.setIsReset(isReset);
 	}
-	
+
 }
